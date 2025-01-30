@@ -40,6 +40,7 @@ ResultSet categoryRs = null;
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 
+// test
 // 정렬 순서 정하기
 String sortClause = "problem_idx DESC"; // 기본 최신순
 if (request.getParameter("latest") != null) {
