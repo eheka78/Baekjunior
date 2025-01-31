@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="java.sql.*, javax.naming.*, Baekjunior.db.*" session="false"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
