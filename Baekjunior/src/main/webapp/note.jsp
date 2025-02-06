@@ -215,7 +215,7 @@ ResultSet memoRs = null;
                <div class="memo_box" contenteditable="true" id="editablememo" style="min-height:600px;padding:30px;background:white;border-radius:10px;border:3px solid black;">
                   <%
                   	String memoSql = "SELECT * FROM algorithm_memo WHERE user_id=? AND algorithm_name=?";
-                  	
+                  
                   	memoPstmt = con.prepareStatement(memoSql);
                   	memoPstmt.setString(1, userId);
                   	memoPstmt.setString(2, algorithmSort);
@@ -367,11 +367,12 @@ ResultSet memoRs = null;
 					}
 					else{
 				%>
-				<% for (String memo : subMemos) { %>
-					<div style="padding:5px;">
-						<img src="img/arrow3.png" style="height:15px; margin-right:5px;"> <span><%=memo %></span>
-					</div>
-		        <% }} %>
+					<% for (String memo : subMemos) { %>
+						<div style="padding:5px;">
+							<img src="img/arrow3.png" style="height:15px; margin-right:5px;"> <span><%=memo %></span>
+						</div>
+		        <% 	   }
+					} %>
 			</div>
 			
 			<div style="display: grid; margin-top: 50px; grid-template-columns: 5fr 2fr; column-gap: 30px;">
@@ -381,21 +382,24 @@ ResultSet memoRs = null;
 		                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("code"), "") %></textarea>
 		            </div>
 		        </div>
-        
 
-        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
-            <div id="code-editor" style="border: none;">
-                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your note here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("main_memo"), "") %></textarea>
-            </div>
-        </div>
-    	</div>
+       		 	<div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
+		            <div id="code-editor" style="border: none;">
+		                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your note here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("main_memo"), "") %></textarea>
+		            </div>
+        		</div>
+    		</div>
 		<%
 			}
 			con.close();
 			pstmt.close();
-			memoPstmt.close();
 			rs.close();
-			memoRs.close();
+			
+			if(algorithmSort != null){
+				memoPstmt.close();
+				memoRs.close();
+			}
+			
 		} catch(SQLException e) {
  			out.print(e);
  			return;
@@ -405,7 +409,8 @@ ResultSet memoRs = null;
 		<script>
 	        const textarea = document.getElementById('code_note');
 	        const lineNumbers = document.getElementById('lineNumbers');
-					
+	        
+			console.log(textarea);
 	        function updateLineNumbers() {
 	            const numberOfLines = textarea.value.split('\n').length;
 	            let lineNumberString = '';
@@ -446,7 +451,7 @@ ResultSet memoRs = null;
 	
 	        function submitcode_note() {
 	            const code = textarea.value;
-	            console.log("Submitted C++ Code:", code);
+	            console.log("Submitted Code:", code);
 	
 	            // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
 	        }
