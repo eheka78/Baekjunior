@@ -269,25 +269,23 @@ try {
 					Bookmark <input type="checkbox" name="check_btn" id="check_btn" value="1">
 				</div>
 				<div>
-				Code Language :
-				<span>
-				<select name="language" style="width:140px; text-align:center; font-size:18px; height:35px;">
-				    <option value="C++">C++</option>
-				    <option value="python">Python</option>
-				    <option value="c#">C#</option>
-				    <option value="java">Java</option>
-					<option value="javascript">JavaScript</option>
-				    <option value="other">other...</option>
-				</select>
-				</span>
-				<span>
-				<input type="text" style="font-size:18px; height:35px;">
-				</span>
+					Code Language :
+					<span>
+					<select name="language" style="width:140px; text-align:center; font-size:18px; height:35px;">
+					    <option value="C++">C++</option>
+					    <option value="python">Python</option>
+					    <option value="c#">C#</option>
+					    <option value="java">Java</option>
+						<option value="javascript">JavaScript</option>
+					    <option value="other">other...</option>
+					</select>
+					</span>
+					<span><input type="text" style="font-size:18px; height:35px;"></span>
 				</div>
 				<div>Code</div>
 				<div id="code-editor">
 			        <div id="lineNumbers"></div>
-			        	<textarea id="code_note" name="code_note" rows="10" placeholder="Enter your C++ code here..."></textarea>
+			        	<textarea id="code_note" name="code_note" rows="10" placeholder="Enter your code here..."></textarea>
 			    </div>
 			</div>
 			</div>
@@ -305,7 +303,6 @@ try {
 	</div>
 </form>
 	
-	<!-- 역시 chatgpt -->
 	<!-- 코드 입력창 -->
 	<script>
 		const textarea = document.getElementById('code_note');
@@ -314,6 +311,7 @@ try {
 		function updateLineNumbers() {
 		    const numberOfLines = textarea.value.split('\n').length;
 		    lineNumbers.innerHTML = '';
+		    
 		    for (let i = 1; i <= numberOfLines; i++) {
 		        lineNumbers.innerHTML += '<div id="line_num' + i + '">' + i + '</div>';
 		    }
