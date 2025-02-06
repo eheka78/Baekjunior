@@ -28,7 +28,7 @@ try {
 	pidb.updateProblem(pi);
 	pidb.close();
 	
-	response.sendRedirect("note_detail.jsp?problem_idx=" + problemIdx);
+	response.sendRedirect("note.jsp?problem_idx=" + problemIdx);
 } catch (SQLException e){
 	out.print(e);
 	return;

@@ -336,7 +336,7 @@ ResultSet rs = null;
 
     function submitcode_note() {
         const code = textarea.value;
-        console.log("Submitted C++ Code:", code);
+        console.log("Submitted Code:", code);
 
         // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
     }
