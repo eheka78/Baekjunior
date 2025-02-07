@@ -59,14 +59,11 @@ request.setCharacterEncoding("utf-8");
 String userId = "none";
 HttpSession session = request.getSession(false);
 
-// 합치면 주석 풀고 아래 2줄 지우기 ****************************************************************************
-/* if(session != null && session.getAttribute("login.id") != null) {
+if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
 }
-int problemIdx = Integer.parseInt(request.getParameter("problem_idx")); */
+int problemIdx = Integer.parseInt(request.getParameter("problem_idx"));
 
-userId = "admin";
-int problemIdx = 22;
 String algorithmSort = request.getParameter("algoname");
 
 

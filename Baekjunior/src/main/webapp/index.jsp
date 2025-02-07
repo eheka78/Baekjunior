@@ -168,8 +168,8 @@ ResultSet levelRs = null;
 					<ul>
 						<li><a href="index.jsp">ALL</a></li>
 						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-						<li><a href="2_Baekjunior.jsp">CATEGORY</a></li>
-						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
+						<li><a href="#">CATEGORY</a></li>
+						<li><a href="#">LEVEL</a></li>
 					</ul>
 				</li>				
 				<li class="main_menu_Friend"><a href="friend.jsp">Friend</a>
