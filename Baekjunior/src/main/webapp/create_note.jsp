@@ -283,9 +283,9 @@ try {
 					<span><input type="text" style="font-size:18px; height:35px;"></span>
 				</div>
 				<div>Code</div>
-				<div id="code-editor">
-			        <div id="lineNumbers"></div>
-			        	<textarea id="code_note" name="code_note" rows="10" placeholder="Enter your code here..."></textarea>
+				<div id="code-editor" style="display: grid; grid-template-columns: 1fr 20fr; border: none;">
+			        <textarea id="lineNumbers" rows="10" wrap="off" style="font-size:15px; overflow:auto; text-align:center; padding-bottom:0px;" readonly></textarea>
+			        <textarea id="code_note" name="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;"></textarea>
 			    </div>
 			</div>
 			</div>
@@ -303,40 +303,57 @@ try {
 	</div>
 </form>
 	
+	<!-- 역시 chatgpt -->
 	<!-- 코드 입력창 -->
 	<script>
-		const textarea = document.getElementById('code_note');
-		const lineNumbers = document.getElementById('lineNumbers');
-		
-		function updateLineNumbers() {
-		    const numberOfLines = textarea.value.split('\n').length;
-		    lineNumbers.innerHTML = '';
-		    
-		    for (let i = 1; i <= numberOfLines; i++) {
-		        lineNumbers.innerHTML += '<div id="line_num' + i + '">' + i + '</div>';
-		    }
-		}
-		
-		// 초기 라인 번호 업데이트
-		updateLineNumbers();
-		
-		// 사용자가 텍스트를 입력하거나 줄을 변경할 때 라인 번호 업데이트
-		textarea.addEventListener('input', updateLineNumbers);
-		textarea.addEventListener('scroll', () => {
-		    lineNumbers.scrollTop = textarea.scrollTop;
-		});
-		// problemId 가 입력되면 importCheck를 1로 업데이트
-		<% if (problemId != null && !problemId.isEmpty()) { %>
-        	document.addEventListener("DOMContentLoaded", function() {
-            	document.getElementById('importCheck').value = '1';
-        	});
-    	<% } %>
-		function submitcode_note() {
-		    const code = textarea.value;
-		    console.log("Submitted C++ Code:", code);
-		
-		    // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
-		}
+	const textarea = document.getElementById('code_note');
+    const lineNumbers = document.getElementById('lineNumbers');
+    
+	console.log(textarea);
+    function updateLineNumbers() {
+        const numberOfLines = textarea.value.split('\n').length;
+        let lineNumberString = '';
+
+        for (let i = 1; i <= numberOfLines; i++) {
+            lineNumberString += i + '\n'
+        }
+
+        lineNumbers.value = lineNumberString;
+    }
+
+    function adjustHeight(element) {
+        element.style.height = 'auto'; // Reset height to auto to measure scrollHeight
+        element.style.height = element.scrollHeight + 'px'; // Adjust height to fit content
+    }
+
+    // Function to sync heights between textareas
+    function syncHeights() {
+        const maxScrollHeight = Math.max(textarea.scrollHeight, lineNumbers.scrollHeight);
+        textarea.style.height = maxScrollHeight + 'px';
+        lineNumbers.style.height = maxScrollHeight + 'px';
+    }
+
+    // 초기 라인 번호 및 높이 업데이트
+    updateLineNumbers();
+    syncHeights();
+
+    // 사용자가 텍스트를 입력하거나 줄을 변경할 때 라인 번호 및 높이 업데이트
+    textarea.addEventListener('input', () => {
+        updateLineNumbers();
+        syncHeights();
+    });
+
+    // Scroll the line numbers to match the code textarea
+    textarea.addEventListener('scroll', () => {
+        lineNumbers.scrollTop = textarea.scrollTop;
+    });
+
+    function submitcode_note() {
+        const code = textarea.value;
+        console.log("Submitted Code:", code);
+
+        // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
+    }
 	</script>
 	
 	<br><br><br><br>
