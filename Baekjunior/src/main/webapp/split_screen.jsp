@@ -202,7 +202,7 @@ ResultSet rs6 = null;
 		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
 	</div>
 	
-	<div style="display:grid; grid-template-columns: 1fr 1fr;margin-top:50px;">
+	<div style="display:grid; grid-template-columns: 1fr 1fr; margin-top:50px;">
 		<!-- 왼쪽 스크린 -->
 		
 		<!-- note가 나와야하는 경우 -->
@@ -219,7 +219,7 @@ ResultSet rs6 = null;
 		%>
 		
 		<div id="split1" style="margin-top:20px; border-right:3px solid black; overflow-y:auto;">
-			<div style=" width:80%; margin:0 auto;">
+			<div style="margin:0 50px 0 80px;">
 				<div style="float:right;">
 					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
 				</div>
@@ -388,7 +388,7 @@ ResultSet rs6 = null;
 			
 			<!-- 노트의 리스트가 나와야하는 경우 -->
 		
-			<div id="list_group">
+			<div id="list_group" style="margin:0 50px;">
 				<ul class="list">
 			
 			<%
@@ -472,8 +472,8 @@ ResultSet rs6 = null;
 				if(rs2.next()){
 		%>
 	
-	<div id="split2" style="height:700px; margin-top:20px; border-left:3px solid black; overflow-y:auto;">
-		<div style=" width:80%; margin:0 auto;">
+	<div id="split2" style="margin-top:20px; border-left:3px solid black; overflow-y:auto;">
+		<div style="width:80%; margin:0 50px;">
 			<div style="float:right;">
 				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
 			</div>
@@ -639,7 +639,7 @@ ResultSet rs6 = null;
 		
 		<!-- 노트의 리스트가 나와야하는 경우 -->
 		
-		<div id="list_group">
+		<div id="list_group" style="margin:0 50px;">
 		<ul class="list">
 		
 		<%
