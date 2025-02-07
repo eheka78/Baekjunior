@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <script>
+	window.onload = function(){
+		document.getElementById("id").focus();
+	}
+	
+
    function openmenu() {
       document.getElementById("menub").style.display = "none";
       document.getElementById("x").style.display = "block";

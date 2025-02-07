@@ -6,6 +6,13 @@
 <meta charset="UTF-8">
 <title>create_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
+
+<style>
+a{
+	text-decoration: none;
+	color:black;
+}
+</style>
 </head>
 
 <script type="text/javascript">
@@ -219,7 +226,15 @@ ResultSet rs6 = null;
 					</div>
 					
 					<div style="font-weight:bold; font-size:20px; margin-top:15px; margin-left:30px;">
-						<div style="display:inline; width:80%;">
+						<div style="display:inline; margin-right:50px;">
+							<%
+							String tierName = rs.getString("tier_name"); 
+							int tierNum = rs.getInt("tier_num");
+							%>
+							<span><img src="img/star_<%=tierName.toLowerCase()%>.png" height="15px"></span>
+							<span> <%=tierName.toUpperCase()%> <%=tierNum %></span>
+						</div>
+						<div style="display:inline;">
 						<%
 							String problemSortStr = rs.getString("problem_sort");
 							String[] algorithmList = problemSortStr.split(",");
@@ -227,15 +242,19 @@ ResultSet rs6 = null;
 	                    		for (String algo : algorithmList) {
 	                            	if (!algo.isEmpty()) {   
 						%>
-							<span><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;" OnClick="location.href='take_algorithm_note.jsp?problem_idx=<%=rs.getInt("problem_idx")%>&algoname=<%=algo %>'"><%=algo %></span>
+							<span style="margin-left:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span><%=algo %></span>
 						<%
 	                            	}
 	                    		}
 	                    	}
 							else {
-						%> <span><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;">default sort</span>
+						%> <span style="margin-left:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;">default sort</span>
 						<% } %>
+						</div>
+						<div style="display:inline;">
 							<span style="margin-right:50px;"><%=rs.getString("language") %></span>
+						</div>
+						<div style="display:inline;">
 							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 						</div>
 						<div style="float:right; font-size:15px; padding:10px;">

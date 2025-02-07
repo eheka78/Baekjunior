@@ -166,8 +166,8 @@ ResultSet levelRs = null;
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
 					<ul>
-						<li><a href="0_Baekjunior.jsp">ALL</a></li>
-						<li><a href="1_Baekjunior.jsp">BOOKMARK</a></li>
+						<li><a href="index.jsp">ALL</a></li>
+						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
 						<li><a href="2_Baekjunior.jsp">CATEGORY</a></li>
 						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
 					</ul>
@@ -565,7 +565,7 @@ ResultSet levelRs = null;
  					while (problemRs.next()) {
  		%>
  			<li class="item">
- 				<div class="content_number"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
+ 				<div class="content_number"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
  				<div class="content_set">
  				<!-- 고정 핀 아이콘 출력 여부 -->
  				<% if(problemRs.getInt("is_fixed") == 1) { %>
@@ -581,7 +581,7 @@ ResultSet levelRs = null;
 	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
 	    		</ul>
 	    	</div>
- 				<div class="content_title area ellipsis"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
+ 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
  			</li>
  		<%
  					}			
