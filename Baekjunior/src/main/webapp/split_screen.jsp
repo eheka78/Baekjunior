@@ -278,7 +278,7 @@ ResultSet rs6 = null;
 				%>
 				<% for (String memo : subMemos) { %>
 					<div style="padding:5px;">
-						<img src="img/star_red.png" style="width:13px;"> <span><%=memo %></span>
+						<img src="img/arrow3.png" style="width:13px;"> <span><%=memo %></span>
 					</div>
 		        <% }
 				} %>
@@ -516,7 +516,7 @@ ResultSet rs6 = null;
 				%>
 				<% for (String memo : subMemos) { %>
 					<div style="padding:5px;">
-						<img src="img/star_red.png" style="width:13px;"> <span><%=memo %></span>
+						<img src="img/arrow3.png" style="width:13px;"> <span><%=memo %></span>
 					</div>
 		        <% }} %>
 			</div>
