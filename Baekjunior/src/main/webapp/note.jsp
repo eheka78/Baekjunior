@@ -322,31 +322,39 @@ ResultSet memoRs = null;
 				</div>
 				
 				<div style="font-weight:bold; font-size:18px; margin-top:15px; margin-left:20px;">
-					<div style="display:inline;">
-					<%
-					String tierName = rs.getString("tier_name"); 
-					int tierNum = rs.getInt("tier_num");
-					%>
-					<span><img src="img/star_<%=tierName.toLowerCase()%>.png" height="15px"></span><span> <%=tierName.toUpperCase()%> <%=tierNum %></span>
+					<!-- 티어 -->
+					<div style="display:inline; margin-right:50px;">
+						<%
+						String tierName = rs.getString("tier_name"); 
+						int tierNum = rs.getInt("tier_num");
+						%>
+						<span><img src="img/star_<%=tierName.toLowerCase()%>.png" height="15px"></span>
+						<span> <%=tierName.toUpperCase()%> <%=tierNum %></span>
 					</div>
-					<div style="display:inline;">
-					<%
+					<!-- 알고리즘 종류 나열 -->
+					<div style="display:inline; margin-right:25px;">
+						<%
 						String problemSortStr = rs.getString("problem_sort");
 						String[] algorithmList = problemSortStr.split(",");
-                    	if(problemSortStr != null && !problemSortStr.trim().isEmpty()) {
-                    		for (String algo : algorithmList) {
-                            	if (!algo.isEmpty()) {
-					%>
-						<span><img src="img/dot1.png" style="width:15px; margin-left:25px;"></span><a href="note.jsp?problem_idx=<%=rs.getInt("problem_idx")%>&algoname=<%=algo %>"> <%=algo %></a>
-					<%
-                            	}
-                    		}
-                    	}
-						else {
-					%> <span><img src="img/dot1.png" style="width:15px; margin-left:25px;"></span> <span>default sort</span>
-					<% } %>
-						<span style="margin-right:50px;"></span>
+	                   	if(problemSortStr != null && !problemSortStr.trim().isEmpty()) {
+	                   		for (String algo : algorithmList) {
+	                           	if (!algo.isEmpty()) {
+						%>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px; "><a href="note.jsp?problem_idx=<%=rs.getInt("problem_idx")%>&algoname=<%=algo %>"> <%=algo %></a></span>
+						<%
+	                           	}
+	                   		}
+	                   	}
+							else {
+						%>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span>default sort</span>
+						<% } %>
+					</div>
+					<!-- 언어 종류 -->
+					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
+					</div> 
+					<div style="display:inline;">
 						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
@@ -378,7 +386,7 @@ ResultSet memoRs = null;
 			<div style="display: grid; margin-top: 50px; grid-template-columns: 5fr 2fr; column-gap: 30px;">
 		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 		            <div id="code-editor" style="display: grid; grid-template-columns: 1fr 17fr; border: none;">
-		                <textarea class="notes" id="lineNumbers" rows="10" wrap="off" style="font-size:15px; overflow:auto; text-align:center; padding-bottom:0px;" readonly></textarea>
+		                <textarea class="notes" id="lineNumbers" rows="10" wrap="off" style="font-size:15px; overflow:auto; text-align:center; padding-bottom:0px; " readonly></textarea>
 		                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("code"), "") %></textarea>
 		            </div>
 		        </div>
