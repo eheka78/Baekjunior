@@ -71,11 +71,15 @@ if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
 }
 
-int problemIdx1 = Integer.parseInt(request.getParameter("problem_idx1"));
-int problemIdx2 = Integer.parseInt(request.getParameter("problem_idx2"));
+String temp = "";
+temp = request.getParameter("problem_idx1");
+int problemIdx1 = (temp == null ? -1 : (Integer.parseInt(temp)));
 
-if(problemIdx1 <= 0 && problemIdx2 <= 0){
-	response.sendRedirect("0_Baekjunior.jsp");
+temp = request.getParameter("problem_idx2");
+int problemIdx2 = (temp == null ? -1 : (Integer.parseInt(temp)));
+
+if(problemIdx1 == -1 && problemIdx2 == -1){
+	response.sendRedirect("index.jsp"); 
     return;
 }
 
@@ -103,15 +107,15 @@ ResultSet rs6 = null;
 
 <body>	
 	<header style="padding:0px 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
 					<ul>
-						<li><a href="0_Baekjunior.jsp">ALL</a></li>
-						<li><a href="1_Baekjunior.jsp">BOOKMARK</a></li>
-						<li><a href="2_Baekjunior.jsp">CATEGORY</a></li>
-						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
+						<li><a href="index.jsp">ALL</a></li>
+						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
+						<li><a href="#">CATEGORY</a></li>
+						<li><a href="#">LEVEL</a></li>
 					</ul>
 				</li>				
 				<li class="main_menu_Friend"><a href="#">Friend</a>
@@ -196,7 +200,7 @@ ResultSet rs6 = null;
 	<div style="display:grid; grid-template-columns: 1fr 1fr;margin-top:50px;">
 		<!-- 왼쪽 스크린 -->
 		
-		<!-- 문제 -->
+		<!-- note가 나와야하는 경우 -->
 		<%
 		if(problemIdx1 != -1){
 			try {
@@ -256,10 +260,6 @@ ResultSet rs6 = null;
 						</div>
 						<div style="display:inline;">
 							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						</div>
-						<div style="float:right; font-size:15px; padding:10px;">
-							<a href="note_detail_edit.jsp" style="color:black;">Edit</a>
-							<a href="#" style="color:black;">Delete</a>
 						</div>
 					</div>
 				</div>	
@@ -372,12 +372,13 @@ ResultSet rs6 = null;
 		 		} finally{
 		 			pstmt.close();
 					rs.close();
-		 		}
-			}
-		
-			else{
+		 		}	
+			} else{
 			%>
 			
+			
+			<!-- 노트의 리스트가 나와야하는 경우 -->
+		
 			<div id="list_group">
 				<ul class="list">
 			
@@ -449,6 +450,7 @@ ResultSet rs6 = null;
 	
 	<!-- 오른쪽 스크린 -->
 	
+	<!-- note가 나와야하는 경우 -->
 	<%
 		if(problemIdx2 != -1){
 			try {
@@ -496,10 +498,6 @@ ResultSet rs6 = null;
 						<% } %>
 						<span style="margin-right:50px;"><%=rs2.getString("language") %></span>
 						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-					</div>
-					<div style="float:right; font-size:15px; padding:10px;">
-						<a href="note_detail_edit.jsp" style="color:black;">Edit</a>
-						<a href="#" style="color:black;">Delete</a>
 					</div>
 				</div>
 			</div>	
@@ -610,10 +608,10 @@ ResultSet rs6 = null;
 	 			pstmt2.close();
 				rs2.close();
 	 		}
-		}
-	
-		else{
+		} else{
 		%>
+		
+		<!-- 노트의 리스트가 나와야하는 경우 -->
 		
 		<div id="list_group">
 		<ul class="list">
