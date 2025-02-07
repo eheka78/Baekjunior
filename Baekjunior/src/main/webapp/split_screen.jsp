@@ -253,13 +253,13 @@ ResultSet rs6 = null;
 	                    		for (String algo : algorithmList) {
 	                            	if (!algo.isEmpty()) {   
 						%>
-							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span><%=algo %></span>
+							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"> <%=algo %></span>
 						<%
 	                            	}
 	                    		}
 	                    	}
 							else {
-						%> <span style="margin-right:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span">default sort</span>
+						%> <span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"> default sort</span>
 						<% } %>
 						</div>
 						<!-- 언어 종류 -->
@@ -507,15 +507,14 @@ ResultSet rs6 = null;
 	                    		for (String algo : algorithmList) {
 	                            	if (!algo.isEmpty()) {
 						%>
-							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span>
-							<span><%=algo %></span>
+							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"> <%=algo %></span>
 						<%
 	                            	}
 	                    		}
 	                    	}
 							else {
 						%> 
-						<span style="margin-right:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span>default sort</span>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"> default sort</span>
 						<% } %>
 					</div>
 					<div style="display:inline;">
