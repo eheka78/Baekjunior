@@ -32,15 +32,15 @@ ResultSet rs = null;
 </script>
 <body>	
 	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
 					<ul>
-						<li><a href="0_Baekjunior.jsp">ALL</a></li>
-						<li><a href="1_Baekjunior.jsp">BOOKMARK</a></li>
-						<li><a href="2_Baekjunior.jsp">CATEGORY</a></li>
-						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
+						<li><a href="index.jsp">ALL</a></li>
+						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
+						<li><a href="#">CATEGORY</a></li>
+						<li><a href="#">LEVEL</a></li>
 					</ul>
 				</li>				
 				<li class="main_menu_Friend"><a href="#">Friend</a>
