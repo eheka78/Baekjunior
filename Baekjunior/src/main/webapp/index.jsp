@@ -166,7 +166,7 @@ ResultSet levelRs = null;
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
 					<ul>
-						<li><a href="0_Baekjunior.jsp">ALL</a></li>
+						<li><a href="index.jsp">ALL</a></li>
 						<li><a href="1_Baekjunior.jsp">BOOKMARK</a></li>
 						<li><a href="2_Baekjunior.jsp">CATEGORY</a></li>
 						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
