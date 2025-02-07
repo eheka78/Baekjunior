@@ -16,6 +16,21 @@ a{
 </head>
 
 <script type="text/javascript">
+	function updateWindowHeight() {
+	    let splitDiv1 = document.getElementById("split1");
+	    let splitDiv2 = document.getElementById("split2");
+	    splitDiv1.style.height = (window.innerHeight - 160) + "px";
+	    splitDiv2.style.height = (window.innerHeight - 160) + "px";
+	    
+	    console.log("현재 window.innerHeight 값:", window.innerHeight);
+	}
+	
+	// 페이지 로드 시 실행
+	window.onload = updateWindowHeight;
+	
+	// 창 크기가 변경될 때 실행
+	window.addEventListener("resize", updateWindowHeight);
+
     function confirmDeletion(problemIdx) {
         var result = confirm("정말 삭제하시겠습니까?");
         if (result) {
@@ -26,7 +41,7 @@ a{
     }
 </script>
 
-<script>
+<script>	
 	// 고정 여부 업데이트하는 함수
 	function updatePin(problemIdx) {
 	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
@@ -50,16 +65,6 @@ a{
 	    };
 	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
 	}
-</script>
-
-<script>
-window.onload = function() {
-	var docHeight = document.documentElement.scrollHeight;
-	var h = document.getElementById('split');
-	
-	h.style.height = docHeight - 150 + 'px';
-	console.log("Document height: " + docHeight + "px");
-};
 </script>
 
 <script>
@@ -213,7 +218,7 @@ ResultSet rs6 = null;
 				if(rs.next()){
 		%>
 		
-		<div id="split" style="margin-top:20px; border-right:3px solid black; overflow-y:scroll;">
+		<div id="split1" style="margin-top:20px; border-right:3px solid black; overflow-y:auto;">
 			<div style=" width:80%; margin:0 auto;">
 				<div style="float:right;">
 					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
@@ -230,6 +235,7 @@ ResultSet rs6 = null;
 					</div>
 					
 					<div style="font-weight:bold; font-size:20px; margin-top:15px; margin-left:30px;">
+						<!-- 티어 -->
 						<div style="display:inline; margin-right:50px;">
 							<%
 							String tierName = rs.getString("tier_name"); 
@@ -238,7 +244,8 @@ ResultSet rs6 = null;
 							<span><img src="img/star_<%=tierName.toLowerCase()%>.png" height="15px"></span>
 							<span> <%=tierName.toUpperCase()%> <%=tierNum %></span>
 						</div>
-						<div style="display:inline;">
+						<!-- 알고리즘 종류 나열 -->
+						<div style="display:inline; margin-right:25px;">
 						<%
 							String problemSortStr = rs.getString("problem_sort");
 							String[] algorithmList = problemSortStr.split(",");
@@ -246,18 +253,20 @@ ResultSet rs6 = null;
 	                    		for (String algo : algorithmList) {
 	                            	if (!algo.isEmpty()) {   
 						%>
-							<span style="margin-left:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span><%=algo %></span>
+							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span><%=algo %></span>
 						<%
 	                            	}
 	                    		}
 	                    	}
 							else {
-						%> <span style="margin-left:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;">default sort</span>
+						%> <span style="margin-right:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span">default sort</span>
 						<% } %>
 						</div>
+						<!-- 언어 종류 -->
 						<div style="display:inline;">
 							<span style="margin-right:50px;"><%=rs.getString("language") %></span>
 						</div>
+						<!-- 친구 -->
 						<div style="display:inline;">
 							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 						</div>
@@ -288,14 +297,14 @@ ResultSet rs6 = null;
 			        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 			            <div id="code-editor" style="display: grid; grid-template-columns: 1fr 17fr; border: none;">
 			                <textarea class="notes" id="lineNumbers" rows="10" wrap="off" style="text-align:center; padding-bottom:0px;" readonly></textarea>
-			                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your C++ code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("code") %></textarea>
+			                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("code") %></textarea>
 			            </div>
 			        </div>
 			        
 			
 			        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 			            <div id="code-editor" style="border: none;">
-			                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your C++ code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("main_memo") %></textarea>
+			                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your code memo here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("main_memo") %></textarea>
 			            </div>
 			        </div>
 		    	</div>
@@ -463,7 +472,7 @@ ResultSet rs6 = null;
 				if(rs2.next()){
 		%>
 	
-	<div id="split" style="margin-top:20px; border-left:3px solid black; overflow-y:scroll;">
+	<div id="split2" style="height:700px; margin-top:20px; border-left:3px solid black; overflow-y:auto;">
 		<div style=" width:80%; margin:0 auto;">
 			<div style="float:right;">
 				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
@@ -480,7 +489,17 @@ ResultSet rs6 = null;
 				</div>
 				
 				<div style="font-weight:bold; font-size:20px; margin-top:15px; margin-left:30px;">
-					<div style="display:inline; width:80%;">
+					<!-- 티어 -->
+					<div style="display:inline; margin-right:50px;">
+						<%
+						String tierName2 = rs2.getString("tier_name"); 
+						int tierNum2 = rs2.getInt("tier_num");
+						%>
+						<span><img src="img/star_<%=tierName2.toLowerCase()%>.png" height="15px"></span>
+						<span> <%=tierName2.toUpperCase()%> <%=tierNum2 %></span>
+					</div>
+					<!-- 알고리즘 종류 나열 -->
+					<div style="display:inline; margin-right:25px;">
 						<%
 							String problemSortStr = rs2.getString("problem_sort");
 							String[] algorithmList = problemSortStr.split(",");
@@ -488,20 +507,28 @@ ResultSet rs6 = null;
 	                    		for (String algo : algorithmList) {
 	                            	if (!algo.isEmpty()) {
 						%>
-							<span><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;" OnClick="location.href='take_algorithm_note.jsp?problem_idx=<%=rs2.getInt("problem_idx")%>&algoname=<%=algo %>'"><%=algo %></span>
+							<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span>
+							<span><%=algo %></span>
 						<%
 	                            	}
 	                    		}
 	                    	}
 							else {
-						%> <span><img src="img/dot1.png" style="width:15px;"></span> <span style="margin-right:50px;">default sort</span>
+						%> 
+						<span style="margin-right:25px;" ><img src="img/dot1.png" style="width:15px;"></span> <span>default sort</span>
 						<% } %>
+					</div>
+					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs2.getString("language") %></span>
+					</div>
+					<div style="display:inline;">
 						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
 				</div>
 			</div>	
 			
+			
+			<!-- 서브 메모 -->
 			<div style="font-weight:bold; font-size:20px; border:3px solid black; background:#5F99EB; padding:30px; margin-top:50px; vertical-align:middle; ">
 				<%
 					String subMemoStr = rs2.getString("sub_memo");
@@ -525,14 +552,14 @@ ResultSet rs6 = null;
 		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 		            <div id="code-editor" style="display: grid; grid-template-columns: 1fr 17fr; border: none;">
 		                <textarea class="notes" id="lineNumbers" rows="10" wrap="off" style="text-align:center; padding-bottom:0px;" readonly></textarea>
-		                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your C++ code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("code") %></textarea>
+		                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("code") %></textarea>
 		            </div>
 		        </div>
 		        
 		
 		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 		            <div id="code-editor" style="border: none;">
-		                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your C++ code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("main_memo") %></textarea>
+		                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your code memo here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("main_memo") %></textarea>
 		            </div>
 		        </div>
 	    	</div>
