@@ -33,6 +33,7 @@ window.onload = updateSortSelectTopLoc;
 </script>
 
 </head>
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -46,11 +47,13 @@ else{
 }
 
 // 기본 page type = 전체 문제 보기(all)
-String pageType = request.getParameter("type");
+String pageType = "all";
+pageType = request.getParameter("type");
 if(pageType == null) pageType = "all";
+log("pageType: " + pageType);
 
 // 모아볼(선택한) 난이도 분류
-int levelSort = 0;
+int levelSort = -1;
 String tierNameSort = "";
 int tierNumSort = 0;
 if(pageType != null && "level".equals(pageType)) {
@@ -278,9 +281,9 @@ ResultSet levelRs = null;
 	<nav>
 		<div>
 			<ul>
-				<li><a href="index.jsp"><b>ALL</b></a></li>
-				<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-				<li><a href="#">LEVEL</a>
+				<li><a href="index.jsp" <%if("all".equals(pageType)){ %>style="font-weight:bold;"<%} %>>ALL</a></li>
+				<li><a href="index.jsp?type=bookmark" <%if("bookmark".equals(pageType)){ %>style="font-weight:bold;"<%} %>>BOOKMARK</a></li>
+				<li><a href="#" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
@@ -293,18 +296,18 @@ ResultSet levelRs = null;
 							int level = levelRs.getInt("level");
 							if(tierName.equals("unrated")) {
 					%>
-						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>"><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%></span></a></li>
+						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>" <%if(levelSort == level){ %>style="font-weight:bold;"<%} %>><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%></span></a></li>
 					<%
 							} else {
 					%>
-						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>"><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%><%=tierNum %></span></a></li>
+						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>" <%if(levelSort == level){ %>style="font-weight:bold;"<%} %>><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%><%=tierNum %></span></a></li>
 					<%
 							}
 						}
 					%>
 					</ul>
 				</li>
-				<li><a href="#">CATEGORY</a>
+				<li><a href="#" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
@@ -313,7 +316,7 @@ ResultSet levelRs = null;
 						categoryRs = categoryPstmt.executeQuery();
 						while(categoryRs.next()) {
 					%>
-						<li><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><span><img src="img/dot1.png"></span><span><%=categoryRs.getString("algorithm_name") %></span></a></li>
+						<li><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" <%if(algorithmSort.equals(categoryRs.getString("algorithm_name"))){ %>style="font-weight:bold;"<%} %>><span><img src="img/dot1.png"></span><span><%=categoryRs.getString("algorithm_name") %></span></a></li>
 					<%
 						}
 					%>
