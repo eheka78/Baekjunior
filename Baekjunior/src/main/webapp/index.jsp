@@ -17,6 +17,21 @@
 }
 </style>
 
+<script>
+function updateSortSelectTopLoc() {
+	let sort_select_div = document.getElementById("sort_select");
+	let sort_select_ul_div = document.getElementById("sort_select_ul");
+	
+	let sort_select_div_bottom = sort_select_div.getBoundingClientRect().bottom;
+	sort_select_ul_div.style.top = sort_select_div_bottom + "px";
+	
+	console.log("top: " + sort_select_div_bottom);
+}
+
+window.onload = updateSortSelectTopLoc;
+
+</script>
+
 </head>
 <%
 request.setCharacterEncoding("utf-8");
@@ -358,7 +373,7 @@ ResultSet levelRs = null;
 				<div id="sort_select" class="content_set_b">
 					<button>SORT</button>
 				</div>
-				<ul style="top:205px;">
+				<ul id="sort_select_ul">
 				<!-- 페이지 타입에 따라 인자 전달을 다르게 함 -->
 		<%
 			if("all".equals(pageType) || "bookmark".equals(pageType)) {
