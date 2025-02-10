@@ -17,7 +17,23 @@
 }
 </style>
 
+<script>
+function updateSortSelectTopLoc() {
+	let sort_select_div = document.getElementById("sort_select");
+	let sort_select_ul_div = document.getElementById("sort_select_ul");
+	
+	let sort_select_div_bottom = sort_select_div.getBoundingClientRect().bottom;
+	sort_select_ul_div.style.top = sort_select_div_bottom + "px";
+	
+	console.log("top: " + sort_select_div_bottom);
+}
+
+window.onload = updateSortSelectTopLoc;
+
+</script>
+
 </head>
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -31,11 +47,13 @@ else{
 }
 
 // 기본 page type = 전체 문제 보기(all)
-String pageType = request.getParameter("type");
+String pageType = "all";
+pageType = request.getParameter("type");
 if(pageType == null) pageType = "all";
+log("pageType: " + pageType);
 
 // 모아볼(선택한) 난이도 분류
-int levelSort = 0;
+int levelSort = -1;
 String tierNameSort = "";
 int tierNumSort = 0;
 if(pageType != null && "level".equals(pageType)) {
@@ -263,9 +281,9 @@ ResultSet levelRs = null;
 	<nav>
 		<div>
 			<ul>
-				<li><a href="index.jsp"><b>ALL</b></a></li>
-				<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-				<li><a href="#">LEVEL</a>
+				<li><a href="index.jsp" <%if("all".equals(pageType)){ %>style="font-weight:bold;"<%} %>>ALL</a></li>
+				<li><a href="index.jsp?type=bookmark" <%if("bookmark".equals(pageType)){ %>style="font-weight:bold;"<%} %>>BOOKMARK</a></li>
+				<li><a href="#" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
@@ -278,18 +296,18 @@ ResultSet levelRs = null;
 							int level = levelRs.getInt("level");
 							if(tierName.equals("unrated")) {
 					%>
-						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>"><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%></span></a></li>
+						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>" <%if(levelSort == level){ %>style="font-weight:bold;"<%} %>><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%></span></a></li>
 					<%
 							} else {
 					%>
-						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>"><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%><%=tierNum %></span></a></li>
+						<li><a href="index.jsp?type=level&level=<%=level%>&tier_name=<%=tierName%>&tier_num=<%=tierNum%>" <%if(levelSort == level){ %>style="font-weight:bold;"<%} %>><span><img src="img/star_<%=tierName.toLowerCase()%>.png"></span><span><%=tierName.toUpperCase()%><%=tierNum %></span></a></li>
 					<%
 							}
 						}
 					%>
 					</ul>
 				</li>
-				<li><a href="#">CATEGORY</a>
+				<li><a href="#" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
@@ -298,7 +316,7 @@ ResultSet levelRs = null;
 						categoryRs = categoryPstmt.executeQuery();
 						while(categoryRs.next()) {
 					%>
-						<li><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><span><img src="img/dot1.png"></span><span><%=categoryRs.getString("algorithm_name") %></span></a></li>
+						<li><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" <%if(algorithmSort.equals(categoryRs.getString("algorithm_name"))){ %>style="font-weight:bold;"<%} %>><span><img src="img/dot1.png"></span><span><%=categoryRs.getString("algorithm_name") %></span></a></li>
 					<%
 						}
 					%>
@@ -356,9 +374,9 @@ ResultSet levelRs = null;
 		%>
 			<div id="sort"  class="content_set">
 				<div id="sort_select" class="content_set_b">
-					<button>SORT</button>
+					<button style="cursor:pointer;">SORT</button>
 				</div>
-				<ul style="top:205px;">
+				<ul id="sort_select_ul">
 				<!-- 페이지 타입에 따라 인자 전달을 다르게 함 -->
 		<%
 			if("all".equals(pageType) || "bookmark".equals(pageType)) {
@@ -424,7 +442,7 @@ ResultSet levelRs = null;
 				</div>
 			</div>
 			<div id="btn_cretenote">
-				<button onclick="location.href='create_note.jsp'">CREATE NOTE</button>
+				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
 			</div>
 		</div>
 		
@@ -573,12 +591,12 @@ ResultSet levelRs = null;
 	    		<% } else { %>
 	    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
 	    		<% } %>
-	    		<button class="content_set_b"><img src="img/....png"></button>
+	    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
 	    		<ul>
-	    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-	    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-	    			<li><a href="#">Setting</a></li>
-	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
+	    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" style="display: block; cursor:pointer;">Unpin / Pin to top</a></li>
+	    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1" style="display: block; cursor:pointer;">Split screen</a></li>
+	    			<li><a href="#" style="display: block; cursor:pointer;">Setting</a></li>
+	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#" style="display: block; cursor:pointer;">Delete</a></li>
 	    		</ul>
 	    	</div>
  				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
