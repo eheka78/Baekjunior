@@ -374,7 +374,7 @@ ResultSet levelRs = null;
 		%>
 			<div id="sort"  class="content_set">
 				<div id="sort_select" class="content_set_b">
-					<button>SORT</button>
+					<button style="cursor:pointer;">SORT</button>
 				</div>
 				<ul id="sort_select_ul">
 				<!-- 페이지 타입에 따라 인자 전달을 다르게 함 -->
@@ -442,7 +442,7 @@ ResultSet levelRs = null;
 				</div>
 			</div>
 			<div id="btn_cretenote">
-				<button onclick="location.href='create_note.jsp'">CREATE NOTE</button>
+				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
 			</div>
 		</div>
 		
@@ -591,12 +591,12 @@ ResultSet levelRs = null;
 	    		<% } else { %>
 	    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
 	    		<% } %>
-	    		<button class="content_set_b"><img src="img/....png"></button>
+	    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
 	    		<ul>
-	    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-	    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-	    			<li><a href="#">Setting</a></li>
-	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
+	    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" style="display: block; cursor:pointer;">Unpin / Pin to top</a></li>
+	    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1" style="display: block; cursor:pointer;">Split screen</a></li>
+	    			<li><a href="#" style="display: block; cursor:pointer;">Setting</a></li>
+	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#" style="display: block; cursor:pointer;">Delete</a></li>
 	    		</ul>
 	    	</div>
  				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
