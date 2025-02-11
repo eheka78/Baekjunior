@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	import="java.sql.*, javax.naming.*, Baekjunior.db.*" session="false"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,7 @@ ResultSet categoryRs = null;
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 
+// test
 // 정렬 순서 정하기
 String sortClause = "problem_idx DESC"; // 기본 최신순
 if (request.getParameter("latest") != null) {
@@ -126,7 +128,7 @@ problemQuery += " ORDER BY is_fixed DESC, " + sortClause;
 						<li><a href="3_Baekjunior.jsp">LEVEL</a></li>
 					</ul>
 				</li>				
-				<li class="main_menu_Friend"><a href="#">Friend</a>
+				<li class="main_menu_Friend"><a href="friend.jsp">Friend</a>
 					<ul>
 						<li><a href="#">friend1</a></li>
 						<li><a href="#">friend2</a></li>

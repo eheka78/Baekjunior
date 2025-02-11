@@ -238,12 +238,12 @@ ResultSet rs = null;
 		        </div>
         
 
-        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
-            <div id="code-editor" style="border: none;">
-                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your note here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("main_memo"), "") %></textarea>
-            </div>
-        </div>
-    	</div>
+		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
+		            <div id="code-editor" style="border: none;">
+		                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your note here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("main_memo"), "") %></textarea>
+		            </div>
+		        </div>
+	    	</div>
 		<%
 			}
 			con.close();
@@ -299,7 +299,7 @@ ResultSet rs = null;
 	
 	        function submitcode_note() {
 	            const code = textarea.value;
-	            console.log("Submitted C++ Code:", code);
+	            console.log("Submitted Code:", code);
 	
 	            // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
 	        }
