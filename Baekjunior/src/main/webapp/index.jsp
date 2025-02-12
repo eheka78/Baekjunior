@@ -55,17 +55,23 @@ log("pageType: " + pageType);
 // 모아볼(선택한) 난이도 분류
 int levelSort = -1;
 String tierNameSort = "";
-int tierNumSort = 0;
-if(pageType != null && "level".equals(pageType)) {
-	levelSort = Integer.parseInt(request.getParameter("level"));
-	tierNameSort = request.getParameter("tier_name");
-	tierNumSort = Integer.parseInt(request.getParameter("tier_num"));
+int tierNumSort = -1;
+if (pageType != null && "level".equals(pageType)) {
+    String temp = request.getParameter("level");
+    levelSort = (temp != null && !temp.equals("")) ? Integer.parseInt(temp) : -1; 
+    
+    tierNameSort = request.getParameter("tier_name");
+    if (tierNameSort == null) { tierNameSort = ""; }
+
+    temp = request.getParameter("tier_num");
+    tierNumSort = (temp != null && !temp.equals("")) ? Integer.parseInt(temp) : -1;
 }
 
 //모아볼(선택한) 알고리즘 분류
 String algorithmSort = "";
 if(pageType != null && "category".equals(pageType)) {
 	algorithmSort = request.getParameter("sort");
+	if(algorithmSort == null) { algorithmSort = ""; }
 }
 
 //기본 SQL 쿼리 (검색어가 없을 경우 전체 검색)
@@ -137,7 +143,7 @@ ResultSet categoryRs = null;
 
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
-%>
+ %>
 
 <script type="text/javascript">
 	// 진짜 삭제할건지 확인하는 함수
@@ -243,7 +249,7 @@ ResultSet levelRs = null;
 			<ul>
 				<li><a href="index.jsp" <%if("all".equals(pageType)){ %>style="font-weight:bold;"<%} %>>ALL</a></li>
 				<li><a href="index.jsp?type=bookmark" <%if("bookmark".equals(pageType)){ %>style="font-weight:bold;"<%} %>>BOOKMARK</a></li>
-				<li><a href="#" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
+				<li><a href="index.jsp?type=level" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
@@ -267,7 +273,7 @@ ResultSet levelRs = null;
 					%>
 					</ul>
 				</li>
-				<li><a href="#" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
+				<li><a href="index.jsp?type=category" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
@@ -512,7 +518,40 @@ ResultSet levelRs = null;
 			}
 		%>
  		<%
- 		if (!userId.equals("none")) {
+ 		if("category".equals(pageType) && algorithmSort.equals("")){  /* category 페이지 */
+ 			categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+			categoryPstmt = con.prepareStatement(categoryQuery);
+			categoryPstmt.setString(1, userId);
+			categoryRs = categoryPstmt.executeQuery();
+			while(categoryRs.next()) {
+ 			%>
+ 			<div><%=categoryRs.getString("algorithm_name")%></div>
+ 			<%
+			}
+ 		}
+ 		else if("level".equals(pageType) && levelSort < 0){
+ 			levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
+			levelPstmt = con.prepareStatement(levelQuery);
+			levelPstmt.setString(1, userId);
+			levelRs = levelPstmt.executeQuery();
+			while(levelRs.next()){
+				String tierName = levelRs.getString("tier_name");
+				int tierNum = levelRs.getInt("tier_num");
+				int level = levelRs.getInt("level");
+				if(tierName.equals("unrated")) {
+ 			%>
+ 			<div><%=tierName %></div>
+ 			<%
+				}else{
+					%>
+		 			<div><%=tierName %></div>
+		 			<%
+				}
+			}
+ 		}
+ 		else{ 
+ 			if (!userId.equals("none")) {
+ 		
  			try {
  				// 문제 목록 select 하는 쿼리문 작성
  				problemPstmt = con.prepareStatement(problemQuery);
@@ -574,6 +613,7 @@ ResultSet levelRs = null;
  				not exist
  			</div>
  		<%		}
+ 				
  			} catch(SQLException e) {
  				out.print(e);
  			} finally {
@@ -589,6 +629,7 @@ ResultSet levelRs = null;
 				/* if(memoPstmt != null) memoPstmt.close();
 				if(memoRs != null) memoRs.close(); */
  			}
+ 		}
  		}
  		%>
  		<% if("category".equals(pageType)) { %>
