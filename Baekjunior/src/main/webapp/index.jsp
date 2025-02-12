@@ -441,7 +441,7 @@ ResultSet levelRs = null;
 				    %>></input><label>Note</label>
 				</div>
 			</div>
-			<div id="btn_cretenote">
+			<div id="btn_cretenote" style="float:left;">
 				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
 			</div>
 		</div>
@@ -542,7 +542,7 @@ ResultSet levelRs = null;
 		} else {
 		%>
 			<div id="list_group">
-			<ul class="list">
+				<ul class="list">
 		<%
 			}
 		%>
