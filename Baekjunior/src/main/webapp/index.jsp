@@ -306,22 +306,23 @@ ResultSet levelRs = null;
 		<%
 				if(tierNameSort.equals("unrated")) { 
 		%>
-					LEVEL : <%=tierNameSort.toUpperCase()%></div>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%} %></div>
 		<% 
 				} else { 
 		%>
-					LEVEL : <%=tierNameSort.toUpperCase()%><%=tierNumSort %></div>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%=tierNumSort %><%} %></div>
 		<% 
 				} 
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
 					<a style="font-size:30px; font-weight:bold;"" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
-					CATEGORY : <%=algorithmSort %></a>
+					CATEGORY <%if(algorithmSort != ""){ %>: <%=algorithmSort %><%} %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
+					<%if(algorithmSort != ""){ %>
 					<button class="memobutton" id="openmemo" onclick="openmemo()">memo</button>
 					<button class="memobutton" id="closememo" onclick="closememo()" style="display:none;">close</button>
-					
+					<%} %>
 					<script>
 					function openmemo() {
 						document.getElementById("memo").style.display = "block";
@@ -334,6 +335,7 @@ ResultSet levelRs = null;
 						document.getElementById("closememo").style.display = "none";
 					}
 					</script>
+					
 				</div>
 		<%
 			}
