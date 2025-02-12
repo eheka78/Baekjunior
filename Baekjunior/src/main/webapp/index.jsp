@@ -55,17 +55,23 @@ log("pageType: " + pageType);
 // 모아볼(선택한) 난이도 분류
 int levelSort = -1;
 String tierNameSort = "";
-int tierNumSort = 0;
-if(pageType != null && "level".equals(pageType)) {
-	levelSort = Integer.parseInt(request.getParameter("level"));
-	tierNameSort = request.getParameter("tier_name");
-	tierNumSort = Integer.parseInt(request.getParameter("tier_num"));
+int tierNumSort = -1;
+if (pageType != null && "level".equals(pageType)) {
+    String temp = request.getParameter("level");
+    levelSort = (temp != null && !temp.equals("")) ? Integer.parseInt(temp) : -1; 
+    
+    tierNameSort = request.getParameter("tier_name");
+    if (tierNameSort == null) { tierNameSort = ""; }
+
+    temp = request.getParameter("tier_num");
+    tierNumSort = (temp != null && !temp.equals("")) ? Integer.parseInt(temp) : -1;
 }
 
 //모아볼(선택한) 알고리즘 분류
 String algorithmSort = "";
 if(pageType != null && "category".equals(pageType)) {
 	algorithmSort = request.getParameter("sort");
+	if(algorithmSort == null) { algorithmSort = ""; }
 }
 
 //기본 SQL 쿼리 (검색어가 없을 경우 전체 검색)
@@ -137,7 +143,7 @@ ResultSet categoryRs = null;
 
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
-%>
+ %>
 
 <script type="text/javascript">
 	// 진짜 삭제할건지 확인하는 함수
@@ -180,46 +186,6 @@ ResultSet levelRs = null;
 <body>	
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
-		<div id="main_menu">
-			<ul>
-				<li class="main_menu_Storage"><a href="#">Storage</a>
-					<ul>
-						<li><a href="index.jsp">ALL</a></li>
-						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-						<li><a href="#">CATEGORY</a></li>
-						<li><a href="#">LEVEL</a></li>
-					</ul>
-				</li>				
-				<li class="main_menu_Friend"><a href="friend.jsp">Friend</a>
-					<ul>
-						<li><a href="#">friend1</a></li>
-						<li><a href="#">friend2</a></li>
-						<li><a href="#">friend3</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Group"><a href="#">Group</a>
-					<ul>
-						<li><a href="#">group1</a></li>
-						<li><a href="#">group2</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_MyPage"><a href="MyPage.jsp">MyPage</a>
-					<ul>
-						<li><a href="#">mypage1</a></li>
-						<li><a href="#">mypage2</a></li>
-						<li><a href="#">mypage3</a></li>
-						<li><a href="#">mypage4</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Setting"><a href="#">Setting</a>
-					<ul>
-						<li><a href="#">setting1</a></li>
-						<li><a href="#">setting2</a></li>
-						<li><a href="#">setting3</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
 		<%
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -283,7 +249,7 @@ ResultSet levelRs = null;
 			<ul>
 				<li><a href="index.jsp" <%if("all".equals(pageType)){ %>style="font-weight:bold;"<%} %>>ALL</a></li>
 				<li><a href="index.jsp?type=bookmark" <%if("bookmark".equals(pageType)){ %>style="font-weight:bold;"<%} %>>BOOKMARK</a></li>
-				<li><a href="#" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
+				<li><a href="index.jsp?type=level" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
@@ -307,7 +273,7 @@ ResultSet levelRs = null;
 					%>
 					</ul>
 				</li>
-				<li><a href="#" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
+				<li><a href="index.jsp?type=category" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
 						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
@@ -340,22 +306,23 @@ ResultSet levelRs = null;
 		<%
 				if(tierNameSort.equals("unrated")) { 
 		%>
-					LEVEL : <%=tierNameSort.toUpperCase()%></div>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%} %></div>
 		<% 
 				} else { 
 		%>
-					LEVEL : <%=tierNameSort.toUpperCase()%><%=tierNumSort %></div>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%=tierNumSort %><%} %></div>
 		<% 
 				} 
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
 					<a style="font-size:30px; font-weight:bold;"" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
-					CATEGORY : <%=algorithmSort %></a>
+					CATEGORY <%if(algorithmSort != ""){ %>: <%=algorithmSort %><%} %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
+					<%if(algorithmSort != ""){ %>
 					<button class="memobutton" id="openmemo" onclick="openmemo()">memo</button>
 					<button class="memobutton" id="closememo" onclick="closememo()" style="display:none;">close</button>
-					
+					<%} %>
 					<script>
 					function openmemo() {
 						document.getElementById("memo").style.display = "block";
@@ -368,6 +335,7 @@ ResultSet levelRs = null;
 						document.getElementById("closememo").style.display = "none";
 					}
 					</script>
+					
 				</div>
 		<%
 			}
@@ -409,8 +377,8 @@ ResultSet levelRs = null;
 				<div id="search_frame" style="float:right;">
 					<!-- 입력받은 검색어가 없으면, ""(placeholder 사용) 있으면, value = Util.nullchk(searchKeyword) 띄움 -->
 					<input id="search_input" type="text"
-    				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> 
-   				 													placeholder="Search...">
+    				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> placeholder="Search..."
+    				onkeypress="searchNotes_enter(event)">
 					<span><img src="img/search.png" style="width:15px;" onclick="searchNotes()"></span>
 				</div>
 				<!-- number로 검색하거나, 검색을 하지 않은 경우 number에 checked -->
@@ -441,13 +409,13 @@ ResultSet levelRs = null;
 				    %>></input><label>Note</label>
 				</div>
 			</div>
-			<div id="btn_cretenote">
+			<div id="btn_cretenote" style="float:left;">
 				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
 			</div>
 		</div>
 		
 		<script>
-		function searchNotes() {
+		function searchNotes() {			
 			// 사용자가 입력한 검색어 받아옴. 불필요한 공백 제거
 	        var searchKeyword = document.getElementById("search_input").value.trim().replace(/\s+/g, '');
 	        // 라디오 버튼 중, checked 상태인 놈을 고름
@@ -471,6 +439,11 @@ ResultSet levelRs = null;
 				+ '&sort=<%=algorithmSort%>&search_range=' + searchRange + '&search_keyword=' + searchKeyword;
 	        }
 	    }
+		
+		function searchNotes_enter(e){
+			console.log("DDDDDD" + e.code);
+			if(e.code == "Enter"){ searchNotes(); }
+		}
 		</script>
 		
 		<br><br><br>
@@ -542,12 +515,45 @@ ResultSet levelRs = null;
 		} else {
 		%>
 			<div id="list_group">
-			<ul class="list">
+				<ul class="list">
 		<%
 			}
 		%>
  		<%
- 		if (!userId.equals("none")) {
+ 		if("category".equals(pageType) && algorithmSort.equals("")){  /* category 페이지 */
+ 			categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+			categoryPstmt = con.prepareStatement(categoryQuery);
+			categoryPstmt.setString(1, userId);
+			categoryRs = categoryPstmt.executeQuery();
+			while(categoryRs.next()) {
+ 			%>
+ 			<div><%=categoryRs.getString("algorithm_name")%></div>
+ 			<%
+			}
+ 		}
+ 		else if("level".equals(pageType) && levelSort < 0){
+ 			levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
+			levelPstmt = con.prepareStatement(levelQuery);
+			levelPstmt.setString(1, userId);
+			levelRs = levelPstmt.executeQuery();
+			while(levelRs.next()){
+				String tierName = levelRs.getString("tier_name");
+				int tierNum = levelRs.getInt("tier_num");
+				int level = levelRs.getInt("level");
+				if(tierName.equals("unrated")) {
+ 			%>
+ 			<div><%=tierName %></div>
+ 			<%
+				}else{
+					%>
+		 			<div><%=tierName %></div>
+		 			<%
+				}
+			}
+ 		}
+ 		else{ 
+ 			if (!userId.equals("none")) {
+ 		
  			try {
  				// 문제 목록 select 하는 쿼리문 작성
  				problemPstmt = con.prepareStatement(problemQuery);
@@ -609,6 +615,7 @@ ResultSet levelRs = null;
  				not exist
  			</div>
  		<%		}
+ 				
  			} catch(SQLException e) {
  				out.print(e);
  			} finally {
@@ -624,6 +631,7 @@ ResultSet levelRs = null;
 				/* if(memoPstmt != null) memoPstmt.close();
 				if(memoRs != null) memoRs.close(); */
  			}
+ 		}
  		}
  		%>
  		<% if("category".equals(pageType)) { %>
