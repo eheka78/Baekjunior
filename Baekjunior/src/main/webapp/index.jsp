@@ -409,8 +409,8 @@ ResultSet levelRs = null;
 				<div id="search_frame" style="float:right;">
 					<!-- 입력받은 검색어가 없으면, ""(placeholder 사용) 있으면, value = Util.nullchk(searchKeyword) 띄움 -->
 					<input id="search_input" type="text"
-    				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> 
-   				 													placeholder="Search...">
+    				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> placeholder="Search..."
+    				onkeypress="searchNotes_enter(event)">
 					<span><img src="img/search.png" style="width:15px;" onclick="searchNotes()"></span>
 				</div>
 				<!-- number로 검색하거나, 검색을 하지 않은 경우 number에 checked -->
@@ -447,7 +447,7 @@ ResultSet levelRs = null;
 		</div>
 		
 		<script>
-		function searchNotes() {
+		function searchNotes() {			
 			// 사용자가 입력한 검색어 받아옴. 불필요한 공백 제거
 	        var searchKeyword = document.getElementById("search_input").value.trim().replace(/\s+/g, '');
 	        // 라디오 버튼 중, checked 상태인 놈을 고름
@@ -471,6 +471,11 @@ ResultSet levelRs = null;
 				+ '&sort=<%=algorithmSort%>&search_range=' + searchRange + '&search_keyword=' + searchKeyword;
 	        }
 	    }
+		
+		function searchNotes_enter(e){
+			console.log("DDDDDD" + e.code);
+			if(e.code == "Enter"){ searchNotes(); }
+		}
 		</script>
 		
 		<br><br><br>
