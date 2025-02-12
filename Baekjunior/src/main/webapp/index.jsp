@@ -180,46 +180,6 @@ ResultSet levelRs = null;
 <body>	
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
-		<div id="main_menu">
-			<ul>
-				<li class="main_menu_Storage"><a href="#">Storage</a>
-					<ul>
-						<li><a href="index.jsp">ALL</a></li>
-						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-						<li><a href="#">CATEGORY</a></li>
-						<li><a href="#">LEVEL</a></li>
-					</ul>
-				</li>				
-				<li class="main_menu_Friend"><a href="friend.jsp">Friend</a>
-					<ul>
-						<li><a href="#">friend1</a></li>
-						<li><a href="#">friend2</a></li>
-						<li><a href="#">friend3</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Group"><a href="#">Group</a>
-					<ul>
-						<li><a href="#">group1</a></li>
-						<li><a href="#">group2</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_MyPage"><a href="MyPage.jsp">MyPage</a>
-					<ul>
-						<li><a href="#">mypage1</a></li>
-						<li><a href="#">mypage2</a></li>
-						<li><a href="#">mypage3</a></li>
-						<li><a href="#">mypage4</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Setting"><a href="#">Setting</a>
-					<ul>
-						<li><a href="#">setting1</a></li>
-						<li><a href="#">setting2</a></li>
-						<li><a href="#">setting3</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
 		<%
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
