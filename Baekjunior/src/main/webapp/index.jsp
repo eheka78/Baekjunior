@@ -221,7 +221,7 @@ ResultSet levelRs = null;
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		<script>
 		function opendiv() {
-			document.getElementById("myprodiv").style.display = "block";
+			doc	ument.getElementById("myprodiv").style.display = "block";
 		}
 		function closediv() {
 			document.getElementById("myprodiv").style.display = "none";
@@ -417,8 +417,9 @@ ResultSet levelRs = null;
 		<script>
 		function searchNotes() {			
 			// 사용자가 입력한 검색어 받아옴. 불필요한 공백 제거
-	        var searchKeyword = document.getElementById("search_input").value.trim().replace(/\s+/g, '');
-	        // 라디오 버튼 중, checked 상태인 놈을 고름
+	        var searchKeyword = encodeURIComponent(document.getElementById("search_input").value.trim().replaceAll(/\s+/g, ' '));
+	        
+			// 라디오 버튼 중, checked 상태인 놈을 고름
 	        var searchRange = document.querySelector('input[name="search_range"]:checked').value;
 		
 	        // 검색어가 없으면 페이지 이동 x
@@ -441,7 +442,6 @@ ResultSet levelRs = null;
 	    }
 		
 		function searchNotes_enter(e){
-			console.log("DDDDDD" + e.code);
 			if(e.code == "Enter"){ searchNotes(); }
 		}
 		</script>
@@ -449,7 +449,7 @@ ResultSet levelRs = null;
 		<br><br><br>
 		
 		<% if("category".equals(pageType)) { %>
-		<div style="display:flex;margin-left:55px;">
+		<div style="display:flex; margin-left:55px;">
 			 <div class="memo" id="memo" style="margin-top:20px;flex:4;animation-name:takent;animation-duration:2s;display:none;">
                <div class="memo_box" contenteditable="true" id="editablememo" style="min-height:600px;padding:30px;background:white;border-radius:10px;border:3px solid black;">
                   <%
@@ -527,7 +527,9 @@ ResultSet levelRs = null;
 			categoryRs = categoryPstmt.executeQuery();
 			while(categoryRs.next()) {
  			%>
- 			<div><%=categoryRs.getString("algorithm_name")%></div>
+ 			<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><%=categoryRs.getString("algorithm_name")%></a></div>
+ 			</li>
  			<%
 			}
  		}
@@ -542,23 +544,26 @@ ResultSet levelRs = null;
 				int level = levelRs.getInt("level");
 				if(tierName.equals("unrated")) {
  			%>
- 			<div><%=tierName %></div>
+ 			<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
+ 			</li>
  			<%
 				}else{
-					%>
-		 			<div><%=tierName %></div>
-		 			<%
+			%>
+		 	<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%> <%=tierNum %></a></div>
+ 			</li>
+		 	<%
 				}
 			}
  		}
  		else{ 
  			if (!userId.equals("none")) {
- 		
+
  			try {
  				// 문제 목록 select 하는 쿼리문 작성
  				problemPstmt = con.prepareStatement(problemQuery);
  				problemPstmt.setString(1, userId);
- 				
  				if("level".equals(pageType)) {
  					problemPstmt.setInt(2, levelSort);
  	 				// 검색어가 있을 경우 쿼리에 파라미터 설정
@@ -575,7 +580,6 @@ ResultSet levelRs = null;
  	 				    problemPstmt.setString(2, "%" + searchKeyword + "%");
  	 				}
  				}
-
  				problemRs = problemPstmt.executeQuery();
  				
  				int resultCount = 0;

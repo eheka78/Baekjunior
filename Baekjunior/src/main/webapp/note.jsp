@@ -297,14 +297,14 @@ ResultSet memoRs = null;
 	                   		for (String algo : algorithmList) {
 	                           	if (!algo.isEmpty()) {
 						%>
-						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px; "><a href="note.jsp?problem_idx=<%=rs.getInt("problem_idx")%>&algoname=<%=algo %>"> <%=algo %></a></span>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"><a href="note.jsp?problem_idx=<%=rs.getInt("problem_idx")%>&algoname=<%=algo %>"> <%=algo %></a></span>
 						<%
 	                           	}
 	                   		}
 	                   	}
 							else {
 						%>
-						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span> <span>default sort</span>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span><span> default sort</span>
 						<% } %>
 					</div>
 					<!-- 언어 종류 -->

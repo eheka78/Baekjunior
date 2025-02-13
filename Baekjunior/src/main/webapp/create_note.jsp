@@ -11,6 +11,22 @@ request.setCharacterEncoding("utf-8");
 <link rel="stylesheet" href="Baekjunior_css.css">
 </head>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    let languageSelect = document.querySelector('select[name="language"]');
+    let otherSpan = document.getElementById("language_other");
+
+    if (languageSelect) {
+        languageSelect.addEventListener("change", function() {
+            if (this.value === "other") {
+                otherSpan.style.display = "inline-block";
+            } else {
+                otherSpan.style.display = "none";
+            }
+        });
+    }
+});
+
+
 function fnCheck(btn) {
     var problemId = document.getElementById("problemId");
     var code_note = document.getElementById("code_note");
@@ -240,7 +256,7 @@ try {
 					    <option value="other">other...</option>
 					</select>
 					</span>
-					<span><input type="text" style="font-size:18px; height:35px;"></span>
+					<span id="language_other" style="display:none;"><input type="text" style="font-size:18px; height:35px;"></span>
 				</div>
 				<div>Code</div>
 				<div id="code-editor" style="display: grid; grid-template-columns: 1fr 20fr; border: none;">
