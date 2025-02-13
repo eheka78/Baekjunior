@@ -441,7 +441,6 @@ ResultSet levelRs = null;
 	    }
 		
 		function searchNotes_enter(e){
-			console.log("DDDDDD" + e.code);
 			if(e.code == "Enter"){ searchNotes(); }
 		}
 		</script>
