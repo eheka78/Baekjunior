@@ -147,32 +147,45 @@ ResultSet rs = null;
 					</div>
 				</div>
 				
-				<div style="font-weight:bold; font-size:20px; margin-top:15px; margin-left:30px;">
-					<div style="display:inline; width:80%;">
-					<%
+				<div style="font-weight:bold; font-size:18px; margin-top:15px; margin-left:20px;">
+					<!-- 티어 -->
+					<div style="display:inline; margin-right:50px;">
+						<%
+						String tierName = rs.getString("tier_name"); 
+						int tierNum = rs.getInt("tier_num");
+						%>
+						<span><img src="img/star_<%=tierName.toLowerCase()%>.png" height="15px"></span>
+						<span> <%=tierName.toUpperCase()%> <%=tierNum %></span>
+					</div>
+					<!-- 알고리즘 종류 나열 -->
+					<div style="display:inline; margin-right:25px;">
+						<%
 						String problemSortStr = rs.getString("problem_sort");
 						String[] algorithmList = problemSortStr.split(",");
-                    	if(problemSortStr != null && !problemSortStr.trim().isEmpty()) {
-                    		for (String algo : algorithmList) {
-                            	if (!algo.isEmpty()) {
-					%>
-						<span><img src="img/dot1.png" style="width:15px; margin-left:25px;"></span> <span><%=algo %></span>
-					<%
-                            	}
-                    		}
-                    	}
-                    	else {
-					%> <span><img src="img/dot1.png" style="width:15px; margin-left:25px;"></span> <span>default sort</span>
-					<% } %>
-						<span style="margin-right:50px;"></span>
-						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="#">Dodam</a></span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="#">Dam</a></span>
+	                   	if(problemSortStr != null && !problemSortStr.trim().isEmpty()) {
+	                   		for (String algo : algorithmList) {
+	                           	if (!algo.isEmpty()) {
+						%>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"><span> <%=algo %></span></span>
+						<%
+	                           	}
+	                   		}
+	                   	}
+							else {
+						%>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span><span> default sort</span>
+						<% } %>
 					</div>
-					<div style="float:right; font-size:15px; padding:10px;">
-						<a onclick="confirmDeletion('<%=rs.getInt("problem_idx") %>')" href="#" style="color:black;">Delete</a>
+					<!-- 언어 종류 -->
+					<div style="display:inline;">
+						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
+					</div> 
+					<div style="display:inline;">
+						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
 				</div>
 			</div>	
+			
 			<script>
 			document.addEventListener('DOMContentLoaded', function() {
 			    const addButton = document.getElementById('add_btn');
