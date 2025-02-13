@@ -417,8 +417,9 @@ ResultSet levelRs = null;
 		<script>
 		function searchNotes() {			
 			// 사용자가 입력한 검색어 받아옴. 불필요한 공백 제거
-	        var searchKeyword = document.getElementById("search_input").value.trim().replace(/\s+/g, '');
-	        // 라디오 버튼 중, checked 상태인 놈을 고름
+	        var searchKeyword = encodeURIComponent(document.getElementById("search_input").value.trim().replaceAll(/\s+/g, ' '));
+	        
+			// 라디오 버튼 중, checked 상태인 놈을 고름
 	        var searchRange = document.querySelector('input[name="search_range"]:checked').value;
 		
 	        // 검색어가 없으면 페이지 이동 x
@@ -558,12 +559,11 @@ ResultSet levelRs = null;
  		}
  		else{ 
  			if (!userId.equals("none")) {
- 		
+
  			try {
  				// 문제 목록 select 하는 쿼리문 작성
  				problemPstmt = con.prepareStatement(problemQuery);
  				problemPstmt.setString(1, userId);
- 				
  				if("level".equals(pageType)) {
  					problemPstmt.setInt(2, levelSort);
  	 				// 검색어가 있을 경우 쿼리에 파라미터 설정
@@ -580,7 +580,6 @@ ResultSet levelRs = null;
  	 				    problemPstmt.setString(2, "%" + searchKeyword + "%");
  	 				}
  				}
-
  				problemRs = problemPstmt.executeQuery();
  				
  				int resultCount = 0;
