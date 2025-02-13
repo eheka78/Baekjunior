@@ -221,7 +221,7 @@ ResultSet levelRs = null;
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		<script>
 		function opendiv() {
-			document.getElementById("myprodiv").style.display = "block";
+			doc	ument.getElementById("myprodiv").style.display = "block";
 		}
 		function closediv() {
 			document.getElementById("myprodiv").style.display = "none";
@@ -449,7 +449,7 @@ ResultSet levelRs = null;
 		<br><br><br>
 		
 		<% if("category".equals(pageType)) { %>
-		<div style="display:flex;margin-left:55px;">
+		<div style="display:flex; margin-left:55px;">
 			 <div class="memo" id="memo" style="margin-top:20px;flex:4;animation-name:takent;animation-duration:2s;display:none;">
                <div class="memo_box" contenteditable="true" id="editablememo" style="min-height:600px;padding:30px;background:white;border-radius:10px;border:3px solid black;">
                   <%
@@ -527,7 +527,9 @@ ResultSet levelRs = null;
 			categoryRs = categoryPstmt.executeQuery();
 			while(categoryRs.next()) {
  			%>
- 			<div><%=categoryRs.getString("algorithm_name")%></div>
+ 			<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><%=categoryRs.getString("algorithm_name")%></a></div>
+ 			</li>
  			<%
 			}
  		}
@@ -542,12 +544,16 @@ ResultSet levelRs = null;
 				int level = levelRs.getInt("level");
 				if(tierName.equals("unrated")) {
  			%>
- 			<div><%=tierName %></div>
+ 			<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
+ 			</li>
  			<%
 				}else{
-					%>
-		 			<div><%=tierName %></div>
-		 			<%
+			%>
+		 	<li class="item">
+ 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%> <%=tierNum %></a></div>
+ 			</li>
+		 	<%
 				}
 			}
  		}
