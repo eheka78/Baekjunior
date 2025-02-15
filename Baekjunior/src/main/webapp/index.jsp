@@ -132,17 +132,17 @@ problemQuery += " ORDER BY is_fixed DESC, " + sortClause;
 
 Connection con = DsCon.getConnection();
 
+PreparedStatement levelPstmt = null;
+ResultSet levelRs = null;
+
+PreparedStatement categoryPstmt = null;
+ResultSet categoryRs = null;
+
 PreparedStatement problemPstmt = null;
 ResultSet problemRs = null;
 
 PreparedStatement problemCountPstmt = null;
 ResultSet countRs = null;
-
-PreparedStatement categoryPstmt = null;
-ResultSet categoryRs = null;
-
-PreparedStatement levelPstmt = null;
-ResultSet levelRs = null;
  %>
 
 <script type="text/javascript">
@@ -221,7 +221,7 @@ ResultSet levelRs = null;
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		<script>
 		function opendiv() {
-			doc	ument.getElementById("myprodiv").style.display = "block";
+			document.getElementById("myprodiv").style.display = "block";
 		}
 		function closediv() {
 			document.getElementById("myprodiv").style.display = "none";
@@ -243,7 +243,7 @@ ResultSet levelRs = null;
 	
 	
 	
-	<!-- menu -->
+	<!-- menu - ALL, BOOKMARK, LEVEL, CATEGORY -->
 	<nav>
 		<div>
 			<ul>
@@ -252,6 +252,7 @@ ResultSet levelRs = null;
 				<li><a href="index.jsp?type=level" <%if("level".equals(pageType) && levelSort == -1){ %>style="font-weight:bold;"<%} %>>LEVEL</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
+					try {
 						String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
 						levelPstmt = con.prepareStatement(levelQuery);
 						levelPstmt.setString(1, userId);
@@ -270,12 +271,19 @@ ResultSet levelRs = null;
 					<%
 							}
 						}
+					} catch(SQLException e) {
+						out.print(e);
+					} finally {
+						if (levelPstmt != null) levelPstmt.close();
+						if (levelRs != null) levelRs.close();
+					}
 					%>
 					</ul>
 				</li>
-				<li><a href="index.jsp?type=category" <%if("category".equals(pageType) && algorithmSort == ""){ %>style="font-weight:bold;"<%} %>>CATEGORY</a>
+				<li><a href="index.jsp?type=category" <%if("category".equals(pageType) && algorithmSort == "") { %>style="font-weight:bold;"<% } %>>CATEGORY</a>
 					<ul class="sub" style="font-size:17px;">
 					<%
+					try {
 						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
 						categoryPstmt = con.prepareStatement(categoryQuery);
 						categoryPstmt.setString(1, userId);
@@ -285,6 +293,12 @@ ResultSet levelRs = null;
 						<li><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" <%if(algorithmSort.equals(categoryRs.getString("algorithm_name"))){ %>style="font-weight:bold;"<%} %>><span><img src="img/dot1.png"></span><span><%=categoryRs.getString("algorithm_name") %></span></a></li>
 					<%
 						}
+					} catch(SQLException e) {
+						out.print(e);
+					} finally {
+						if (categoryPstmt != null) categoryPstmt.close();
+						if (categoryRs != null) categoryRs.close();
+					}
 					%>
 					</ul>
 				</li>
@@ -293,36 +307,31 @@ ResultSet levelRs = null;
 		</div>
 	</nav>
 	
+	<!-- 현재 페이지 type을 상단에 출력 -->
 	<div id="main">
 		<div id="main_bar">
-		<% 
-			if("bookmark".equals(pageType)) { 
-		%>
+		<% 	if("bookmark".equals(pageType)) { %>
 				<div style="font-size:30px; font-weight:bold; margin-bottom:50px;">BOOKMARK</div>
-		<% 
-			} else if("level".equals(pageType)) {
-		%>
+		<% 	} 
+			else if("level".equals(pageType)) { %>
 				<div style="font-size:30px; font-weight:bold; margin-bottom:50px;">
+			<% if(tierNameSort.equals("unrated")) { %>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%} %>
+			<%  } else { %>
+					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%=tierNumSort %><%} %>
+			<%  } %>
+				</div>
 		<%
-				if(tierNameSort.equals("unrated")) { 
-		%>
-					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%} %></div>
-		<% 
-				} else { 
-		%>
-					LEVEL<%if(levelSort != -1){ %> : <%=tierNameSort.toUpperCase()%><%=tierNumSort %><%} %></div>
-		<% 
-				} 
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
-					<a style="font-size:30px; font-weight:bold;"" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
-					CATEGORY <%if(algorithmSort != ""){ %>: <%=algorithmSort %><%} %></a>
+					<a style="font-size:30px; font-weight:bold;" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
+					CATEGORY <%if(algorithmSort != "") { %> : <%=algorithmSort %> <% } %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
 					<%if(algorithmSort != ""){ %>
 					<button class="memobutton" id="openmemo" onclick="openmemo()">memo</button>
 					<button class="memobutton" id="closememo" onclick="closememo()" style="display:none;">close</button>
-					<%} %>
+					<% } %>
 					<script>
 					function openmemo() {
 						document.getElementById("memo").style.display = "block";
@@ -335,44 +344,45 @@ ResultSet levelRs = null;
 						document.getElementById("closememo").style.display = "none";
 					}
 					</script>
-					
 				</div>
 		<%
 			}
 		%>
+			<!-- SORT 버튼 -->
 			<div id="sort"  class="content_set">
 				<div id="sort_select" class="content_set_b">
 					<button style="cursor:pointer;">SORT</button>
 				</div>
 				<ul id="sort_select_ul">
 				<!-- 페이지 타입에 따라 인자 전달을 다르게 함 -->
-		<%
-			if("all".equals(pageType) || "bookmark".equals(pageType)) {
-		%>
-					<li><a href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-					<li><a href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-					<li><a href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-					<li><a href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
-		<%
-			} else if("level".equals(pageType)) {
-		%>
-					<li><a href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-					<li><a href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-					<li><a href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-					<li><a href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
-		<%
-			} else if("category".equals(pageType)) {
-		%>
-					<li><a href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-					<li><a href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-					<li><a href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-					<li><a href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
-		<%
-			}
-		%>
+				<%
+					if("all".equals(pageType) || "bookmark".equals(pageType)) {
+				%>
+						<li><a href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+				<%
+					} else if("level".equals(pageType)) {
+				%>
+						<li><a href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+				<%
+					} else if("category".equals(pageType)) {
+				%>
+						<li><a href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+				<%
+					}
+				%>
 				</ul>
-			</div>
+			</div><!-- end-of-sort -->
 			
+			<!-- 검색 버튼 -->
 			<div id="search">
 				<div id="search_frame" style="float:right;">
 					<!-- 입력받은 검색어가 없으면, ""(placeholder 사용) 있으면, value = Util.nullchk(searchKeyword) 띄움 -->
@@ -408,11 +418,12 @@ ResultSet levelRs = null;
 				    	}
 				    %>></input><label>Note</label>
 				</div>
-			</div>
+			</div><!-- end-of-search -->
+			
 			<div id="btn_cretenote" style="float:left;">
 				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
 			</div>
-		</div>
+		</div> <!-- end-of-main_bar -->
 		
 		<script>
 		function searchNotes() {			
@@ -449,8 +460,10 @@ ResultSet levelRs = null;
 		<br><br><br>
 		
 		<% if("category".equals(pageType)) { %>
+		<!-- pageType이 category인 경우 -->
 		<div style="display:flex; margin-left:55px;">
-			 <div class="memo" id="memo" style="margin-top:20px;flex:4;animation-name:takent;animation-duration:2s;display:none;">
+			<!-- 알고리즘 메모 박스 : 버튼 눌러야 보임 -->
+			<div class="memo" id="memo" style="margin-top:20px;flex:4;animation-name:takent;animation-duration:2s;display:none;">
                <div class="memo_box" contenteditable="true" id="editablememo" style="min-height:600px;padding:30px;background:white;border-radius:10px;border:3px solid black;">
                   <%
                   	String memoSql = "SELECT * FROM algorithm_memo WHERE user_id=? AND algorithm_name=?";
@@ -466,8 +479,9 @@ ResultSet levelRs = null;
                   	<%=Util.nullChk(memoRs.getString("algorithm_memo"), "not exist")%>
                   <% 
                   	} 
-                  	memoPstmt.close();
-                  	memoRs.close();
+                  	
+                  	if(memoPstmt != null) memoPstmt.close();
+                  	if(memoRs != null) memoRs.close();
                   %>
                </div>
                
@@ -503,86 +517,107 @@ ResultSet levelRs = null;
 	                  });
                   
                </script>
-            </div>
-		<% 
-			}
-		%>
-		
-		<% if("category".equals(pageType)) { %>
-			<div id="list_group" style="flex:6;">
+            </div><!-- end-of-memo박스 -->
+            
+            <div id="list_group" style="flex:6;">
 				<ul class="list" style="margin: 20px 0 0 0;">
-		<%
-		} else {
+		<% 
+			} else {
 		%>
 			<div id="list_group">
 				<ul class="list">
 		<%
 			}
 		%>
- 		<%
- 		if("category".equals(pageType) && algorithmSort.equals("")){  /* category 페이지 */
- 			categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
-			categoryPstmt = con.prepareStatement(categoryQuery);
-			categoryPstmt.setString(1, userId);
-			categoryRs = categoryPstmt.executeQuery();
-			while(categoryRs.next()) {
- 			%>
- 			<li class="item">
- 				<div class="content_number"><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><%=categoryRs.getString("algorithm_name")%></a></div>
- 			</li>
- 			<%
-			}
- 		}
- 		else if("level".equals(pageType) && levelSort < 0){
- 			levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
-			levelPstmt = con.prepareStatement(levelQuery);
-			levelPstmt.setString(1, userId);
-			levelRs = levelPstmt.executeQuery();
-			while(levelRs.next()){
-				String tierName = levelRs.getString("tier_name");
-				int tierNum = levelRs.getInt("tier_num");
-				int level = levelRs.getInt("level");
-				if(tierName.equals("unrated")) {
- 			%>
- 			<li class="item">
- 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
- 			</li>
- 			<%
-				}else{
-			%>
-		 	<li class="item">
- 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%> <%=tierNum %></a></div>
- 			</li>
-		 	<%
+ 	<%
+ 		if("category".equals(pageType) && algorithmSort.equals("")) {  	/* category 페이지 : 알고리즘 분류 선택 x */
+ 			try {
+	 			String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+				categoryPstmt = con.prepareStatement(categoryQuery);
+				categoryPstmt.setString(1, userId);
+				categoryRs = categoryPstmt.executeQuery();
+				while(categoryRs.next()) {
+	 	%>
+	 			<li class="item">
+	 				<div class="content_number"><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><%=categoryRs.getString("algorithm_name")%></a></div>
+	 			</li>
+	 	<%
 				}
+ 			} catch(SQLException e) {
+				out.print(e);
+			} finally {
+				if(con != null) con.close();
+				if(categoryPstmt != null) categoryPstmt.close();
+				if(categoryRs != null) categoryRs.close();
 			}
  		}
- 		else{ 
+ 		else if("level".equals(pageType) && levelSort < 0) {	/* level 페이지 : 난이도 선택 x */
+ 			try {
+	 			String levelQuery = "SELECT DISTINCT tier_name, tier_num, level FROM problems WHERE user_id=? ORDER BY level";
+				levelPstmt = con.prepareStatement(levelQuery);
+				levelPstmt.setString(1, userId);
+				levelRs = levelPstmt.executeQuery();
+				while(levelRs.next()){
+					String tierName = levelRs.getString("tier_name");
+					int tierNum = levelRs.getInt("tier_num");
+					int level = levelRs.getInt("level");
+					// unrated인 경우 숫자(tierNum) 출력 x
+					if(tierName.equals("unrated")) {
+	 	%>
+	 			<li class="item">
+	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
+	 			</li>
+	 			<%
+					} else {
+				%>
+			 	<li class="item">
+	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%> <%=tierNum %></a></div>
+	 			</li>
+	<%
+					}
+				}
+ 			} catch(SQLException e) {
+				out.print(e);
+			} finally {
+				if(con != null) con.close();
+				if(levelPstmt != null) levelPstmt.close();
+				if(levelRs != null) levelRs.close();
+			}
+ 		}
+ 		// All, Bookmark, Level(난이도 선택 o), Category(알고리즘 분류 선택 o) 페이지의 문제 목록 출력
+ 		else { 
  			if (!userId.equals("none")) {
-
+ 				
  			try {
  				// 문제 목록 select 하는 쿼리문 작성
  				problemPstmt = con.prepareStatement(problemQuery);
  				problemPstmt.setString(1, userId);
+ 				// LEVEL별 문제 select
  				if("level".equals(pageType)) {
  					problemPstmt.setInt(2, levelSort);
  	 				// 검색어가 있을 경우 쿼리에 파라미터 설정
  					if (searchKeyword != null && !searchKeyword.isEmpty()) {
  	 				    problemPstmt.setString(3, "%" + searchKeyword + "%");
  	 				}
- 				} else if("category".equals(pageType)) {
+ 				} 
+ 				// CATEGORY별 문제 select 
+ 				else if("category".equals(pageType)) {
  					problemPstmt.setString(2, algorithmSort);
  		 			if (searchKeyword != null && !searchKeyword.isEmpty()) {
  	 				    problemPstmt.setString(3, "%" + searchKeyword + "%");
  	 				}
- 				} else {
+ 				} 
+ 				// ALL, BOOKMARK 문제 select
+ 				else {
  	 				if (searchKeyword != null && !searchKeyword.isEmpty()) {
  	 				    problemPstmt.setString(2, "%" + searchKeyword + "%");
  	 				}
  				}
  				problemRs = problemPstmt.executeQuery();
  				
+ 				// 조건에 맞게 select한 문제의 개수
  				int resultCount = 0;
+ 				
  				while (problemRs.next()) {
  				    resultCount++;
  				}
@@ -592,62 +627,55 @@ ResultSet levelRs = null;
  					problemRs.beforeFirst();
  					while (problemRs.next()) {
  		%>
- 			<li class="item">
- 				<div class="content_number"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
- 				<div class="content_set">
- 				<!-- 고정 핀 아이콘 출력 여부 -->
- 				<% if(problemRs.getInt("is_fixed") == 1) { %>
-	    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png">
-	    		<% } else { %>
-	    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
-	    		<% } %>
-	    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
-	    		<ul>
-	    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" style="display: block; cursor:pointer;">Unpin / Pin to top</a></li>
-	    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1" style="display: block; cursor:pointer;">Split screen</a></li>
-	    			<li><a href="#" style="display: block; cursor:pointer;">Setting</a></li>
-	    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#" style="display: block; cursor:pointer;">Delete</a></li>
-	    		</ul>
-	    	</div>
- 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
- 			</li>
+			 			<li class="item">
+			 				<div class="content_number"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
+			 				<div class="content_set">
+			 				<!-- 고정 핀 아이콘 출력 여부 -->
+			 				<% if(problemRs.getInt("is_fixed") == 1) { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png">
+				    		<% } else { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
+				    		<% } %>
+				    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
+					    		<ul>
+					    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" style="display: block; cursor:pointer;">Unpin / Pin to top</a></li>
+					    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1" style="display: block; cursor:pointer;">Split screen</a></li>
+					    			<li><a href="#" style="display: block; cursor:pointer;">Setting</a></li>
+					    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#" style="display: block; cursor:pointer;">Delete</a></li>
+					    		</ul>
+				    		</div>
+			 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
+			 			</li>
  		<%
  					}			
  				} else {
  		%>
- 			 <div>
- 				not exist
- 			</div>
- 		<%		}
- 				
+		 			 <div>
+		 				not exist
+		 			</div>
+ 		<%		}	%>
+ 		<%-- <% if("category".equals(pageType)) { %>
+				</li>
+		 <% } %> --%>
+				</ul><!-- end-of-list -->
+			</div><!-- end-of-list_group -->
+	<% if("category".equals(pageType)) { %></div><!-- end-of-style="display:flex; margin-left:55px;" --><% } %>
+		</div>
+	</div><!-- end-of-main -->
+<br><br><br>
+<footer></footer>
+</body>
+</html>
+<%
  			} catch(SQLException e) {
  				out.print(e);
  			} finally {
  				if(con != null) con.close();
 				if(countRs != null) countRs.close();
-				if(levelPstmt != null) levelPstmt.close();
-				if(levelRs != null) levelRs.close();
-				if(categoryPstmt != null) categoryPstmt.close();
-				if(categoryRs != null) categoryRs.close();
 				if(problemPstmt != null) problemPstmt.close();
 				if(problemRs != null) problemRs.close();
 				if(problemCountPstmt != null) problemCountPstmt.close();
-				/* if(memoPstmt != null) memoPstmt.close();
-				if(memoRs != null) memoRs.close(); */
  			}
  		}
- 		}
- 		%>
- 		<% if("category".equals(pageType)) { %>
-				</li>
-		<% } %>
-			</ul>
-		</div>
-	</div>
-	
-	<br><br><br>
-
-	<footer></footer>
-
-</body>
-</html> 
+ 	}
+ %> 
