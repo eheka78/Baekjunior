@@ -42,6 +42,44 @@ ResultSet categoryRs = null;
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 %>
+
+<script type="text/javascript">
+    function confirmDeletion(problemIdx) {
+        var result = confirm("정말 삭제하시겠습니까?");
+        if (result) {
+            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+        } else {
+            return false;
+        }
+    }
+</script>
+
+<script>
+	// 고정 여부 업데이트하는 함수
+	function updatePin(problemIdx) {
+	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+	    let fix = 0;
+	    
+		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+			pinIcon.style.display = 'none';
+			fix = 0;
+		} else {
+			pinIcon.style.display = 'inline-block';
+			fix = 1;
+		}
+	  
+		const xhr = new XMLHttpRequest();
+	    xhr.open("POST", "updatePin.jsp", true);
+	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+	            console.log(xhr.responseText);  
+	        }
+	    };
+	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+	}
+</script>
+
 <body style="min-height:100vh;">
 	<header style="padding:0 100px;">
 		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
@@ -141,9 +179,13 @@ ResultSet levelRs = null;
 	<div class="contents">
 		<div class="menu">
 			<div class="menu_box">
-				<ul>
-					<li><a href="#">내 활동</a></li>
-					<li><a href="editProfile.jsp">프로필 수정</a></li>
+				<ul style="min-width:150px;">
+					<li>
+						<a href="#">내 활동</a>
+					</li>
+					<li>
+						<a href="editProfile.jsp">프로필 수정</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -153,7 +195,13 @@ ResultSet levelRs = null;
 				<button onclick="location.href='checkdelete_note.jsp'" style="width:90px;height:40px;border-radius:40px;">선택</button>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
-				<ul class="list">
+				<table>
+					<tr>
+					  <th>#</th>
+					  <th>제목</th>
+					  <th></th>
+					  <th style="width:100px;">설정</th>
+					</tr>
 		 		<%
 		 		if (!userId.equals("none")) {
 		 			try {
@@ -180,24 +228,29 @@ ResultSet levelRs = null;
 		 					// 고정된 문제 먼저 출력
 		 					while (problemRs.next()) {
 		 		%>
-		 			<li class="item">
-		 				<div class="content_number"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
-		 				<div class="content_set">
-		 				<% if(problemRs.getInt("is_fixed") == 1) { %>
-			    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png">
-			    		<% } else { %>
-			    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
-			    		<% } %>
+				  <tr class="table_item">
+				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
+				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
+				    
+				    <td>
+					    <% if(problemRs.getInt("is_fixed") == 1) { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="width:15px;">
+				    	<% } else { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="display:none;width:15px;">
+				    	<% } %>
+			    	</td>
+			    	<td style="text-align:right;">
+			    		<div class="content_set" style="position:relative;">
 			    		<button class="content_set_b"><img src="img/....png"></button>
-			    		<ul>
-			    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-			    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-			    			<li><a href="#">Setting</a></li>
-			    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
-			    		</ul>
-			    	</div>
-		 				<div class="content_title"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
-		 			</li>
+			    			<ul style="width:180px;top:15px;right:0px;">
+				    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
+				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
+				    			<li><a href="#">Setting</a></li>
+				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
+				    		</ul>
+				    	</div>
+			    	</td>
+				  </tr>
 		 		<%
 		 					}			
 		 				}
@@ -215,6 +268,7 @@ ResultSet levelRs = null;
 		 		}
 		 		%>
 				</ul>
+				</table>
 			</div>
 		</div>
 	</div>
