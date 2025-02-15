@@ -245,9 +245,11 @@ td > div > p:nth-child(2){
 	height: 550px;
 	overflow: scroll;
 }
-#list_group > table, td, th {
+#list_group table,
+#list_group td,
+#list_group th {
 	border-bottom: 1px solid #ddd;
 }
-#list_group > td, th {
+#list_group th {
 	padding: 15px;
 }
