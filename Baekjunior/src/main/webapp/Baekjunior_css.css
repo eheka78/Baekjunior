@@ -306,6 +306,11 @@ nav a:hover{
 	transform:scale(1.01);
 }
 
+.table_item:hover {
+	font-weight:bold;
+	transform:scale(1.01);
+}
+
 .content_number {
   display:inline-block;
   align-items:center;
@@ -370,24 +375,6 @@ nav a:hover{
     display:block;
 }
 
-.content_set_b + ul{
-	position:absolute;
-	top:45px;
-	right:18px;		/* 2차 메뉴를 1차 메뉴의 왼쪽 벽에 붙인다 */
-	text-align:center;
-	background:white;
-	border:3px solid black;
-	z-index:100;
-}
-
-.content_set > ul > li{
-	font-size:15px;
-	padding:3px 10px;
-}
-
-.content_set > ul > li:hover{
-	background:#ebebeb;
-}
 
 /* category color */
 .content_title span{
