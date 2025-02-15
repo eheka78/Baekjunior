@@ -537,11 +537,11 @@ ResultSet countRs = null;
 				categoryPstmt.setString(1, userId);
 				categoryRs = categoryPstmt.executeQuery();
 				while(categoryRs.next()) {
-	 	%>
+	%>
 	 			<li class="item">
 	 				<div class="content_number"><a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>"><%=categoryRs.getString("algorithm_name")%></a></div>
 	 			</li>
-	 	<%
+	<%
 				}
  			} catch(SQLException e) {
 				out.print(e);
@@ -563,7 +563,7 @@ ResultSet countRs = null;
 					int level = levelRs.getInt("level");
 					// unrated인 경우 숫자(tierNum) 출력 x
 					if(tierName.equals("unrated")) {
-	 	%>
+	%>
 	 			<li class="item">
 	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
 	 			</li>
@@ -584,7 +584,7 @@ ResultSet countRs = null;
 				if(levelRs != null) levelRs.close();
 			}
  		}
- 		// All, Bookmark, Level(난이도 선택 o), Category(알고리즘 분류 선택 o) 페이지의 문제 목록 출력
+ 		// All, Bookmark, Level(난이도 선택 o), Category(알고리즘 분류 선택 o) 페이지 : 문제 목록 출력
  		else { 
  			if (!userId.equals("none")) {
  				
@@ -626,7 +626,7 @@ ResultSet countRs = null;
  				if (resultCount > 0) {
  					problemRs.beforeFirst();
  					while (problemRs.next()) {
- 		%>
+ 	%>
 			 			<li class="item">
 			 				<div class="content_number"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
 			 				<div class="content_set">
@@ -646,14 +646,14 @@ ResultSet countRs = null;
 				    		</div>
 			 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
 			 			</li>
- 		<%
+ 			<%
  					}			
  				} else {
- 		%>
+ 			%>
 		 			 <div>
 		 				not exist
 		 			</div>
- 		<%		}	%>
+ 			<% } %>
  		<%-- <% if("category".equals(pageType)) { %>
 				</li>
 		 <% } %> --%>
@@ -666,16 +666,16 @@ ResultSet countRs = null;
 <footer></footer>
 </body>
 </html>
-<%
- 			} catch(SQLException e) {
- 				out.print(e);
- 			} finally {
- 				if(con != null) con.close();
-				if(countRs != null) countRs.close();
-				if(problemPstmt != null) problemPstmt.close();
-				if(problemRs != null) problemRs.close();
-				if(problemCountPstmt != null) problemCountPstmt.close();
- 			}
- 		}
- 	}
- %> 
+	<%
+	 			} catch(SQLException e) {
+	 				out.print(e);
+	 			} finally {
+	 				if(con != null) con.close();
+					if(countRs != null) countRs.close();
+					if(problemPstmt != null) problemPstmt.close();
+					if(problemRs != null) problemRs.close();
+					if(problemCountPstmt != null) problemCountPstmt.close();
+	 			}
+	 		}
+	 	}
+ 	%> 
