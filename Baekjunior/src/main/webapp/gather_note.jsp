@@ -82,7 +82,7 @@ ResultSet levelRs = null;
 
 <body style="min-height:100vh;">
 	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
@@ -139,12 +139,14 @@ ResultSet levelRs = null;
 		<div>
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
 				<li><img src="img/user.png" style="width:30px;"></li>
-				<li><a href="#"><%=userId %></a></li>
+				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
-				<img src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg" style="border-radius:70%;width:70px;">
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:20px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:8px;text-decoration: none;color: black;">로그아웃</a>
+				<div id="myprofileimgborder">
+					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+				</div>
+				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
+				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -229,7 +231,7 @@ ResultSet levelRs = null;
 		 					while (problemRs.next()) {
 		 		%>
 				  <tr class="table_item">
-				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
+				    <td style="padding-left: 10px;"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
 				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
 				    
 				    <td>
