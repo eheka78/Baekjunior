@@ -37,12 +37,14 @@ try {
 		<div>
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
 				<li><img src="img/user.png" style="width:30px;"></li>
-				<li><a href="#"><%=userId %></a></li>
+				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
-				<img src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg" style="border-radius:70%;width:70px;">
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:20px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:8px;text-decoration: none;color: black;">로그아웃</a>
+				<div id="myprofileimgborder">
+					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+				</div>
+				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
+				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -77,7 +79,7 @@ try {
 	<div class="contents">
 		<div class="menu">
 			<div class="menu_box">
-				<ul>
+				<ul style="min-width:150px;">
 					<li><a href="#">내 활동</a></li>
 					<li><a href="editProfile.jsp">프로필 수정</a></li>
 				</ul>

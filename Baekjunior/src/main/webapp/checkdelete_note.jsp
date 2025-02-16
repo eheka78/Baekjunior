@@ -44,7 +44,7 @@ ResultSet levelRs = null;
 %>
 <body style="min-height:100vh;">
 	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
@@ -101,12 +101,14 @@ ResultSet levelRs = null;
 		<div>
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
 				<li><img src="img/user.png" style="width:30px;"></li>
-				<li><a href="#"><%=userId %></a></li>
+				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
-				<img src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg" style="border-radius:70%;width:70px;">
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:20px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:8px;text-decoration: none;color: black;">로그아웃</a>
+				<div id="myprofileimgborder">
+					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+				</div>
+				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
+				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -141,9 +143,13 @@ ResultSet levelRs = null;
 	<div class="contents">
 		<div class="menu">
 			<div class="menu_box">
-				<ul>
-					<li><a href="#">내 활동</a></li>
-					<li><a href="editProfile.jsp">프로필 수정</a></li>
+				<ul style="min-width:150px;">
+					<li>
+						<a href="#">내 활동</a>
+					</li>
+					<li>
+						<a href="editProfile.jsp">프로필 수정</a>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -156,7 +162,13 @@ ResultSet levelRs = null;
 				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
-				<ul class="list">
+				<table>
+					<tr>
+					  <th>#</th>
+					  <th>제목</th>
+					  <th></th>
+					  <th style="width:100px;"></th>
+					</tr>
 		 		<%
 		 		if (!userId.equals("none")) {
 		 			try {
@@ -183,11 +195,22 @@ ResultSet levelRs = null;
 		 					// 고정된 문제 먼저 출력
 		 					while (problemRs.next()) {
 		 		%>
-		 			<li class="item">
-		 				<input name="itemCheck" type="checkbox" value="$(list.no)" style="margin-right:10px;">
-		 				<div class="content_number"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
-		 				<div class="content_title"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
-		 			</li>
+				  <tr class="table_item">
+				    <td style="padding-left: 10px;">
+				    	<input name="itemCheck" type="checkbox" value="$(list.no)" style="margin-right:10px;">
+				    	<a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a>
+				    </td>
+				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
+				    
+				    <td>
+					    <% if(problemRs.getInt("is_fixed") == 1) { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="width:15px;">
+				    	<% } else { %>
+				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="display:none;width:15px;">
+				    	<% } %>
+			    	</td>
+			    	<td style="text-align:right;"></td>
+				  </tr>
 		 		<%
 		 					}			
 		 				}
