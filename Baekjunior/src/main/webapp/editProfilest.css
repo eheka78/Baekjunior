@@ -232,3 +232,16 @@ input[type="submit"]:hover {
 	transition: 0.3s;
 	cursor: pointer;
 }
+/* 프로필사진 1:1원으로 만들기 */
+#myprofileimgborder {
+	border-radius: 70%;
+	width: 70px;
+	height: 70px;
+	overflow: hidden;
+}
+#myprofileimg {
+	border-radius: 70%;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
