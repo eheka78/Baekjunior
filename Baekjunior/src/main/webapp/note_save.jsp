@@ -14,6 +14,9 @@
 	int level = Integer.parseInt(request.getParameter("level"));
 	String code = request.getParameter("code_note");
 	String language = request.getParameter("language");
+	String languageOther = request.getParameter("language_other");
+	if(languageOther != null && !languageOther.isEmpty()) 
+		language = languageOther;
 	
 	String isCheckedStr = request.getParameter("check_btn");
 	int isChecked = 0; // 기본값을 0(체크되지 않음)으로 설정
@@ -69,7 +72,7 @@
 				response.sendRedirect("note_detail_edit.jsp?problem_idx=" + pi.getProblem_idx());
 			}
 			else {
-				response.sendRedirect("note_detail.jsp?problem_idx=" + pi.getProblem_idx());
+				response.sendRedirect("note.jsp?problem_idx=" + pi.getProblem_idx());
 			}
 		} catch(SQLException e){
 			out.print(e);

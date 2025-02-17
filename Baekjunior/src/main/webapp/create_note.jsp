@@ -32,6 +32,8 @@ function fnCheck(btn) {
     var code_note = document.getElementById("code_note");
     var importCheck = document.getElementById("importCheck");
     var problemTitle = document.getElementById("title");
+    var language = document.getElementById("language");
+    var languageOther = document.getElementById("language_others");
     var form = document.querySelector('form');
 
     if(problemId.value == "") {
@@ -44,6 +46,10 @@ function fnCheck(btn) {
     }
     else if(problemTitle.value == "not_found") {
     	alert("존재하지 않는 문제 번호입니다.");
+    	return false;
+    }
+    else if(language.value == "other" && languageOther.value == "") {
+    	alert("언어를 입력하세요.");
     	return false;
     }
     else if(code_note.value == "") {
@@ -69,7 +75,7 @@ function importClick() {
     if (problemId) {
         location.href = 'create_note.jsp?problemId=' + encodeURIComponent(problemId);
     } else {
-        alert("문제 번호를 입력해주세요.");
+        alert("문제 번호를 입력하세요.");
     }
     return false; // 문제 정보 가져오기만 하고 제출은 x
 }
@@ -96,7 +102,7 @@ if (problemId != null && !problemId.isEmpty()) {
         level = getPI.getLevel(problemId);
         tier_name = getPI.getTierName();
         tier_num = getPI.getTierNum();
-    }
+	}
 }
 
 HttpSession session = request.getSession(false);
@@ -136,6 +142,7 @@ try {
 			</div>
 		</div>
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -247,7 +254,7 @@ try {
 				<div>
 					Code Language :
 					<span>
-					<select name="language" style="width:140px; text-align:center; font-size:18px; height:35px;">
+					<select id="language" name="language" style="width:140px; text-align:center; font-size:18px; height:35px;">
 					    <option value="C++">C++</option>
 					    <option value="python">Python</option>
 					    <option value="c#">C#</option>
@@ -256,7 +263,7 @@ try {
 					    <option value="other">other...</option>
 					</select>
 					</span>
-					<span id="language_other" style="display:none;"><input type="text" style="font-size:18px; height:35px;"></span>
+					<span id="language_other" style="display:none;"><input type="text" id="language_others" name="language_other" style="font-size:18px; height:35px;"></span>
 				</div>
 				<div>Code</div>
 				<div id="code-editor" style="display: grid; grid-template-columns: 1fr 20fr; border: none;">
@@ -323,7 +330,14 @@ try {
     textarea.addEventListener('scroll', () => {
         lineNumbers.scrollTop = textarea.scrollTop;
     });
-
+    
+ 	// problemId 가 입력되면 importCheck를 1로 업데이트
+	<% if (problemId != null && !problemId.isEmpty()) { %>
+    	document.addEventListener("DOMContentLoaded", function() {
+        	document.getElementById('importCheck').value = '1';
+    	});
+	<% } %>
+	
     function submitcode_note() {
         const code = textarea.value;
         console.log("Submitted Code:", code);

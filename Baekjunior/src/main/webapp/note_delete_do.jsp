@@ -8,7 +8,7 @@ try {
 	pidb.deleteProblem(problemIdx);
 	pidb.close();
 	
-	response.sendRedirect("0_Baekjunior.jsp");
+	response.sendRedirect("index.jsp");
 } catch(SQLException e) {
 	out.print(e);
 	return;
