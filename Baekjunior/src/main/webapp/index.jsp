@@ -110,7 +110,7 @@ if (request.getParameter("latest") != null) {
 String searchRange = request.getParameter("search_range");
 String searchKeyword = request.getParameter("search_keyword");
 
-if (searchKeyword != null && !searchKeyword.isEmpty()) {	
+if (searchKeyword != null && searchRange != null && !searchKeyword.isEmpty()) {	
 	//searchKeyword = StringEscapeUtils.escapeHtml4(searchKeyword);
     searchKeyword = searchKeyword.replace(" ", ""); // 검색어에서 공백 제거
     // 특수 문자로 구분하기 위해 앞에 [\] 를 붙여 이스케이프 처리
@@ -357,26 +357,55 @@ ResultSet countRs = null;
 				<!-- 페이지 타입에 따라 인자 전달을 다르게 함 -->
 				<%
 					if("all".equals(pageType) || "bookmark".equals(pageType)) {
-				%>
-						<li><a href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+				
+						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){%>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
+						}else{
+				%>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&latest=true">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&earliest=true">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&ascending=true">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&descending=true">Descending number</a></li>
+				<%			
+						}
 					} else if("level".equals(pageType)) {
+						
+						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){
 				%>
-						<li><a href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
+						}else{
+				%>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Descending number</a></li>
+				<%
+						}
 					} else if("category".equals(pageType)) {
+						
+						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){
 				%>
-						<li><a href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
+						}else{
+				%>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>">Latest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>">Earliest</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>">Ascending number</a></li>
+						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>">Descending number</a></li>
+				<%
+						}
 					}
 				%>
 				</ul>
@@ -395,7 +424,7 @@ ResultSet countRs = null;
 				<div id="search_selection" style="float:right;">
 					<input type="radio" name="search_range" value="number" 
 					<%
-				    	if (searchRange == null || "number".equals(searchRange)) {
+				    	if (searchRange == null || searchRange.trim().isEmpty() || "null".equalsIgnoreCase(searchRange) || "number".equals(searchRange)) {
 				    %> 
 				    	checked 
 				    <%
