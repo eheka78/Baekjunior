@@ -236,7 +236,7 @@ ResultSet rs = null;
 				<div id="container">
 				<% for (String memo : subMemos) { %>
 					<div class="container_div" style="padding:5px;">
-		           		<span><img src="img/star_red.png" style="width:13px;"></span>
+		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
 		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
 		                <a class="delete_btn" href="#">X</a>
 		        	</div>
@@ -315,17 +315,21 @@ ResultSet rs = null;
     }
 </script>
     	
-    	<div style="float:right; margin-top:50px">
-    		<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px;">Save</button>
-		</div>
-		</form>
+	    	<div style="float:right; margin-top:50px">
+	    		<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px;">Save</button>
+			</div>
+			</form>
+			
+			<!-- 아래 여백 만드는 용도 -->
+			<div style="height:200px;"></div>
 			
 		</div>
 		
 		
+		
 	</div>
 	
-	<br><br><br><br>
+	
 
 	<footer></footer>
 
