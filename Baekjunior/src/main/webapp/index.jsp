@@ -488,11 +488,11 @@ ResultSet countRs = null;
 		
 		<br><br><br>
 		
-		<% if("category".equals(pageType)) { %>
+		<% if("category".equals(pageType) && !algorithmSort.trim().equals("")) { %>
 		<!-- pageType이 category인 경우 -->
-		<div style="display:flex; margin-left:55px;">
+		<div style="display:flex;">
 			<!-- 알고리즘 메모 박스 : 버튼 눌러야 보임 -->
-			<div class="memo" id="memo" style="margin-top:20px;flex:4;animation-name:takent;animation-duration:2s;display:none;">
+			<div class="memo" id="memo" style="margin:20px 0 0 20px; flex:4; animation-name:takent;animation-duration:2s;display:none;">
                <div class="memo_box" contenteditable="true" id="editablememo" style="min-height:600px;padding:30px;background:white;border-radius:10px;border:3px solid black;">
                   <%
                   	String memoSql = "SELECT * FROM algorithm_memo WHERE user_id=? AND algorithm_name=?";
@@ -549,7 +549,7 @@ ResultSet countRs = null;
             </div><!-- end-of-memo박스 -->
             
             <div id="list_group" style="flex:6;">
-				<ul class="list" style="margin: 20px 0 0 0;">
+				<ul class="list"">
 		<% 
 			} else {
 		%>
