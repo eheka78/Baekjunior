@@ -420,7 +420,7 @@ ResultSet rs6 = null;
 		 		%>
 		 		
 		 			<li class="item">
-		 				<div class="content_number"><a href="note_detail.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"># <%=rs3.getInt("problem_id") %></a></div>
+		 				<div class="content_number"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"># <%=rs3.getInt("problem_id") %></a></div>
 		 				<div class="content_set">
 				    	<% if(rs3.getInt("is_fixed") == 1) { %>
 			    			<img class="content_set_a" id="content_set_a_<%= rs3.getInt("problem_idx") %>" src="img/pin.png">
@@ -435,7 +435,7 @@ ResultSet rs6 = null;
 		    				<li><a onclick="confirmDeletion('<%=rs3.getInt("problem_idx") %>')" href="#">Delete</a></li>
 		    			</ul>
 			    		</div>
-		 				<div class="content_title"><a href="#"><%=rs3.getString("memo_title") %></a></div>
+		 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"><%=rs3.getString("memo_title") %></a></div>
 		 			</li>
 		 		<%
 		 					}
@@ -673,7 +673,7 @@ ResultSet rs6 = null;
 	 		%>
 	 		
 	 			<li class="item">
-	 				<div class="content_number"><a href="note_detail.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"># <%=rs5.getInt("problem_id") %></a></div>
+	 				<div class="content_number"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"># <%=rs5.getInt("problem_id") %></a></div>
 	 				<div class="content_set">
 			    	<% if(rs5.getInt("is_fixed") == 1) { %>
 		    			<img class="content_set_a" id="content_set_a_<%= rs5.getInt("problem_idx") %>" src="img/pin.png">
@@ -688,7 +688,7 @@ ResultSet rs6 = null;
 	    				<li><a onclick="confirmDeletion('<%=rs5.getInt("problem_idx") %>')" href="#">Delete</a></li>
 	    			</ul>
 		    	</div>
-	 				<div class="content_title"><a href="#"><%=rs5.getString("memo_title") %></a></div>
+	 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"><%=rs5.getString("memo_title") %></a></div>
 	 			</li>
 	 		<%
 	 					}
