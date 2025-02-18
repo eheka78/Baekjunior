@@ -112,10 +112,13 @@ try {
 	<div class="contents">
 		<div class="menu">
 			<div class="menu_box">
-				<ul>
-					<li><a href="#">내 활동</a></li>
-					<li><a href="#">프로필 수정</a></li>
-					<li><a href="#">친구 관리</a></li>
+				<ul style="min-width:150px;">
+					<li>
+						<a href="#">내 활동</a>
+					</li>
+					<li>
+						<a href="editProfile.jsp">프로필 수정</a>
+					</li>
 				</ul>
 			</div>
 		</div>
