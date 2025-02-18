@@ -359,51 +359,51 @@ ResultSet countRs = null;
 					if("all".equals(pageType) || "bookmark".equals(pageType)) {
 				
 						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&latest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&earliest=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&ascending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&descending=true&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
 						}else{
 				%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&latest=true">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&earliest=true">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&ascending=true">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=<%=pageType%>&descending=true">Descending number</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&latest=true">Latest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&earliest=true">Earliest</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&ascending=true">Ascending number</a></li>
+						<li><a href="index.jsp?type=<%=pageType%>&descending=true">Descending number</a></li>
 				<%			
 						}
 					} else if("level".equals(pageType)) {
 						
 						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){
 				%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+						<li><a href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
 						}else{
 				%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Descending number</a></li>
+						<li><a href="index.jsp?type=level&latest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Latest</a></li>
+						<li><a href="index.jsp?type=level&earliest=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Earliest</a></li>
+						<li><a href="index.jsp?type=level&ascending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=level&descending=true&level=<%=levelSort%>&tier_name=<%=tierNameSort%>&tier_num=<%=tierNumSort%>">Descending number</a></li>
 				<%
 						}
 					} else if("category".equals(pageType)) {
 						
 						if(searchKeyword != null && !searchKeyword.trim().isEmpty()){
 				%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
+						<li><a href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Latest</a></li>
+						<li><a href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Earliest</a></li>
+						<li><a href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>&search_range=<%=searchRange%>&search_keyword=<%=searchKeyword%>">Descending number</a></li>
 				<%
 						}else{
 				%>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>">Latest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>">Earliest</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>">Ascending number</a></li>
-						<li><a class="sort_select_ul_li_a" href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>">Descending number</a></li>
+						<li><a href="index.jsp?type=category&latest=true&sort=<%=algorithmSort%>">Latest</a></li>
+						<li><a href="index.jsp?type=category&earliest=true&sort=<%=algorithmSort%>">Earliest</a></li>
+						<li><a href="index.jsp?type=category&ascending=true&sort=<%=algorithmSort%>">Ascending number</a></li>
+						<li><a href="index.jsp?type=category&descending=true&sort=<%=algorithmSort%>">Descending number</a></li>
 				<%
 						}
 					}
