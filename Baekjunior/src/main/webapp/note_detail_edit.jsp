@@ -201,7 +201,7 @@ ResultSet rs = null;
 
 			        // div 내부 HTML 설정
 			        newDiv.innerHTML = `
-			            <span><img src="img/star_red.png" style="width:13px;"></span>
+			            <span><img src="img/arrow3.png" style="width:13px;"></span>
 			            <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="">
 			            <a class="delete_btn" href="#">X</a>
 			        `;
