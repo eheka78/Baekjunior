@@ -313,6 +313,7 @@ ResultSet memoRs = null;
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
 					</div> 
+					<div style="height:10px;"></div>
 					<div style="display:inline;">
 						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
