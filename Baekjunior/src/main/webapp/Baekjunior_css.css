@@ -174,7 +174,8 @@ nav a:hover{
 }
 
 #main_bar{
-	padding:0 60px;
+	padding-right:60px;
+	padding-left:10px;
 	letter-spacing:2px;
 	margin-top:20px;
 }
