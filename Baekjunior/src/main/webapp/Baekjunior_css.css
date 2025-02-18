@@ -213,6 +213,10 @@ nav a:hover{
 	font-size:15px;
 }
 
+#sort_select_ul li a{
+	display:block;
+}
+
 #search{
 	float:right;
 	margin-right:20px;
