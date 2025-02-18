@@ -202,7 +202,7 @@ try {
 					<div>
 						Problem Title :
 						<span style="border-bottom:3px solid black;">
-							<input type="text" id="title" name="title" value="<%=title%>" style="background:transparent; outline:none; border:none; width:50%;">
+							<input type="text" id="title" name="title" value="<%=title%>" style="background:transparent; outline:none; border:none; width:50%;" readonly>
 						</span>
 					</div>
 					<div>
