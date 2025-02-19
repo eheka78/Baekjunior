@@ -315,7 +315,10 @@ ResultSet memoRs = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
+						Friends who solved :
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">...</span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
