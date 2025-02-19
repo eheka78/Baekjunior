@@ -31,6 +31,15 @@ a{
 	// 창 크기가 변경될 때 실행
 	window.addEventListener("resize", updateWindowHeight);
 
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    window.location.href = "logout_do.jsp";
+			} else {
+	    	return false;
+			}
+	}
+	
     function confirmDeletion(problemIdx) {
         var result = confirm("정말 삭제하시겠습니까?");
         if (result) {
@@ -75,6 +84,10 @@ HttpSession session = request.getSession(false);
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
 }
+else{
+	response.sendRedirect("information.jsp");
+    return;
+}
 
 String temp = "";
 temp = request.getParameter("problem_idx1");
@@ -113,46 +126,6 @@ ResultSet rs6 = null;
 <body>	
 	<header style="padding:0px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
-		<div id="main_menu">
-			<ul>
-				<li class="main_menu_Storage"><a href="#">Storage</a>
-					<ul>
-						<li><a href="index.jsp">ALL</a></li>
-						<li><a href="index.jsp?type=bookmark">BOOKMARK</a></li>
-						<li><a href="#">CATEGORY</a></li>
-						<li><a href="#">LEVEL</a></li>
-					</ul>
-				</li>				
-				<li class="main_menu_Friend"><a href="#">Friend</a>
-					<ul>
-						<li><a href="#">friend1</a></li>
-						<li><a href="#">friend2</a></li>
-						<li><a href="#">friend3</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Group"><a href="#">Group</a>
-					<ul>
-						<li><a href="#">group1</a></li>
-						<li><a href="#">group2</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_MyPage"><a href="#">MyPage</a>
-					<ul>
-						<li><a href="#">mypage1</a></li>
-						<li><a href="#">mypage2</a></li>
-						<li><a href="#">mypage3</a></li>
-						<li><a href="#">mypage4</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Setting"><a href="#">Setting</a>
-					<ul>
-						<li><a href="#">setting1</a></li>
-						<li><a href="#">setting2</a></li>
-						<li><a href="#">setting3</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
 		<%
 		try {
 			if(userId != "none") {
@@ -174,7 +147,7 @@ ResultSet rs6 = null;
 					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -223,7 +196,7 @@ ResultSet rs6 = null;
 		<div id="split1" style="margin-top:20px; border-right:3px solid black; overflow-y:auto;">
 			<div style="margin:0 50px 0 80px;">
 				<div style="float:right;">
-					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
+					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
 				</div>
 				<br><br>
 				<div>
@@ -429,11 +402,10 @@ ResultSet rs6 = null;
 			    		<% } else { %>
 			    			<img class="content_set_a" id="content_set_a_<%= rs3.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
 			    		<% } %>
-			    		<button class="content_set_b"><img src="img/....png"></button>
+			    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
 			    		<ul>
 		    				<li><a onclick="updatePin('<%=rs3.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
 		    				<li><a href="split_screen.jsp?problem_idx1=<%=rs3.getInt("problem_idx")%>&problem_idx2=<%=problemIdx2 %>">Split screen</a></li>
-		    				<li><a href="#">Setting</a></li>
 		    				<li><a onclick="confirmDeletion('<%=rs3.getInt("problem_idx") %>')" href="#">Delete</a></li>
 		    			</ul>
 			    		</div>
@@ -477,7 +449,7 @@ ResultSet rs6 = null;
 	<div id="split2" style="margin-top:20px; border-left:3px solid black; overflow-y:auto;">
 		<div style="width:80%; margin:0 50px;">
 			<div style="float:right;">
-				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px;">X</button>
+				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
 			</div>
 			<br><br>
 			<div>
@@ -682,11 +654,10 @@ ResultSet rs6 = null;
 		    		<% } else { %>
 		    			<img class="content_set_a" id="content_set_a_<%= rs5.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
 		    		<% } %>
-		    		<button class="content_set_b"><img src="img/....png"></button>
+		    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
 		    		<ul>
 	    				<li><a onclick="updatePin('<%=rs5.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
 	    				<li><a href="split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=<%=rs5.getInt("problem_idx")%>">Split screen</a></li>
-	    				<li><a href="#">Setting</a></li>
 	    				<li><a onclick="confirmDeletion('<%=rs5.getInt("problem_idx") %>')" href="#">Delete</a></li>
 	    			</ul>
 		    	</div>

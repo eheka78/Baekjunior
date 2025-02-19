@@ -31,6 +31,16 @@ try {
 		rs.next();
 	}
 %>
+<script>
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    window.location.href = "logout_do.jsp";
+			} else {
+	    	return false;
+			}
+	}
+</script>
 <body>
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
@@ -44,7 +54,7 @@ try {
 					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%

@@ -33,6 +33,15 @@ try {
 %>
 
 <script type="text/javascript">
+	function confirmLogout() {
+    	var result = confirm("정말 로그아웃 하시겠습니까?");
+    	if (result) {
+    	    window.location.href = "logout_do.jsp";
+   		} else {
+        	return false;
+   		}
+	}
+	
     function confirmDeletion(userId) {
         var result = confirm("정말 탈퇴하시겠습니까?");
         if (result) {
@@ -76,7 +85,7 @@ try {
 					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -154,7 +163,7 @@ try {
 						<td><a href="">이메일 변경 ></a></td>
 					</tr>
 					<tr>
-						<td><a href="logout_do.jsp">로그아웃 ></a></td>
+						<td><a href="#" onclick="confirmLogout()">로그아웃 ></a></td>
 					</tr>
 					<tr>
 						<td><a href="#" onclick="confirmDeletion('<%=userId %>')">회원 탈퇴 ></a></td>
