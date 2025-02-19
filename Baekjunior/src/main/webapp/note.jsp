@@ -161,7 +161,7 @@ ResultSet memoRs = null;
                   <img src="img/dot1.png" style="width: 15px;height:15px;">
                   <h1 style="display: inline;font-size: 30px;margin-left: 10px;"><%=algorithmSort %></h1>
                </div>
-               <i class="fa-solid fa-xmark fa-xl" id="x" onclick="closealgont()" style="margin-right:4"></i>
+               <i class="fa-solid fa-xmark fa-xl" id="x" onclick="closealgont()" style="margin-right:4;cursor:pointer;"></i>
             </div>
             <script>
             function closealgont() {
@@ -270,9 +270,9 @@ ResultSet memoRs = null;
 					<div style="display:inline; width:80%; font-size:30px; font-weight:bold;">
 						#<span><%=rs.getInt("problem_id") %></span> : <span><%=rs.getString("problem_title") %></span> 
 						<% if(rs.getInt("is_checked") == 1) { %> 
-							<span><img class="bookmark_star" src="img/star_on.png" style="width:25px;"></span>
+							<span><img class="bookmark_star" src="img/star_on.png" style="width:25px;cursor:pointer;"></span>
 						<% } else { %>
-							<span><img class="bookmark_star" src="img/star_off.png" style="width:25px;"></span>
+							<span><img class="bookmark_star" src="img/star_off.png" style="width:25px;cursor:pointer;"></span>
 						<% } %>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">

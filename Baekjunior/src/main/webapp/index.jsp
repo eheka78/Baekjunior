@@ -327,7 +327,7 @@ ResultSet countRs = null;
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
-					<a style="font-size:30px; font-weight:bold;" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
+					<a style="font-size:30px; font-weight:bold;cursor:pointer;" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
 					CATEGORY <%if(algorithmSort != "") { %> : <%=algorithmSort %> <% } %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
 					<%if(algorithmSort != ""){ %>
@@ -420,7 +420,7 @@ ResultSet countRs = null;
 					<input id="search_input" type="text"
     				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> placeholder="Search..."
     				onkeypress="searchNotes_enter(event)">
-					<span><img src="img/search.png" style="width:15px;" onclick="searchNotes()"></span>
+					<span><img src="img/search.png" style="width:15px;cursor:pointer;" onclick="searchNotes()"></span>
 				</div>
 				<!-- number로 검색하거나, 검색을 하지 않은 경우 number에 checked -->
 				<div id="search_selection" style="float:right;">

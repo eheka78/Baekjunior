@@ -139,9 +139,9 @@ ResultSet rs = null;
 						#<span><%=rs.getInt("problem_id") %></span> : <span><%=rs.getString("problem_title") %></span>
 						<!-- is_checked가 1이면 북마크 상태, 아니면 북마크되지 않은 상태 -->
 						<% if(rs.getInt("is_checked") == 1) { %> 
-						<span><img class="bookmark_star" src="img/star_on.png" style="width:18px;"></span>
+						<span><img class="bookmark_star" src="img/star_on.png" style="width:18px;cursor:pointer;"></span>
 						<% } else { %>
-						<span><img class="bookmark_star" src="img/star_off.png" style="width:18px;"></span>
+						<span><img class="bookmark_star" src="img/star_off.png" style="width:18px;cursor:pointer;"></span>
 						<% } %>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
@@ -318,7 +318,7 @@ ResultSet rs = null;
 </script>
     	
 	    	<div style="float:right; margin-top:50px">
-	    		<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px;">Save</button>
+	    		<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; cursor:pointer;">Save</button>
 			</div>
 			</form>
 			

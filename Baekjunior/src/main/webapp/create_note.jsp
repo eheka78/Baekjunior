@@ -197,7 +197,7 @@ try {
 						<span style="border-bottom:3px solid black;">
 							<input type="text" id="problemId" name="problemId" value="<%=Util.nullChk(problemId, "") %>" oninput="resetImportCheck()" style="background:transparent; outline:none; border:none;">
 						</span>
-						<span><button type="button" style="font-size:15px; font-weight:bold; padding:5px 20px; background:white; border:3px soild black; margin-left:20px;"
+						<span><button type="button" style="font-size:15px; font-weight:bold; padding:5px 20px; background:white; border:3px soild black; margin-left:20px; cursor:pointer;"
 								onclick="importClick()">import</button>
 						</span>
 					</div>
@@ -251,12 +251,12 @@ try {
 				
 			<div id="note">
 				<div style="margin-top:20px;">
-					Bookmark <input type="checkbox" name="check_btn" id="check_btn" value="1">
+					Bookmark <input type="checkbox" name="check_btn" id="check_btn" value="1" style="cursor:pointer;">
 				</div>
 				<div>
 					Code Language :
 					<span>
-					<select id="language" name="language" style="width:140px; text-align:center; font-size:18px; height:35px;">
+					<select id="language" name="language" style="width:140px; text-align:center; font-size:18px; height:35px; cursor:pointer;">
 					    <option value="C++">C++</option>
 					    <option value="python">Python</option>
 					    <option value="c#">C#</option>

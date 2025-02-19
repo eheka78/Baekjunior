@@ -76,7 +76,7 @@ try {
 
 <body>
 	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
