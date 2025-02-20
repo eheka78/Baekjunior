@@ -45,46 +45,6 @@ ResultSet levelRs = null;
 <body style="min-height:100vh;">
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
-		<div id="main_menu">
-			<ul>
-				<li class="main_menu_Storage"><a href="#">Storage</a>
-					<ul>
-						<li><a href="#">storage1</a></li>
-						<li><a href="#">storage2</a></li>
-						<li><a href="#">storage3</a></li>
-						<li><a href="#">storage4</a></li>
-					</ul>
-				</li>				
-				<li class="main_menu_Friend"><a href="#">Friend</a>
-					<ul>
-						<li><a href="#">friend1</a></li>
-						<li><a href="#">friend2</a></li>
-						<li><a href="#">friend3</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Group"><a href="#">Group</a>
-					<ul>
-						<li><a href="#">group1</a></li>
-						<li><a href="#">group2</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_MyPage"><a href="#">MyPage</a>
-					<ul>
-						<li><a href="#">mypage1</a></li>
-						<li><a href="#">mypage2</a></li>
-						<li><a href="#">mypage3</a></li>
-						<li><a href="#">mypage4</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Setting"><a href="#">Setting</a>
-					<ul>
-						<li><a href="#">setting1</a></li>
-						<li><a href="#">setting2</a></li>
-						<li><a href="#">setting3</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
 		<%
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -153,12 +113,14 @@ ResultSet levelRs = null;
 				</ul>
 			</div>
 		</div>
+		
 		<div class="inner_contents" style="margin-top:35px;">
+		<form action="checkdelete_do.jsp" onsubmit="return validateForm()" method="post" name="deletenote">
 			<div class="inner_header">
 				<h1 style="font-size:30px;">노트</h1>
 				<div>
-					<button name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
-					<button onclick="deleteValue();" style="width:100px;height:40px;border-radius:40px;">선택삭제</button>
+					<button onclick="document.getElementById('deletenoteitem')" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
+					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;">
 				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
@@ -197,7 +159,7 @@ ResultSet levelRs = null;
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;">
-				    	<input name="itemCheck" type="checkbox" value="$(list.no)" style="margin-right:10px;">
+				    	<input type="checkbox" id="deletenoteitem" name="deletenoteitem" value="<%=problemRs.getInt("problem_idx")%>" style="margin-right:10px;">
 				    	<a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a>
 				    </td>
 				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
@@ -229,6 +191,7 @@ ResultSet levelRs = null;
 		 		%>
 				</ul>
 			</div>
+		</form>
 		</div>
 	</div>
 	

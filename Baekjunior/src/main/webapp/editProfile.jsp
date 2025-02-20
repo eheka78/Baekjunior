@@ -143,7 +143,7 @@ try {
 					<button onclick="onClickUpload();" style="margin-top:10px;">프로필 사진 업로드</button>
 					<h1><%=rs.getString("user_id") %></h1>
 					<textarea name="intro"><%=Util.nullChk(rs.getString("intro"), "") %></textarea>
-					<input type="submit">
+					<input type="submit" value="저장">
 				</div>
 				</form>
 				<script>
