@@ -133,12 +133,12 @@ ResultSet rs = null;
 	
 	
 	
-	<div style="display: grid; grid-template-columns: 2fr 5fr; height:70vh;">
+	<div style="display: grid; grid-template-columns: 2fr 5fr; height:78vh;">
 		<div style="background-color:white;">
 			<div style="border-bottom: solid black 2px;">
-				<div style="margin:20px 0 20px 40px;">Friend who solved LIST ▸</div>
+				<div style="margin:20px 20px 20px 40px;">Friend who solved LIST ▸</div>
 			</div>
-			<div style="overflow-y:scroll; height:100%;">
+			<div style="overflow-y:scroll;">
 
 	
 	<%
@@ -150,7 +150,7 @@ ResultSet rs = null;
 		while(rs.next()){
 	%>
 				<div style="border-top: solid black 2px;">
-					<div style="display: grid; margin:20px 0 20px 40px; grid-template-columns: 5fr 1fr;">
+					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 5fr 1fr;">
 						<div style="display: grid; grid-template-rows: 3fr 2fr;">
 							<div style="font-size: 20px; cursor: pointer;" 
 							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)">
@@ -211,7 +211,6 @@ ResultSet rs = null;
 	</div>	
 	
 	
-	<br><br>
 
 	<footer></footer>
 
