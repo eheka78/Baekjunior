@@ -125,6 +125,36 @@ public class ProblemInfoDB {
 		pstmt.close();
 	}
 	
+	public int countProblem(String id) throws SQLException {
+		String sql = "SELECT COUNT(*) FROM problems WHERE user_id=?";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		
+		rs = pstmt.executeQuery();
+		// 문제가 존재하면
+		if(rs.next())
+			// 첫 번째 컬럼(COUNT(*))의 값을 가져옴 
+			return rs.getInt(1);
+		else 
+			return 0;
+	}
+	
+	public int countBookmark(String id) throws SQLException {
+		String sql = "SELECT COUNT(*) FROM problems WHERE user_id=? AND is_checked=1";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		
+		rs = pstmt.executeQuery();
+		// 문제가 존재하면
+		if(rs.next())
+			// 첫 번째 컬럼(COUNT(*))의 값을 가져옴 
+			return rs.getInt(1);
+		else 
+			return 0;
+	}
+	
 	public void close() throws SQLException {
 		if(rs != null) rs.close();
 		if(pstmt != null) pstmt.close();

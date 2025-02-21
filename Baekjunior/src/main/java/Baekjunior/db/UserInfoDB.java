@@ -76,6 +76,26 @@ public class UserInfoDB {
 		pstmt.executeUpdate();
 	}
 	
+	public void updateEmail(String id, String email) throws SQLException {
+		String sql = "UPDATE users SET email=? WHERE user_id=?";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, email);
+		pstmt.setString(2, id);
+		
+		pstmt.executeUpdate();
+	}
+	
+	public void updatePassword(String id, String pwd) throws SQLException {
+		String sql = "UPDATE users SET password=? WHERE user_id=?";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, pwd);
+		pstmt.setString(2, id);
+		
+		pstmt.executeUpdate();
+	}
+	
 	// db 상에 해당 id와 password를 가진 유저가 존재하는지 확인하는 함수
 	public int userExistCheck(String id, String pwd) throws SQLException {
 		String sql = "SELECT * FROM users WHERE user_id=? AND password=?";
