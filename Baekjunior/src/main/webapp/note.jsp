@@ -318,7 +318,7 @@ ResultSet memoRs = null;
 						Friends who solved :
 						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span>
 						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">...</span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>">...</a></span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
@@ -381,7 +381,7 @@ ResultSet memoRs = null;
 	        const textarea = document.getElementById('code_note');
 	        const lineNumbers = document.getElementById('lineNumbers');
 	        
-			console.log(textarea);
+			console.log("AA: " + textarea);
 	        function updateLineNumbers() {
 	            const numberOfLines = textarea.value.split('\n').length;
 	            let lineNumberString = '';
