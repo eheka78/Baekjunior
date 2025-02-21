@@ -6,9 +6,8 @@
 <meta charset="UTF-8">
 <title>Baekjunior</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
-
 <style>
-	.ellipsis {
+.ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
