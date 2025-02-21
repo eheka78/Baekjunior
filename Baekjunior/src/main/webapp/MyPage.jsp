@@ -58,6 +58,7 @@ try {
 			</div>
 		</div>
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -95,12 +96,18 @@ try {
 				</ul>
 			</div>
 		</div>
+		<% 
+			ProblemInfoDB pidb = new ProblemInfoDB(); 
+			int noteCount = pidb.countProblem(userId);
+			int bookmarkCount = pidb.countBookmark(userId);
+			pidb.close();
+		%>
 		<div class="inner_contents">
 			<div class="select_div">
 				<Button class="note_div" onclick="location.href='gather_note.jsp'">
 					<div>
 						<h3>노트</h3>
-						<p>35</p>
+						<p><%=noteCount %></p>
 						<i class="fa-solid fa-note-sticky fa-lg"></i>
 					</div>
 				</Button>
@@ -114,7 +121,7 @@ try {
 				<Button class="bookmark_div" onclick="location.href='#'">
 					<div>
 						<h3>북마크</h3>
-						<p>15</p>
+						<p><%=bookmarkCount %></p>
 						<i class="fa-solid fa-bookmark fa-lg"></i>
 					</div>
 				</Button>

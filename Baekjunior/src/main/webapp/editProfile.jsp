@@ -89,6 +89,7 @@ try {
 			</div>
 		</div>
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
