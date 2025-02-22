@@ -202,6 +202,7 @@ ResultSet rs = null;
 	
 	
 	<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){

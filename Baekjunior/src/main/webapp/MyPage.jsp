@@ -129,7 +129,7 @@ try {
 						<i class="fa-solid fa-box-open fa-lg"></i>
 					</div>
 				</Button>
-				<Button class="bookmark_div" onclick="location.href='#'">
+				<Button class="bookmark_div" onclick="location.href='index.jsp?type=bookmark'">
 					<div>
 						<h3>BOOKMARK</h3>
 						<p><%=bookmarkCount %></p>

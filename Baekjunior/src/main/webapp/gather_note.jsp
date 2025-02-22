@@ -213,7 +213,7 @@ ResultSet levelRs = null;
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
-				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
+				    <td><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
 				    
 				    <td>
 					    <% if(problemRs.getInt("is_fixed") == 1) { %>

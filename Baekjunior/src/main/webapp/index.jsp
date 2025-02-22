@@ -347,7 +347,7 @@ ResultSet countRs = null;
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
-					<a style="font-size:30px; font-weight:bold;cursor:pointer;" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
+					<a style="font-size:30px; font-weight:bold;cursor:pointer;" <%if(algorithmSort != "") { %> onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'" <% } %>>
 					CATEGORY <%if(algorithmSort != "") { %> : <%=algorithmSort %> <% } %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
 					<%if(algorithmSort != ""){ %>
@@ -700,13 +700,10 @@ ResultSet countRs = null;
  					}			
  				} else {
  			%>
-		 			 <div>
+		 			<!--  <div>
 		 				not exist
-		 			</div>
+		 			</div> -->
  			<% } %>
- 		<%-- <% if("category".equals(pageType)) { %>
-				</li>
-		 <% } %> --%>
 				</ul><!-- end-of-list -->
 			</div><!-- end-of-list_group -->
 	<% if("category".equals(pageType)) { %></div><!-- end-of-style="display:flex; margin-left:55px;" --><% } %>
