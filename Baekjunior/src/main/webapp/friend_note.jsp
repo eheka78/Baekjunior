@@ -12,8 +12,8 @@
 function updateWindowHeight() {
     let friends_code_list_div = document.getElementById("friends_code_list");
     let friend_code_div = document.getElementById("friend_code");
-    friends_code_list_div.style.height = (window.innerHeight - 220) + "px";
-    friend_code_div.style.height = (window.innerHeight - 210 + 60) + "px";
+    friends_code_list_div.style.height = (window.innerHeight - 160) + "px";
+    friend_code_div.style.height = (window.innerHeight - 87) + "px";
     
     console.log("현재 window.innerHeight 값:", window.innerHeight);
 }
@@ -149,7 +149,7 @@ ResultSet rs = null;
 	
 	
 	
-	<section class="banner">
+	<section class="banner" style="padding:43px;">
 		<a href="#" class="logo"></a>
 	</section>
 	
@@ -221,6 +221,9 @@ ResultSet rs = null;
 			        .then(response => response.text()) // 서버에서 텍스트 응답 받기
 			        .then(data => {
 			        	let noteElement = document.getElementById("noteContent");
+			        	let noteElement_empty = document.getElementById("noteContent_empty");
+			        	noteElement_empty.style.display = "none"; // 모든 스타일 초기화
+			        	noteElement_empty.style = ""; // 모든 스타일 초기화
 			            noteElement.style = ""; // 모든 스타일 초기화
 			            noteElement.innerHTML = data; // 특정 영역 업데이트
 			        })
@@ -231,7 +234,7 @@ ResultSet rs = null;
 			<!-- 나타나는 div -->
 			<div id="friend_code" style="overflow-y:scroll;">
 				<div id="noteContent" style="text-align:center;">
-				<div style="margin-top:40vh;">Click on a list item,<br>and the note will appear here.</div>
+				<div id="noteContent_empty" style="margin-top:40vh; display:block;">Click on a list item,<br>and the note will appear here.</div>
 				</div>
 			</div>
 			
