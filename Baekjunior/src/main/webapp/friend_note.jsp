@@ -31,6 +31,12 @@ a{
 	color:black;
 }
 
+.friends_code_list:hover div {
+	letter-spacing:3px;
+	font-weight:bold;
+	transition:0.3s;
+}
+
  @-webkit-keyframes takent {
       0% {
          flex: 0;
@@ -154,28 +160,34 @@ ResultSet rs = null;
 			<div style="border-bottom: solid black 2px;">
 				<div style="margin:20px 20px 20px 40px; font-weight:bold;">Friend who solved LIST ▸</div>
 			</div>
-			<div id="friends_code_list" style="overflow-y:scroll;">
+			<div style="overflow-y:scroll;">
 
 	
 	<%
+	var num = 0;
 	try {
 		String sql = "SELECT * FROM problems WHERE problem_id=? ORDER BY submitDate DESC";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, problemId);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
+			num++;
 	%>
-				<div style="border-top: solid black 2px;">
-					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 5fr 1fr;">
+				<div class="friends_code_list" style="border-top: solid black 2px;">
+					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 1fr 10fr 2fr;">
+						<div style="display:table;">
+							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:15px;"><%=num %></div>
+						</div>
 						<div style="display: grid; grid-template-rows: 3fr 2fr;">
-							<div style="font-size: 20px; cursor: pointer;" 
-							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)">
-							    <a href="#"><%= rs.getString("user_id") %></a>
+							<div id="friend_code_user_id" style="font-size: 20px; cursor: pointer;" 
+							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)"><%= rs.getString("user_id") %>
 							</div>
 	
 							<div style="font-size: 15px;">Submit date: <%=rs.getDate("submitDate") %></div>
 						</div>
-						<div style="float:right;"><%=rs.getString("language") %></div>
+						<div style="display:table; float:right;">
+							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:20px;"><%=rs.getString("language") %></div>
+						</div>
 					</div>
 				</div>
 		
