@@ -328,6 +328,10 @@ ResultSet memoRs = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>"><%=rs.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
+					<div style="display:inline;">
 						Friends who solved :
 						<%
 						try {
@@ -347,7 +351,9 @@ ResultSet memoRs = null;
 				 			return;
 				 		}
 						%>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a></span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">
+							<a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a>
+						</span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
