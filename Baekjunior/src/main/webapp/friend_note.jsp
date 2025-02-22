@@ -11,9 +11,9 @@
 <script>
 function updateWindowHeight() {
     let friends_code_list_div = document.getElementById("friends_code_list");
-    let friend_code_list_div = document.getElementById("friend_code");
+    let friend_code_div = document.getElementById("friend_code");
     friends_code_list_div.style.height = (window.innerHeight - 220) + "px";
-    friend_code.style.height = (window.innerHeight - 210 + 60) + "px";
+    friend_code_div.style.height = (window.innerHeight - 210 + 60) + "px";
     
     console.log("현재 window.innerHeight 값:", window.innerHeight);
 }
@@ -31,7 +31,7 @@ a{
 	color:black;
 }
 
-.friends_code_list:hover div {
+.friends_code_list_item:hover div {
 	letter-spacing:3px;
 	font-weight:bold;
 	transition:0.3s;
@@ -160,7 +160,7 @@ ResultSet rs = null;
 			<div style="border-bottom: solid black 2px;">
 				<div style="margin:20px 20px 20px 40px; font-weight:bold;">Friend who solved LIST ▸</div>
 			</div>
-			<div style="overflow-y:scroll;">
+			<div id="friends_code_list" style="overflow-y:scroll;">
 
 	
 	<%
@@ -173,7 +173,7 @@ ResultSet rs = null;
 		while(rs.next()){
 			num++;
 	%>
-				<div class="friends_code_list" style="border-top: solid black 2px;">
+				<div class="friends_code_list_item" style="border-top: solid black 2px;">
 					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 1fr 10fr 2fr;">
 						<div style="display:table;">
 							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:15px;"><%=num %></div>
