@@ -13,68 +13,6 @@ a{
 	color:black;
 }
 </style>
-</head>
-
-<script type="text/javascript">
-	function updateWindowHeight() {
-	    let splitDiv1 = document.getElementById("split1");
-	    let splitDiv2 = document.getElementById("split2");
-	    splitDiv1.style.height = (window.innerHeight - 160) + "px";
-	    splitDiv2.style.height = (window.innerHeight - 160) + "px";
-	    
-	    console.log("현재 window.innerHeight 값:", window.innerHeight);
-	}
-	
-	// 페이지 로드 시 실행
-	window.onload = updateWindowHeight;
-	
-	// 창 크기가 변경될 때 실행
-	window.addEventListener("resize", updateWindowHeight);
-
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-	
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
-
-<script>	
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
 
 <script>
 <%
@@ -123,6 +61,73 @@ ResultSet rs6 = null;
 %>
 </script>
 
+</head>
+
+<script type="text/javascript">
+	function updateWindowHeight() {
+	    let splitDiv1 = document.getElementById("split1");
+	    let splitDiv2 = document.getElementById("split2");
+
+		if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
+		    splitDiv1.style.height = (window.innerHeight - 160) + "px";
+		    splitDiv2.style.height = (window.innerHeight - 160) + "px";
+		}
+	    console.log("현재 window.innerHeight 값:", window.innerHeight);
+	}
+	
+	// 페이지 로드 시 실행
+	window.onload = updateWindowHeight;
+	
+	// 창 크기가 변경될 때 실행
+	window.addEventListener("resize", updateWindowHeight);
+
+
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    window.location.href = "logout_do.jsp";
+			} else {
+	    	return false;
+			}
+	}
+	
+    function confirmDeletion(problemIdx) {
+        var result = confirm("정말 삭제하시겠습니까?");
+        if (result) {
+            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+        } else {
+            return false;
+        }
+    }
+    
+    
+	// 고정 여부 업데이트하는 함수
+	function updatePin(problemIdx) {
+	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+	    let fix = 0;
+	    
+		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+			pinIcon.style.display = 'none';
+			fix = 0;
+		} else {
+			pinIcon.style.display = 'inline-block';
+			fix = 1;
+		}
+	  
+		const xhr = new XMLHttpRequest();
+	    xhr.open("POST", "updatePin.jsp", true);
+	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+	            console.log(xhr.responseText);  
+	        }
+	    };
+	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+	}
+</script>
+
+
+
 <body>	
 	<header style="padding:0px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
@@ -140,8 +145,7 @@ ResultSet rs6 = null;
 				profileimg = rs.getString("savedFileName");
 				if(profileimg == null){
 					profileimg = "img/user.png";
-				}
-				else {
+				} else {
 					profileimg = "./upload/" + rs.getString("savedFileName");
 				}
 			}
@@ -162,8 +166,8 @@ ResultSet rs6 = null;
 			</div>
 		</div>
 		<%
-		pstmt.close();
-		rs.close();
+			pstmt.close();
+			rs.close();
 		} catch (SQLException e){
 			out.print(e);
 			return;
