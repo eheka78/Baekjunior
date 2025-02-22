@@ -69,8 +69,8 @@ ResultSet rs6 = null;
 	    let splitDiv2 = document.getElementById("split2");
 
 		if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
-		    splitDiv1.style.height = (window.innerHeight - 160) + "px";
-		    splitDiv2.style.height = (window.innerHeight - 160) + "px";
+		    splitDiv1.style.height = (window.innerHeight - 105) + "px";
+		    splitDiv2.style.height = (window.innerHeight - 105) + "px";
 		}
 	    console.log("현재 window.innerHeight 값:", window.innerHeight);
 	}
@@ -129,7 +129,7 @@ ResultSet rs6 = null;
 
 
 <body>	
-	<header>
+	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -184,15 +184,15 @@ ResultSet rs6 = null;
 		</script>
 	</header>
 	
-	<section class="banner" style="padding:40px 100px;">
-		<a href="index.jsp" class="logo"></a>
+	<section class="banner" style="padding:43px;">
+		<a href="#" class="logo"></a>
 	</section>
 	
 	<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
 	</div>
 	
-	<div style="display:grid; grid-template-columns: 1fr 1fr; margin-top:50px;">
+	<div style="display:grid; grid-template-columns: 1fr 1fr;">
 		<!-- 왼쪽 스크린 -->
 		
 		<!-- note가 나와야하는 경우 -->
@@ -208,7 +208,7 @@ ResultSet rs6 = null;
 				if(rs.next()){
 		%>
 		
-		<div id="split1" style="margin-top:20px; border-right:3px solid black; overflow-y:auto;">
+		<div id="split1" style="margin-top:10px; border-right:3px solid black; overflow-y:auto;">
 			<div style="margin:0 50px 0 80px;">
 				<div style="float:right;">
 					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
@@ -258,7 +258,7 @@ ResultSet rs6 = null;
 						</div> 
 						<div style="height:10px;"></div>
 						<div style="display:inline;">
-							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>"><%=rs.getString("problem_url") %></a></span>
+							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
 						</div> 
 						<div style="height:10px;"></div>
 					</div>
@@ -460,7 +460,7 @@ ResultSet rs6 = null;
 				if(rs2.next()){
 		%>
 	
-	<div id="split2" style="margin-top:20px; border-left:3px solid black; overflow-y:auto;">
+	<div id="split2" style="margin-top:10px; border-left:3px solid black; overflow-y:auto;">
 		<div style="width:80%; margin:0 50px;">
 			<div style="float:right;">
 				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
@@ -510,7 +510,7 @@ ResultSet rs6 = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>"><%=rs2.getString("problem_url") %></a></span>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs2.getString("problem_url") %></a></span>
 					</div> 
 					<div style="height:10px;"></div>
 				</div>
