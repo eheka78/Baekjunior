@@ -91,7 +91,7 @@ PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
 <body>	
-	<header style="padding:0 100px;">
+	<header style="padding:5px 100px;" >
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		try {
@@ -105,7 +105,7 @@ ResultSet rs = null;
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src="img/user.png" style="width:30px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>

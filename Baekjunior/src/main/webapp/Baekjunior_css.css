@@ -25,7 +25,7 @@ header{
 	z-index:100000;
 	background:white;
 	border-bottom:thick double black;
-	padding:30px 100px;
+	padding:25px 100px;
 }
 
 header.sticky{
