@@ -166,8 +166,8 @@ ResultSet rs = null;
 	<%
 	var num = 0;
 	try {
-		String sql = "SELECT * FROM problems WHERE problem_id=? ORDER BY submitDate DESC";
-		pstmt = con.prepareStatement(sql);
+		String sql2 = "SELECT * FROM problems WHERE problem_id=? ORDER BY submitDate DESC";
+		pstmt = con.prepareStatement(sql2);
 		pstmt.setInt(1, problemId);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
