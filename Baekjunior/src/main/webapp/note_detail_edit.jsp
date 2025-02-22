@@ -44,7 +44,7 @@ ResultSet rs = null;
     }
 </script>
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -68,7 +68,7 @@ ResultSet rs = null;
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -205,9 +205,6 @@ ResultSet rs = null;
 					<!-- 언어 종류 -->
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-					</div> 
-					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
 				</div>
 			</div>	
@@ -264,13 +261,13 @@ ResultSet rs = null;
 					<div class="container_div" style="padding:5px;">
 		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
 		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <a class="delete_btn" href="#">X</a>
+		                <a class="delete_btn" href="#"><img src="img/x.png"></a>
 		        	</div>
 		        <% } %>
 		        </div>
 		        
-		        <div style="padding:5px; margin-bottom:20px;">
-		            <a id="add_btn" href="#">+</a>
+		        <div style="padding:10px 5px 5px 5px; margin-bottom:20px;">
+		            <a id="add_btn" href="#" style="padding:0px; margin:0px;"><img src="img/plus.png" style="height:20px;"></a>
 		        </div>
 			</div>
 			

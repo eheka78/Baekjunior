@@ -13,68 +13,6 @@ a{
 	color:black;
 }
 </style>
-</head>
-
-<script type="text/javascript">
-	function updateWindowHeight() {
-	    let splitDiv1 = document.getElementById("split1");
-	    let splitDiv2 = document.getElementById("split2");
-	    splitDiv1.style.height = (window.innerHeight - 160) + "px";
-	    splitDiv2.style.height = (window.innerHeight - 160) + "px";
-	    
-	    console.log("현재 window.innerHeight 값:", window.innerHeight);
-	}
-	
-	// 페이지 로드 시 실행
-	window.onload = updateWindowHeight;
-	
-	// 창 크기가 변경될 때 실행
-	window.addEventListener("resize", updateWindowHeight);
-
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-	
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
-
-<script>	
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
 
 <script>
 <%
@@ -123,8 +61,75 @@ ResultSet rs6 = null;
 %>
 </script>
 
+</head>
+
+<script type="text/javascript">
+	function updateWindowHeight() {
+	    let splitDiv1 = document.getElementById("split1");
+	    let splitDiv2 = document.getElementById("split2");
+
+		if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
+		    splitDiv1.style.height = (window.innerHeight - 160) + "px";
+		    splitDiv2.style.height = (window.innerHeight - 160) + "px";
+		}
+	    console.log("현재 window.innerHeight 값:", window.innerHeight);
+	}
+	
+	// 페이지 로드 시 실행
+	window.onload = updateWindowHeight;
+	
+	// 창 크기가 변경될 때 실행
+	window.addEventListener("resize", updateWindowHeight);
+
+
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    window.location.href = "logout_do.jsp";
+			} else {
+	    	return false;
+			}
+	}
+	
+    function confirmDeletion(problemIdx) {
+        var result = confirm("정말 삭제하시겠습니까?");
+        if (result) {
+            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+        } else {
+            return false;
+        }
+    }
+    
+    
+	// 고정 여부 업데이트하는 함수
+	function updatePin(problemIdx) {
+	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+	    let fix = 0;
+	    
+		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+			pinIcon.style.display = 'none';
+			fix = 0;
+		} else {
+			pinIcon.style.display = 'inline-block';
+			fix = 1;
+		}
+	  
+		const xhr = new XMLHttpRequest();
+	    xhr.open("POST", "updatePin.jsp", true);
+	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+	            console.log(xhr.responseText);  
+	        }
+	    };
+	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+	}
+</script>
+
+
+
 <body>	
-	<header style="padding:0px 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -140,15 +145,14 @@ ResultSet rs6 = null;
 				profileimg = rs.getString("savedFileName");
 				if(profileimg == null){
 					profileimg = "img/user.png";
-				}
-				else {
+				} else {
 					profileimg = "./upload/" + rs.getString("savedFileName");
 				}
 			}
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -162,8 +166,8 @@ ResultSet rs6 = null;
 			</div>
 		</div>
 		<%
-		pstmt.close();
-		rs.close();
+			pstmt.close();
+			rs.close();
 		} catch (SQLException e){
 			out.print(e);
 			return;
@@ -251,11 +255,12 @@ ResultSet rs6 = null;
 						<!-- 언어 종류 -->
 						<div style="display:inline;">
 							<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-						</div>
-						<!-- 친구 -->
+						</div> 
+						<div style="height:10px;"></div>
 						<div style="display:inline;">
-							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						</div>
+							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>"><%=rs.getString("problem_url") %></a></span>
+						</div> 
+						<div style="height:10px;"></div>
 					</div>
 				</div>	
 				
@@ -266,7 +271,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -397,9 +402,7 @@ ResultSet rs6 = null;
 		 				
 		 				if (rs4.next() && rs4.getInt(1) <= 0) {
 		 					%>
-		 					<div>
-		 						not exist
-		 					</div>
+		 					<div></div>
 		 					<%
 		 				} else {
 		 					while (rs3.next()) {
@@ -504,10 +507,12 @@ ResultSet rs6 = null;
 					</div>
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs2.getString("language") %></span>
-					</div>
+					</div> 
+					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-					</div>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>"><%=rs2.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
 				</div>
 			</div>	
 			
@@ -520,7 +525,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -647,9 +652,7 @@ ResultSet rs6 = null;
 	 				
 	 				if (rs6.next() && rs6.getInt(1) <= 0) {
 	 					%>
-	 					<div>
-	 						not exist
-	 					</div>
+	 					<div></div>
 	 					<%
 	 				} else {
 	 					while (rs5.next()) {

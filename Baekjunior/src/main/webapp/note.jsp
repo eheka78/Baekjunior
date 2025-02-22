@@ -86,7 +86,7 @@ ResultSet memoRs = null;
     }
 </script>
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -110,8 +110,8 @@ ResultSet memoRs = null;
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
@@ -328,6 +328,10 @@ ResultSet memoRs = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>"><%=rs.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
+					<div style="display:inline;">
 						Friends who solved :
 						<%
 						try {
@@ -347,7 +351,9 @@ ResultSet memoRs = null;
 				 			return;
 				 		}
 						%>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a></span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">
+							<a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a>
+						</span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
@@ -363,7 +369,7 @@ ResultSet memoRs = null;
 					
 					if(subMemoStr == null){
 						%>
-						<div>not exist</div><%
+						<div></div><%
 					}
 					else{
 				%>

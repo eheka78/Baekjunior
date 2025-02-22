@@ -193,7 +193,7 @@ ResultSet countRs = null;
 </script>
 
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		PreparedStatement pstmt = null;
@@ -219,11 +219,11 @@ ResultSet countRs = null;
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>

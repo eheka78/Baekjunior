@@ -84,10 +84,10 @@ try {
 </script>
 
 <body>
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src="img/user.png" style="width:30px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
