@@ -91,7 +91,6 @@ try {
 		<div class="menu">
 			<div class="menu_box">
 				<ul style="min-width:150px;">
-					<li><a href="#">내 활동</a></li>
 					<li><a href="editProfile.jsp">프로필 수정</a></li>
 				</ul>
 			</div>
@@ -106,21 +105,21 @@ try {
 			<div class="select_div">
 				<Button class="note_div" onclick="location.href='gather_note.jsp'">
 					<div>
-						<h3>노트</h3>
+						<h3>NOTE</h3>
 						<p><%=noteCount %></p>
 						<i class="fa-solid fa-note-sticky fa-lg"></i>
 					</div>
 				</Button>
-				<Button class="draft_div" onclick="location.href='#'">
+				<Button class="draft_div" onclick="location.href='gather_category.jsp'">
 					<div>
-						<h3>임시저장</h3>
+						<h3>CATEGORY</h3>
 						<p>3</p>
 						<i class="fa-solid fa-box-open fa-lg"></i>
 					</div>
 				</Button>
 				<Button class="bookmark_div" onclick="location.href='#'">
 					<div>
-						<h3>북마크</h3>
+						<h3>BOOKMARK</h3>
 						<p><%=bookmarkCount %></p>
 						<i class="fa-solid fa-bookmark fa-lg"></i>
 					</div>

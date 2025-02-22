@@ -113,13 +113,30 @@ ResultSet levelRs = null;
 				</ul>
 			</div>
 		</div>
-		
+		<script>
+		function checkAll() {
+			const checkboxes = document.getElementsByName("deletenoteitem");
+			let allcheck = document.getElementById("allCheck").innerHTML;
+			if (allcheck == "전체선택") {
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = true
+				})
+				document.getElementById("allCheck").innerHTML = "전체해제";
+			}
+			else if (allcheck == "전체해제") {
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = false
+				})
+				document.getElementById("allCheck").innerHTML = "전체선택";
+			}
+		}
+		</script>
 		<div class="inner_contents" style="margin-top:35px;">
 		<form action="checkdelete_do.jsp" onsubmit="return validateForm()" method="post" name="deletenote">
 			<div class="inner_header">
 				<h1 style="font-size:30px;">노트</h1>
 				<div>
-					<button onclick="document.getElementById('deletenoteitem')" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
+					<button type="button" onclick="checkAll()" id="allCheck" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
 					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;">
 				</div>
 			</div>

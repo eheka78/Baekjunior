@@ -124,10 +124,7 @@ try {
 			<div class="menu_box">
 				<ul style="min-width:150px;">
 					<li>
-						<a href="#">내 활동</a>
-					</li>
-					<li>
-						<a href="editProfile.jsp">프로필 수정</a>
+						<a href="MyPage.jsp">내 활동</a>
 					</li>
 				</ul>
 			</div>

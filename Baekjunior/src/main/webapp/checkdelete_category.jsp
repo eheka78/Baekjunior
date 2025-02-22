@@ -39,56 +39,11 @@ PreparedStatement problemCountPstmt = null;
 ResultSet countRs = null;
 PreparedStatement categoryPstmt = null;
 ResultSet categoryRs = null;
+PreparedStatement cateNoteCountPstmt = null;
+ResultSet cateNoteRs = null;
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 %>
-
-<script type="text/javascript">
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
-
-<script>
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
-
 <body style="min-height:100vh;">
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
@@ -115,7 +70,7 @@ ResultSet levelRs = null;
 					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -152,7 +107,7 @@ ResultSet levelRs = null;
 			<div class="menu_box">
 				<ul style="min-width:150px;">
 					<li>
-						<a href="MyPage.jsp">내 활동</a>
+						<a href="#">내 활동</a>
 					</li>
 					<li>
 						<a href="editProfile.jsp">프로필 수정</a>
@@ -160,35 +115,56 @@ ResultSet levelRs = null;
 				</ul>
 			</div>
 		</div>
+		<script>
+		function checkAll() {
+			const checkboxes = document.getElementsByName("deletecateitem");
+			let allcheck = document.getElementById("allCheck").innerHTML;
+			if (allcheck == "전체선택") {
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = true
+				})
+				document.getElementById("allCheck").innerHTML = "전체해제";
+			}
+			else if (allcheck == "전체해제") {
+				checkboxes.forEach((checkbox) => {
+					checkbox.checked = false
+				})
+				document.getElementById("allCheck").innerHTML = "전체선택";
+			}
+		}
+		</script>
 		<div class="inner_contents" style="margin-top:35px;">
+		<form action="checkdelete_cate_do.jsp" onsubmit="return validateForm()" method="post" name="deletecate">
 			<div class="inner_header">
-				<h1 style="font-size:30px;">NOTE</h1>
-				<button onclick="location.href='checkdelete_note.jsp'" style="width:90px;height:40px;border-radius:40px;">선택</button>
+				<h1 style="font-size:30px;">CATEGORY</h1>
+				<div>
+					<button type="button" onclick="checkAll()" id="allCheck" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
+					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;">
+				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
 				<table>
 					<tr>
-					  <th>#</th>
-					  <th>제목</th>
-					  <th></th>
-					  <th style="width:100px;">설정</th>
+					  <th>분류</th>
+					  <th>메모</th>
+					  <th>노트 수</th>
+					  <th style="width:100px;"></th>
 					</tr>
 		 		<%
 		 		if (!userId.equals("none")) {
 		 			try {
 		 				
-		 				// 문제 선택
-		 				String problemQuery = "SELECT * FROM problems WHERE user_id=? ORDER BY is_fixed DESC, " + sortClause;
-		 				problemPstmt = con.prepareStatement(problemQuery);
-		 				problemPstmt.setString(1, userId);
-		 				problemRs = problemPstmt.executeQuery();
+		 				// 카테고리 선택
+		 				String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+		 				categoryPstmt = con.prepareStatement(categoryQuery);
+						categoryPstmt.setString(1, userId);
+						categoryRs = categoryPstmt.executeQuery();
 						
-		 				// 등록된 문제 수 세기
-						String problemCountQuery = "SELECT COUNT(*) FROM problems WHERE user_id=?";
+						// 등록된 카테고리 수 세기
+						String problemCountQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
 						problemCountPstmt = con.prepareStatement(problemCountQuery);
 						problemCountPstmt.setString(1, userId);
 						countRs = problemCountPstmt.executeQuery();
-		 			
 		 				if (countRs.next() && countRs.getInt(1) <= 0) {
 		 					%>
 		 					</table>
@@ -198,29 +174,30 @@ ResultSet levelRs = null;
 		 					<%
 		 				} else {
 		 					// 고정된 문제 먼저 출력
-		 					while (problemRs.next()) {
+		 					while(categoryRs.next()) {
+		 						//해당 카테고리와 관련된 노트 개수
+		 						String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
+		 						cateNoteCountPstmt = con.prepareStatement(sql);
+		 						cateNoteCountPstmt.setString(1, userId);
+		 						cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
+		 						cateNoteRs = cateNoteCountPstmt.executeQuery();
+		 						int catenotecount = 0;
+		 						if(cateNoteRs.next()){
+		 							catenotecount = cateNoteRs.getInt(1);
+		 						}
 		 		%>
 				  <tr class="table_item">
-				    <td style="padding-left: 10px;"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
-				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
-				    
-				    <td>
-					    <% if(problemRs.getInt("is_fixed") == 1) { %>
-				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="width:15px;">
-				    	<% } else { %>
-				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="display:none;width:15px;">
-				    	<% } %>
-			    	</td>
-			    	<td style="text-align:right;">
-			    		<div class="content_set" style="position:relative;">
-			    		<button class="content_set_b"><img src="img/....png"></button>
-			    			<ul style="width:180px;top:15px;right:0px;">
-				    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
-				    		</ul>
-				    	</div>
-			    	</td>
+				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" style="margin-right:10px;">
+				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
+				    		<span><%=categoryRs.getString("algorithm_name") %></span>
+				    	</a>
+				    </td>
+				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    <span>&nbsp;&nbsp;<%=categoryRs.getString("algorithm_memo") %></span>
+				    </td>
+				    <td><%=catenotecount%></td>
+			    	<td style="text-align:right;"></td>
 				  </tr>
 		 		<%
 		 					}			
@@ -232,6 +209,10 @@ ResultSet levelRs = null;
 						if(problemPstmt != null) problemPstmt.close();
 						if(problemRs != null) problemRs.close();
 						if(problemCountPstmt != null) problemCountPstmt.close();
+						if(categoryPstmt != null) categoryPstmt.close();
+						if(categoryRs != null) categoryRs.close();
+						if(cateNoteCountPstmt != null) cateNoteCountPstmt.close();
+						if(cateNoteRs != null) cateNoteRs.close();
 						if(countRs != null) countRs.close();
 						if(levelPstmt != null) levelPstmt.close();
 						if(levelRs != null) levelRs.close();
@@ -241,6 +222,7 @@ ResultSet levelRs = null;
 				</ul>
 				</table>
 			</div>
+		</form>
 		</div>
 	</div>
 	
