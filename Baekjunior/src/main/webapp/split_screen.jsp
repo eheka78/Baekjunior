@@ -76,10 +76,25 @@ ResultSet rs6 = null;
 	}
 	
 	// 페이지 로드 시 실행
-	window.onload = updateWindowHeight;
-	
+	window.addEventListener("DOMContentLoaded", updateWindowHeight);
 	// 창 크기가 변경될 때 실행
 	window.addEventListener("resize", updateWindowHeight);
+	
+	
+	/* profile top 위치 */
+	function updateProfileSelectTopLoc() {
+		let profile_div = document.getElementById("profile");
+		let myprodiv_div = document.getElementById("myprodiv");
+		
+
+		let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+		 myprodiv_div.style.top = profile_div_bottom + "px";
+		console.log("top2: " + profile_div_bottom);
+		
+	}
+
+	window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+	window.addEventListener("resize", updateProfileSelectTopLoc);
 
 
 	function confirmLogout() {
@@ -151,7 +166,7 @@ ResultSet rs6 = null;
 			}
 
 		%>
-		<div>
+		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
@@ -161,8 +176,7 @@ ResultSet rs6 = null;
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
