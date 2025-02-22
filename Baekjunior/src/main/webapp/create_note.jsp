@@ -298,10 +298,10 @@ try {
 	
 	<div style="width:80%; margin:0 auto; margin-top:30px;">
 		<div style="float:right;">
-			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; margin-right:10px;"
+			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; margin-right:10px; cursor:pointer;"
 					onclick="return fnCheck('save_and_note')">
 				Save and Note</button> 
-			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px;"
+			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; cursor:pointer;"
 					onclick="return fnCheck('save')">Save</button>
 		</div>
 	</div>

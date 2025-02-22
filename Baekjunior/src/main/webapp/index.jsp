@@ -527,7 +527,7 @@ ResultSet countRs = null;
                   	memoRs = memoPstmt.executeQuery();
                   	if(memoRs.next()) {
                   %>
-                  	<%=Util.nullChk(memoRs.getString("algorithm_memo"), "not exist")%>
+                  	<%=Util.nullChk(memoRs.getString("algorithm_memo"), "")%>
                   <% 
                   	} 
                   	
@@ -698,12 +698,8 @@ ResultSet countRs = null;
 			 			</li>
  			<%
  					}			
- 				} else {
+ 				} 
  			%>
-		 			<!--  <div>
-		 				not exist
-		 			</div> -->
- 			<% } %>
 				</ul><!-- end-of-list -->
 			</div><!-- end-of-list_group -->
 	<% if("category".equals(pageType)) { %></div><!-- end-of-style="display:flex; margin-left:55px;" --><% } %>

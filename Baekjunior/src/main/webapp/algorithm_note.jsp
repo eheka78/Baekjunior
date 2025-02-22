@@ -199,13 +199,7 @@ try {
 						problemPstmt.setString(2, algorithmSort);
 						
 						problemRs = problemPstmt.executeQuery();
-						if(!problemRs.next()) {
-				%>
-						<div>
-		 					not exist
-		 				</div>
-		 		<%
-						} else {
+						if(problemRs.next()) {
 							problemRs.beforeFirst();
 							while(problemRs.next()) {
 		 		%>
