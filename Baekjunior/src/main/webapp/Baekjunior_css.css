@@ -385,6 +385,17 @@ nav a:hover{
 	box-shadow:inset 0 -23px 0 #FF654D;
 }
 
+/* 2줄 이상일 떄 ...으로 바꿔주는 css */
+.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 최대 2줄 표시 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word; /* 긴 단어(띄어쓰기 없는 문자)도 자동 줄바꿈 */
+  white-space: normal; /* 기본적으로 여러 줄 허용 */
+}
+
 input[type='radio'] {
   appearance: none;
   width: 15px;
