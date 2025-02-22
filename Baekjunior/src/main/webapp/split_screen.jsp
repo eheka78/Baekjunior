@@ -437,7 +437,7 @@ ResultSet rs6 = null;
 		    				<li><a onclick="confirmDeletion('<%=rs3.getInt("problem_idx") %>')" href="#">Delete</a></li>
 		    			</ul>
 			    		</div>
-		 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"><%=rs3.getString("memo_title") %></a></div>
+		 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"><%=rs3.getString("memo_title") %></a></div>
 		 			</li>
 		 		<%
 		 					}
@@ -689,7 +689,7 @@ ResultSet rs6 = null;
 	    				<li><a onclick="confirmDeletion('<%=rs5.getInt("problem_idx") %>')" href="#">Delete</a></li>
 	    			</ul>
 		    	</div>
-	 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"><%=rs5.getString("memo_title") %></a></div>
+	 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"><%=rs5.getString("memo_title") %></a></div>
 	 			</li>
 	 		<%
 	 					}
