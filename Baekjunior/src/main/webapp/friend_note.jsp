@@ -8,10 +8,33 @@
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 
+<script>
+function updateWindowHeight() {
+    let friends_code_list_div = document.getElementById("friends_code_list");
+    let friend_code_list_div = document.getElementById("friend_code");
+    friends_code_list_div.style.height = (window.innerHeight - 220) + "px";
+    friend_code.style.height = (window.innerHeight - 210 + 60) + "px";
+    
+    console.log("현재 window.innerHeight 값:", window.innerHeight);
+}
+
+// 페이지 로드 시 실행
+window.onload = updateWindowHeight;
+
+// 창 크기가 변경될 때 실행
+window.addEventListener("resize", updateWindowHeight);
+</script>
+
 <style>
 a{
 	text-decoration: none;
 	color:black;
+}
+
+.friends_code_list:hover div {
+	letter-spacing:3px;
+	font-weight:bold;
+	transition:0.3s;
 }
 
  @-webkit-keyframes takent {
@@ -51,7 +74,6 @@ a{
       animation-duration: 2s;
    }
 </style>
-
 
 </head>
 <%
@@ -133,33 +155,39 @@ ResultSet rs = null;
 	
 	
 	
-	<div style="display: grid; grid-template-columns: 2fr 5fr; height:78vh;">
-		<div style="background-color:white;">
+	<div style="display: grid; grid-template-columns: 2fr 5fr;">
+		<div  style="background-color:white;">
 			<div style="border-bottom: solid black 2px;">
-				<div style="margin:20px 20px 20px 40px;">Friend who solved LIST ▸</div>
+				<div style="margin:20px 20px 20px 40px; font-weight:bold;">Friend who solved LIST ▸</div>
 			</div>
 			<div style="overflow-y:scroll;">
 
 	
 	<%
+	var num = 0;
 	try {
 		String sql = "SELECT * FROM problems WHERE problem_id=? ORDER BY submitDate DESC";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setInt(1, problemId);
 		rs = pstmt.executeQuery();
 		while(rs.next()){
+			num++;
 	%>
-				<div style="border-top: solid black 2px;">
-					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 5fr 1fr;">
+				<div class="friends_code_list" style="border-top: solid black 2px;">
+					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 1fr 10fr 2fr;">
+						<div style="display:table;">
+							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:15px;"><%=num %></div>
+						</div>
 						<div style="display: grid; grid-template-rows: 3fr 2fr;">
-							<div style="font-size: 20px; cursor: pointer;" 
-							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)">
-							    <a href="#"><%= rs.getString("user_id") %></a>
+							<div id="friend_code_user_id" style="font-size: 20px; cursor: pointer;" 
+							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)"><%= rs.getString("user_id") %>
 							</div>
 	
 							<div style="font-size: 15px;">Submit date: <%=rs.getDate("submitDate") %></div>
 						</div>
-						<div style="float:right;"><%=rs.getString("language") %></div>
+						<div style="display:table; float:right;">
+							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:20px;"><%=rs.getString("language") %></div>
+						</div>
 					</div>
 				</div>
 		
@@ -167,7 +195,7 @@ ResultSet rs = null;
 		}
 
 	%>
-		</div>
+			</div>
 		</div>
 			
 			
@@ -201,7 +229,7 @@ ResultSet rs = null;
 			</script>
 			
 			<!-- 나타나는 div -->
-			<div style="overflow-y:scroll;">
+			<div id="friend_code" style="overflow-y:scroll;">
 				<div id="noteContent" style="text-align:center;">
 				<div style="height:40vh;"></div>
 				<div>Click on a list item,<br>and the note will appear here.</div>
