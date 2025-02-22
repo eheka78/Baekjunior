@@ -221,9 +221,6 @@ ResultSet rs = null;
 			        .then(response => response.text()) // 서버에서 텍스트 응답 받기
 			        .then(data => {
 			        	let noteElement = document.getElementById("noteContent");
-			        	let noteElement_empty = document.getElementById("noteContent_empty");
-			        	noteElement_empty.style.display = "none"; // 모든 스타일 초기화
-			        	noteElement_empty.style = ""; // 모든 스타일 초기화
 			            noteElement.style = ""; // 모든 스타일 초기화
 			            noteElement.innerHTML = data; // 특정 영역 업데이트
 			        })
