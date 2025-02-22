@@ -47,6 +47,7 @@ ResultSet rs = null;
 	<header style="padding:0 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
+		String profileimg = null;
 		try {
 			if(userId != "none") {
 				String sql = "SELECT * FROM users WHERE user_id=?";
@@ -54,20 +55,30 @@ ResultSet rs = null;
 				pstmt.setString(1, userId);
 				rs = pstmt.executeQuery();
 				rs.next();
+
+				// 프로필이미지 설정 전인 경우 기본이미지 뜨도록 처리
+				profileimg = rs.getString("savedFileName");
+				if(profileimg == null){
+					profileimg = "img/user.png";
+				}
+				else {
+					profileimg = "./upload/" + rs.getString("savedFileName");
+				}
 			}
 
 		%>
 		<div>
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
-				<li><img src="img/user.png" style="width:30px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
 				<div id="myprofileimgborder">
-					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
+						로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -105,7 +116,7 @@ ResultSet rs = null;
 			if(rs.next()){
 	%>
 	<section class="banner">
-		<a href="#" class="logo"></a>
+		<a href="index.jsp" class="logo"></a>
 	</section>
 	
 	

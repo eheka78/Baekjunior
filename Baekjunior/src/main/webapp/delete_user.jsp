@@ -22,6 +22,7 @@ if(session != null && session.getAttribute("login.id") != null) {
 Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
+String profileimg = null;
 try {
 	if(userId != "none") {
 		String sql = "SELECT * FROM users WHERE user_id=?";
@@ -29,11 +30,20 @@ try {
 		pstmt.setString(1, userId);
 		rs = pstmt.executeQuery();
 		rs.next();
+
+		// 프로필이미지 설정 전인 경우 기본이미지 뜨도록 처리
+		profileimg = rs.getString("savedFileName");
+		if(profileimg == null){
+			profileimg = "img/user.png";
+		}
+		else {
+			profileimg = "./upload/" + rs.getString("savedFileName");
+		}
 	}
 %>
 <body>
 	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
+		<a href="index.jsp" class="logo">Baekjunior</a>
 		<div id="main_menu">
 			<ul>
 				<li class="main_menu_Storage"><a href="#">Storage</a>
@@ -76,15 +86,16 @@ try {
 		</div>
 		<div>
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
-				<li><img src="img/user.png" style="width:30px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
 				<div id="myprofileimgborder">
-					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
+						로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -120,7 +131,7 @@ try {
 		<div class="menu">
 			<div class="menu_box">
 				<ul>
-					<li><a href="#">내 활동</a></li>
+					<li><a href="MyPage.jsp">내 활동</a></li>
 					<li><a href="editProfile.jsp">프로필 수정</a></li>
 				</ul>
 			</div>
