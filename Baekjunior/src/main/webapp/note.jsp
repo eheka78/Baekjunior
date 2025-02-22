@@ -363,7 +363,7 @@ ResultSet memoRs = null;
 					
 					if(subMemoStr == null){
 						%>
-						<div>not exist</div><%
+						<div></div><%
 					}
 					else{
 				%>
