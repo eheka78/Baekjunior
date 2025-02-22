@@ -129,7 +129,7 @@ ResultSet rs6 = null;
 
 
 <body>	
-	<header>
+	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -184,15 +184,15 @@ ResultSet rs6 = null;
 		</script>
 	</header>
 	
-	<section class="banner" style="padding:40px 100px;">
-		<a href="index.jsp" class="logo"></a>
+	<section class="banner" style="padding:43px;">
+		<a href="#" class="logo"></a>
 	</section>
 	
 	<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
 	</div>
 	
-	<div style="display:grid; grid-template-columns: 1fr 1fr; margin-top:50px;">
+	<div style="display:grid; grid-template-columns: 1fr 1fr; margin-top:10px;">
 		<!-- 왼쪽 스크린 -->
 		
 		<!-- note가 나와야하는 경우 -->
