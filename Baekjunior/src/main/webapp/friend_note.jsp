@@ -174,19 +174,19 @@ ResultSet rs = null;
 			num++;
 	%>
 				<div class="friends_code_list_item" style="border-top: solid black 2px;">
-					<div style="display: grid; margin:20px 20px 20px 40px; grid-template-columns: 1fr 10fr 2fr;">
+					<div style="display: grid; margin:15px 20px 15px 40px; grid-template-columns: 1fr 10fr 2fr;">
 						<div style="display:table;">
 							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:15px;"><%=num %></div>
 						</div>
 						<div style="display: grid; grid-template-rows: 3fr 2fr;">
-							<div id="friend_code_user_id" style="font-size: 20px; cursor: pointer;" 
-							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>)"><%= rs.getString("user_id") %>
+							<div id="friend_code_user_id" style="font-size: 18px; cursor: pointer;" 
+							     onclick="ajax_fetch(&quot;<%= rs.getString("user_id") %>&quot;, <%= rs.getInt("problem_idx") %>, <%=num %>)"><%= rs.getString("user_id") %>
 							</div>
 	
-							<div style="font-size: 15px;">Submit date: <%=rs.getDate("submitDate") %></div>
+							<div style="font-size: 13px;">Submit date: <%=rs.getDate("submitDate") %></div>
 						</div>
 						<div style="display:table; float:right;">
-							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:20px;"><%=rs.getString("language") %></div>
+							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:18px;"><%=rs.getString("language") %></div>
 						</div>
 					</div>
 				</div>
@@ -215,9 +215,8 @@ ResultSet rs = null;
 			<!-- 오른쪽 친구 노트 출력 화면 -->
 			<!-- 처리 script -->
 			<script>
-			function ajax_fetch(friend, problemIdx) {
-				console.log("AA: " + friend + " \nBB: " + problemIdx);
-				fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx)
+			function ajax_fetch(friend, problemIdx, num) {
+				fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx + "&num=" + num)
 			        .then(response => response.text()) // 서버에서 텍스트 응답 받기
 			        .then(data => {
 			        	let noteElement = document.getElementById("noteContent");
@@ -231,8 +230,7 @@ ResultSet rs = null;
 			<!-- 나타나는 div -->
 			<div id="friend_code" style="overflow-y:scroll;">
 				<div id="noteContent" style="text-align:center;">
-				<div style="height:40vh;"></div>
-				<div>Click on a list item,<br>and the note will appear here.</div>
+				<div style="margin-top:40vh;">Click on a list item,<br>and the note will appear here.</div>
 				</div>
 			</div>
 			

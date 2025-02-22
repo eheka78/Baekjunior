@@ -61,6 +61,7 @@ log("CC: " + request.getParameter("friend") + " \nDD: " + request.getParameter("
 
 String friend = request.getParameter("friend");
 int problemIdx = Integer.parseInt(request.getParameter("problem_idx"));
+int num = Integer.parseInt(request.getParameter("num"));
 
 
 Connection con = DsCon.getConnection();
@@ -91,8 +92,9 @@ ResultSet rs = null;
 		<div style="width:80%; margin:0 auto;">
 			<div>
 				<div>
+					<div style="font-size:15px;">[ <%=num %>. <%=rs.getString("user_id") %> ]</div>
 					<div style="display:inline; width:80%; font-size:30px; font-weight:bold;">
-						#<span><%=rs.getInt("problem_id") %></span> : <span><%=rs.getString("problem_title") %></span> 
+						#<span><%=rs.getInt("problem_id") %> : <%=rs.getString("problem_title") %></span> 
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						Submit Date : <span><%=rs.getDate("submitDate") %></span>
