@@ -157,7 +157,7 @@ ResultSet rs = null;
 	
 	<div style="display: grid; grid-template-columns: 2fr 5fr;">
 		<div  style="background-color:white;">
-			<div style="border-bottom: solid black 2px;">
+			<div style="border-bottom: solid black 3px;">
 				<div style="margin:20px 20px 20px 40px; font-weight:bold;">Friend who solved LIST ▸</div>
 			</div>
 			<div id="friends_code_list" style="overflow-y:scroll;">
@@ -173,7 +173,7 @@ ResultSet rs = null;
 		while(rs.next()){
 			num++;
 	%>
-				<div class="friends_code_list_item" style="border-top: solid black 2px;">
+				<div class="friends_code_list_item" <%if(num != 1){%>style="border-top: solid black 2px;"<%} %>>
 					<div style="display: grid; margin:15px 20px 15px 40px; grid-template-columns: 1fr 10fr 2fr;">
 						<div style="display:table;">
 							<div style="vertical-align:middle; display:table-cell; text-alignn:center; font-size:15px;"><%=num %></div>
