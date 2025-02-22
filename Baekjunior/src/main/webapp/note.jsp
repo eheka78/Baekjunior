@@ -195,7 +195,7 @@ ResultSet memoRs = null;
                   	memoRs = memoPstmt.executeQuery();
                   	if(memoRs.next()) {
                   %>
-                  <%=Util.nullChk(memoRs.getString("algorithm_memo"), "not exist")%>
+                  <%=Util.nullChk(memoRs.getString("algorithm_memo"), "")%>
                   <% } %>
                </div>
                <!-- editablememo 내용 수정할때마다 받아오기 -->
