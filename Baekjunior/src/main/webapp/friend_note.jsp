@@ -91,7 +91,7 @@ PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
 <body>	
-	<header style="padding:5px 100px;" >
+	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		try {
