@@ -13,13 +13,6 @@ a{
 	color:black;
 }
 
-a:hover, 
-ul > li:hover{
-	letter-spacing:3px;
-	font-weight:bold;
-	transition:0.3s;
-}
-
  @-webkit-keyframes takent {
       0% {
          flex: 0;
