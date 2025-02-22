@@ -39,6 +39,8 @@ PreparedStatement problemCountPstmt = null;
 ResultSet countRs = null;
 PreparedStatement categoryPstmt = null;
 ResultSet categoryRs = null;
+PreparedStatement cateNoteCountPstmt = null;
+ResultSet cateNoteRs = null;
 PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 %>
@@ -162,33 +164,32 @@ ResultSet levelRs = null;
 		</div>
 		<div class="inner_contents" style="margin-top:35px;">
 			<div class="inner_header">
-				<h1 style="font-size:30px;">NOTE</h1>
-				<button onclick="location.href='checkdelete_note.jsp'" style="width:90px;height:40px;border-radius:40px;">선택</button>
+				<h1 style="font-size:30px;">CATEGORY</h1>
+				<button onclick="location.href='checkdelete_category.jsp'" style="width:90px;height:40px;border-radius:40px;">선택</button>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
 				<table>
 					<tr>
-					  <th>#</th>
-					  <th>제목</th>
-					  <th></th>
-					  <th style="width:100px;">설정</th>
+					  <th>분류</th>
+					  <th>메모</th>
+					  <th>노트 수</th>
+					  <th style="width:100px;"></th>
 					</tr>
 		 		<%
 		 		if (!userId.equals("none")) {
 		 			try {
 		 				
-		 				// 문제 선택
-		 				String problemQuery = "SELECT * FROM problems WHERE user_id=? ORDER BY is_fixed DESC, " + sortClause;
-		 				problemPstmt = con.prepareStatement(problemQuery);
-		 				problemPstmt.setString(1, userId);
-		 				problemRs = problemPstmt.executeQuery();
+		 				// 카테고리 선택
+		 				String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+		 				categoryPstmt = con.prepareStatement(categoryQuery);
+						categoryPstmt.setString(1, userId);
+						categoryRs = categoryPstmt.executeQuery();
 						
-		 				// 등록된 문제 수 세기
-						String problemCountQuery = "SELECT COUNT(*) FROM problems WHERE user_id=?";
+						// 등록된 카테고리 수 세기
+						String problemCountQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
 						problemCountPstmt = con.prepareStatement(problemCountQuery);
 						problemCountPstmt.setString(1, userId);
 						countRs = problemCountPstmt.executeQuery();
-		 			
 		 				if (countRs.next() && countRs.getInt(1) <= 0) {
 		 					%>
 		 					</table>
@@ -198,29 +199,29 @@ ResultSet levelRs = null;
 		 					<%
 		 				} else {
 		 					// 고정된 문제 먼저 출력
-		 					while (problemRs.next()) {
+		 					while(categoryRs.next()) {
+		 						//해당 카테고리와 관련된 노트 개수
+		 						String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
+		 						cateNoteCountPstmt = con.prepareStatement(sql);
+		 						cateNoteCountPstmt.setString(1, userId);
+		 						cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
+		 						cateNoteRs = cateNoteCountPstmt.executeQuery();
+		 						int catenotecount = 0;
+		 						if(cateNoteRs.next()){
+		 							catenotecount = cateNoteRs.getInt(1);
+		 						}
 		 		%>
 				  <tr class="table_item">
-				    <td style="padding-left: 10px;"><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a></td>
-				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
-				    
-				    <td>
-					    <% if(problemRs.getInt("is_fixed") == 1) { %>
-				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="width:15px;">
-				    	<% } else { %>
-				    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" align="right" style="display:none;width:15px;">
-				    	<% } %>
-			    	</td>
-			    	<td style="text-align:right;">
-			    		<div class="content_set" style="position:relative;">
-			    		<button class="content_set_b"><img src="img/....png"></button>
-			    			<ul style="width:180px;top:15px;right:0px;">
-				    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
-				    		</ul>
-				    	</div>
-			    	</td>
+				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
+				    		<span><%=categoryRs.getString("algorithm_name") %></span>
+				    	</a>
+				    </td>
+				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    <span>&nbsp;&nbsp;<%=categoryRs.getString("algorithm_memo") %></span>
+				    </td>
+				    <td><%=catenotecount%></td>
+			    	<td style="text-align:right;"></td>
 				  </tr>
 		 		<%
 		 					}			
@@ -232,6 +233,10 @@ ResultSet levelRs = null;
 						if(problemPstmt != null) problemPstmt.close();
 						if(problemRs != null) problemRs.close();
 						if(problemCountPstmt != null) problemCountPstmt.close();
+						if(categoryPstmt != null) categoryPstmt.close();
+						if(categoryRs != null) categoryRs.close();
+						if(cateNoteCountPstmt != null) cateNoteCountPstmt.close();
+						if(cateNoteRs != null) cateNoteRs.close();
 						if(countRs != null) countRs.close();
 						if(levelPstmt != null) levelPstmt.close();
 						if(levelRs != null) levelRs.close();
