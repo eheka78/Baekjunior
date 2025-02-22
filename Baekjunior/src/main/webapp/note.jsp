@@ -68,9 +68,11 @@ String algorithmSort = request.getParameter("algoname");
 
 
 Connection con = DsCon.getConnection();
-PreparedStatement pstmt = null;
+PreparedStatement pstmt = null;;
+PreparedStatement pstmt2 = null;
 PreparedStatement memoPstmt = null;
 ResultSet rs = null;
+ResultSet rs2 = null;
 ResultSet memoRs = null;
 %>
 <script type="text/javascript">
@@ -316,9 +318,25 @@ ResultSet memoRs = null;
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
 						Friends who solved :
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>">...</a></span>
+						<%
+						try {
+							String sql2 = "SELECT * FROM problems WHERE problem_id = ? AND user_id != ?";
+							
+							pstmt2 = con.prepareStatement(sql2);
+							pstmt2.setInt(1, rs.getInt("problem_id"));
+							pstmt2.setString(2, userId);
+							rs2 = pstmt2.executeQuery();
+							while(rs2.next()){
+						%>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><%=rs2.getString("user_id") %></span>
+						<%
+							}							
+						} catch(SQLException e) {
+				 			out.print(e);
+				 			return;
+				 		}
+						%>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a></span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
@@ -365,6 +383,8 @@ ResultSet memoRs = null;
 			con.close();
 			pstmt.close();
 			rs.close();
+			pstmt2.close();
+			rs2.close();
 			
 			if(algorithmSort != null){
 				memoPstmt.close();
