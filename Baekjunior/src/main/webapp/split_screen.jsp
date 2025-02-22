@@ -251,11 +251,12 @@ ResultSet rs6 = null;
 						<!-- 언어 종류 -->
 						<div style="display:inline;">
 							<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-						</div>
-						<!-- 친구 -->
+						</div> 
+						<div style="height:10px;"></div>
 						<div style="display:inline;">
-							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						</div>
+							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>"><%=rs.getString("problem_url") %></a></span>
+						</div> 
+						<div style="height:10px;"></div>
 					</div>
 				</div>	
 				
@@ -266,7 +267,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -397,9 +398,7 @@ ResultSet rs6 = null;
 		 				
 		 				if (rs4.next() && rs4.getInt(1) <= 0) {
 		 					%>
-		 					<div>
-		 						not exist
-		 					</div>
+		 					<div></div>
 		 					<%
 		 				} else {
 		 					while (rs3.next()) {
@@ -504,10 +503,12 @@ ResultSet rs6 = null;
 					</div>
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs2.getString("language") %></span>
-					</div>
+					</div> 
+					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-					</div>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>"><%=rs2.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
 				</div>
 			</div>	
 			
@@ -520,7 +521,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -647,9 +648,7 @@ ResultSet rs6 = null;
 	 				
 	 				if (rs6.next() && rs6.getInt(1) <= 0) {
 	 					%>
-	 					<div>
-	 						not exist
-	 					</div>
+	 					<div></div>
 	 					<%
 	 				} else {
 	 					while (rs5.next()) {
