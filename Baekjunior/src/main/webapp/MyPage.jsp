@@ -112,6 +112,10 @@ try {
 			int noteCount = pidb.countProblem(userId);
 			int bookmarkCount = pidb.countBookmark(userId);
 			pidb.close();
+			
+			AlgorithmMemoDB amdb = new AlgorithmMemoDB();
+			int cateCount = amdb.countAlgorithmMemo(userId);
+			amdb.close();
 		%>
 		<div class="inner_contents">
 			<div class="select_div">
@@ -125,7 +129,7 @@ try {
 				<Button class="draft_div" onclick="location.href='gather_category.jsp'">
 					<div>
 						<h3>CATEGORY</h3>
-						<p>3</p>
+						<p><%=cateCount %></p>
 						<i class="fa-solid fa-box-open fa-lg"></i>
 					</div>
 				</Button>
