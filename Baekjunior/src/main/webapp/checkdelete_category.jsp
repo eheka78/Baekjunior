@@ -127,22 +127,25 @@ ResultSet levelRs = null;
 			</div>
 		</div>
 		<script>
-		function checkAll() {
-			const checkboxes = document.getElementsByName("deletecateitem");
-			let allcheck = document.getElementById("allCheck").innerHTML;
-			if (allcheck == "전체선택") {
-				checkboxes.forEach((checkbox) => {
-					checkbox.checked = true
-				})
-				document.getElementById("allCheck").innerHTML = "전체해제";
+			function checkAll() {
+				const checkboxes = document.getElementsByName("deletecateitem");
+				let allcheck = document.getElementById("allCheck").innerHTML;
+				if (allcheck == "전체선택") {
+					checkboxes.forEach((checkbox) => {
+						let catenotecount = parseInt(checkbox.dataset.catenotecount);
+						if(catenotecount==0){
+							checkbox.checked = true
+						}
+					})
+					document.getElementById("allCheck").innerHTML = "전체해제";
+				}
+				else if (allcheck == "전체해제") {
+					checkboxes.forEach((checkbox) => {
+						checkbox.checked = false
+					})
+					document.getElementById("allCheck").innerHTML = "전체선택";
+				}
 			}
-			else if (allcheck == "전체해제") {
-				checkboxes.forEach((checkbox) => {
-					checkbox.checked = false
-				})
-				document.getElementById("allCheck").innerHTML = "전체선택";
-			}
-		}
 		</script>
 		<div class="inner_contents" style="margin-top:35px;">
 		<form action="checkdelete_cate_do.jsp" onsubmit="return validateForm()" method="post" name="deletecate">
@@ -171,47 +174,38 @@ ResultSet levelRs = null;
 						categoryPstmt.setString(1, userId);
 						categoryRs = categoryPstmt.executeQuery();
 						
-						// 등록된 카테고리 수 세기
-						String problemCountQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
-						problemCountPstmt = con.prepareStatement(problemCountQuery);
-						problemCountPstmt.setString(1, userId);
-						countRs = problemCountPstmt.executeQuery();
-		 				if (countRs.next() && countRs.getInt(1) <= 0) {
-		 					%>
-		 					</table>
-		 					<div>
-		 						not exist
-		 					</div>
-		 					<%
-		 				} else {
-		 					// 고정된 문제 먼저 출력
-		 					while(categoryRs.next()) {
-		 						//해당 카테고리와 관련된 노트 개수
-		 						String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
-		 						cateNoteCountPstmt = con.prepareStatement(sql);
-		 						cateNoteCountPstmt.setString(1, userId);
-		 						cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
-		 						cateNoteRs = cateNoteCountPstmt.executeQuery();
-		 						int catenotecount = 0;
-		 						if(cateNoteRs.next()){
-		 							catenotecount = cateNoteRs.getInt(1);
-		 						}
+		 				while(categoryRs.next()) {
+		 					//해당 카테고리와 관련된 노트 개수
+		 					String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
+		 					cateNoteCountPstmt = con.prepareStatement(sql);
+		 					cateNoteCountPstmt.setString(1, userId);
+		 					cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
+		 					cateNoteRs = cateNoteCountPstmt.executeQuery();
+		 					int catenotecount = 0;
+		 					if(cateNoteRs.next()){
+		 						catenotecount = cateNoteRs.getInt(1);
+		 					}
+
+		 					//알고리즘 메모 내용 불러오기
+		 					String algorithmMemo = categoryRs.getString("algorithm_memo");
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" style="margin-right:10px;cursor:pointer;">
+				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" data-catenotecount="<%=catenotecount %>" style="margin-right:10px;cursor:pointer;"
+				    	<%if (catenotecount != 0){%>disabled<%} %>>
 				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>
 				    </td>
 				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    <span>&nbsp;&nbsp;<%=categoryRs.getString("algorithm_memo") %></span>
+				    <% if(algorithmMemo != null && algorithmMemo.trim().isEmpty()) { %>
+				    <span><%=algorithmMemo%></span>
+				    <%} %>
 				    </td>
 				    <td><%=catenotecount%></td>
 			    	<td style="text-align:right;"></td>
 				  </tr>
-		 		<%
-		 					}			
+		 		<%		
 		 				}
 		 			} catch(SQLException e) {
 		 				out.print(e);
@@ -230,7 +224,6 @@ ResultSet levelRs = null;
 		 			}
 		 		}
 		 		%>
-				</ul>
 				</table>
 			</div>
 		</form>
