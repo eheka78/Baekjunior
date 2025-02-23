@@ -21,6 +21,30 @@ function updateProfileSelectTopLoc() {
 	
 }
 
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+	} else {
+    	return false;
+	}
+}
+
+function showAlert(message) {
+    alert(message);
+}
+
+function fnCheck() {
+	var pwd = document.getElementById("password");
+	if(pwd.value == "") {
+		alert("비밀번호를 입력하세요");
+		pwd.focus();
+		return false;
+	}
+	window.open("", "deletePopup", "width=500,height=300");
+	return true;
+}
+
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
@@ -75,6 +99,7 @@ try {
 			</div>
 		</div>
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -113,13 +138,14 @@ try {
 			</div>
 		</div>
 		<div class="inner_content">
-			<form class="delete_box" action="user_delete_do.jsp" method="POST">
+			<form class="delete_box" action="user_delete_do.jsp" target="deletePopup" onsubmit="return fnCheck()" method="POST">
 				<h1 style="font-size: xx-large;">비밀번호 재확인</h1>
 				<span>비밀번호를 다시 한번 입력해주세요</span>
-				<input type="password">
+				<input type="text" name="user_id" value="<%=userId %>" style="display:none;">
+				<input type="password" name="password" id="password">
 				<div>
-					<input type="submit" value="확인">
-					<input type="reset" value="취소" onclick="location.href='editProfile.jsp'">
+					<input type="submit" value="확인" style="cursor:pointer;">
+					<input type="reset" value="취소" onclick="location.href='editProfile.jsp'" style="cursor:pointer;">
 				</div>
 			</form>
 		</div>

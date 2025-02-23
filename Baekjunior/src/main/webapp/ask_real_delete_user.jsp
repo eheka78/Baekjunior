@@ -18,7 +18,26 @@ function updateProfileSelectTopLoc() {
 	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
 	 myprodiv_div.style.top = profile_div_bottom + "px";
 	console.log("top2: " + profile_div_bottom);
-	
+}
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmNext() {
+	var checkCaution = document.getElementById("realcheck");
+	if(checkCaution.checked) {
+		window.location.href = "delete_user.jsp";
+	} else {
+		alert("유의사항을 확인해주세요.");
+		checkCaution.focus();
+		return false;
+	}
 }
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
@@ -76,6 +95,7 @@ try {
 			</div>
 		</div>
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -118,10 +138,10 @@ try {
 				<h1 style="font-size: xx-large;">정말 탈퇴하시겠어요?</h1>
 				<span>지금 탈퇴하면 내가 작성한 노트들을 복구할 수 없어요!</span>
 				<div style="justify-content: flex-start;margin-top:30px;">
-					<input type="checkbox" id="realcheck" name="realcheck">
-					<label for="realcheck">회원탈퇴 유의사항을 확인하였습니다.</label>
+					<input type="checkbox" id="realcheck" name="realcheck" style="cursor:pointer">
+					<label for="realcheck" style="cursor:pointer">회원탈퇴 유의사항을 확인하였습니다.</label>
 				</div>
-				<button onclick="location.href='delete_user.jsp'">다음</button>
+				<button onclick="confirmNext()">다음</button>
 			</div>
 		</div>
 	</div>
