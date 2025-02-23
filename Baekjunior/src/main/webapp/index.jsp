@@ -313,7 +313,7 @@ ResultSet countRs = null;
 					<ul class="sub" style="font-size:17px;">
 					<%
 					try {
-						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+						String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=? ORDER BY algorithm_name";
 						categoryPstmt = con.prepareStatement(categoryQuery);
 						categoryPstmt.setString(1, userId);
 						categoryRs = categoryPstmt.executeQuery();
@@ -378,6 +378,8 @@ ResultSet countRs = null;
 			}
 		%>
 			<!-- SORT 버튼 -->
+			<!-- LEVEL, CATEGORY 페이지에는 SORT 출력 x -->
+			<% if(!(("level".equals(pageType) && levelSort < 0) || ("category".equals(pageType) && algorithmSort.equals("")))) { %>
 			<div id="sort"  class="content_set">
 				<div id="sort_select" class="content_set_b">
 					<button style="cursor:pointer;">SORT</button>
@@ -439,8 +441,13 @@ ResultSet countRs = null;
 				%>
 				</ul>
 			</div><!-- end-of-sort -->
+			<%
+				}
+			%>
 			
 			<!-- 검색 버튼 -->
+			<!-- LEVEL, CATEGORY 페이지에는 검색 출력 x -->
+			<% if(!(("level".equals(pageType) && levelSort < 0) || ("category".equals(pageType) && algorithmSort.equals("")))) { %>
 			<div id="search">
 				<div id="search_frame" style="float:right;">
 					<!-- 입력받은 검색어가 없으면, ""(placeholder 사용) 있으면, value = Util.nullchk(searchKeyword) 띄움 -->
@@ -452,31 +459,35 @@ ResultSet countRs = null;
 				<!-- number로 검색하거나, 검색을 하지 않은 경우 number에 checked -->
 				<div id="search_selection" style="float:right;">
 					<input type="radio" name="search_range" value="number" 
-					<%
-				    	if (searchRange == null || searchRange.trim().isEmpty() || "null".equalsIgnoreCase(searchRange) || "number".equals(searchRange)) {
-				    %> 
-				    	checked 
-				    <%
-				    	}
-				    %>></input><label>Number</label>
+					<% if (searchRange == null || searchRange.trim().isEmpty() || "null".equalsIgnoreCase(searchRange) || "number".equals(searchRange))  
+						{ %> checked <% } %>></input><label>Number</label>
 					<input type="radio" name="search_range" value="title"
-					<%
-				    	if ("title".equals(searchRange)) {
-				    %> 
-				    	checked 
-				    <%
-				    	}
-				    %>></input><label>Title</label>
+					<% if ("title".equals(searchRange)) 
+						{ %> checked <% } %>></input><label>Title</label>
 					<input type="radio" name="search_range" value="note"
-					<%
-				   		if ("note".equals(searchRange)) {
-				    %> 
-				    	checked 
-				    <%
-				    	}
-				    %>></input><label>Note</label>
+					<% if ("note".equals(searchRange)) 
+						{ %> checked <% } %>></input><label>Note</label>
 				</div>
 			</div><!-- end-of-search -->
+			<%
+				}
+			%>
+			
+			<!-- CATEGROY 페이지에서의 검색은 알고리즘 이름으로 이루어짐 -->
+			<% if("category".equals(pageType) && algorithmSort.equals("")) { %>
+				<div id="search">
+					<div id="search_frame" style="float:right;">
+						<!-- 입력받은 검색어가 없으면, ""(placeholder 사용) 있으면, value = Util.nullchk(searchKeyword) 띄움 -->
+						<input id="search_input" type="text"
+	    				<%= Util.nullchk(searchKeyword).isEmpty() ? "" : "value='" + Util.nullchk(searchKeyword) + "'" %> placeholder="Search..."
+	    				onkeypress="searchNotes_enter(event)">
+						<span><img src="img/search.png" style="width:15px;cursor:pointer;" onclick="searchNotes()"></span>
+					</div>
+					<div id="search_selection" style="float:right;display:none;">
+						<input type="radio" name="search_range" value="algorithm_name" checked> 						
+					</div>
+				</div>
+			<% } %>
 			
 			<div id="btn_cretenote" style="float:left;">
 				<button onclick="location.href='create_note.jsp'" style="cursor:pointer;">CREATE NOTE</button>
@@ -517,8 +528,8 @@ ResultSet countRs = null;
 		
 		<br><br><br>
 		
+		<!-- pageType이 category이고, 알고리즘 분류가 선택된 경우 -->
 		<% if("category".equals(pageType) && !algorithmSort.trim().equals("")) { %>
-		<!-- pageType이 category인 경우 -->
 		<div style="display:flex;">
 			<!-- 알고리즘 메모 박스 : 버튼 눌러야 보임 -->
 			<div class="memo" id="memo" style="margin:20px 0 0 20px; flex:4; animation-name:takent;animation-duration:2s;display:none;">
@@ -591,8 +602,18 @@ ResultSet countRs = null;
  		if("category".equals(pageType) && algorithmSort.equals("")) {  	/* category 페이지 : 알고리즘 분류 선택 x */
  			try {
 	 			String categoryQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
+	 			if("algorithm_name".equals(searchRange)) {
+	 				categoryQuery += " AND REPLACE(algorithm_name, ' ', '') LIKE ?";
+                }
+	 			categoryQuery += " ORDER BY algorithm_name";
+	 			
 				categoryPstmt = con.prepareStatement(categoryQuery);
 				categoryPstmt.setString(1, userId);
+				
+				if("algorithm_name".equals(searchRange)) {
+	 				categoryPstmt.setString(2, "%" + searchKeyword + "%");
+                }
+				
 				categoryRs = categoryPstmt.executeQuery();
 				while(categoryRs.next()) {
 	%>
