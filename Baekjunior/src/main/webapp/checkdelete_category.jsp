@@ -171,31 +171,20 @@ ResultSet levelRs = null;
 						categoryPstmt.setString(1, userId);
 						categoryRs = categoryPstmt.executeQuery();
 						
-						// 등록된 카테고리 수 세기
-						String problemCountQuery = "SELECT * FROM algorithm_memo WHERE user_id=?";
-						problemCountPstmt = con.prepareStatement(problemCountQuery);
-						problemCountPstmt.setString(1, userId);
-						countRs = problemCountPstmt.executeQuery();
-		 				if (countRs.next() && countRs.getInt(1) <= 0) {
-		 					%>
-		 					</table>
-		 					<div>
-		 						not exist
-		 					</div>
-		 					<%
-		 				} else {
-		 					// 고정된 문제 먼저 출력
-		 					while(categoryRs.next()) {
-		 						//해당 카테고리와 관련된 노트 개수
-		 						String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
-		 						cateNoteCountPstmt = con.prepareStatement(sql);
-		 						cateNoteCountPstmt.setString(1, userId);
-		 						cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
-		 						cateNoteRs = cateNoteCountPstmt.executeQuery();
-		 						int catenotecount = 0;
-		 						if(cateNoteRs.next()){
-		 							catenotecount = cateNoteRs.getInt(1);
-		 						}
+		 				while(categoryRs.next()) {
+		 					//해당 카테고리와 관련된 노트 개수
+		 					String sql = "SELECT COUNT(*) FROM algorithm_sort WHERE user_id=? AND sort=?";
+		 					cateNoteCountPstmt = con.prepareStatement(sql);
+		 					cateNoteCountPstmt.setString(1, userId);
+		 					cateNoteCountPstmt.setString(2, categoryRs.getString("algorithm_name"));
+		 					cateNoteRs = cateNoteCountPstmt.executeQuery();
+		 					int catenotecount = 0;
+		 					if(cateNoteRs.next()){
+		 						catenotecount = cateNoteRs.getInt(1);
+		 					}
+
+		 					//알고리즘 메모 내용 불러오기
+		 					String algorithmMemo = categoryRs.getString("algorithm_memo");
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
@@ -205,13 +194,14 @@ ResultSet levelRs = null;
 				    	</a>
 				    </td>
 				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    <span>&nbsp;&nbsp;<%=categoryRs.getString("algorithm_memo") %></span>
+				    <% if(algorithmMemo != null && algorithmMemo.trim().isEmpty()) { %>
+				    <span><%=algorithmMemo%></span>
+				    <%} %>
 				    </td>
 				    <td><%=catenotecount%></td>
 			    	<td style="text-align:right;"></td>
 				  </tr>
-		 		<%
-		 					}			
+		 		<%		
 		 				}
 		 			} catch(SQLException e) {
 		 				out.print(e);
@@ -230,7 +220,6 @@ ResultSet levelRs = null;
 		 			}
 		 		}
 		 		%>
-				</ul>
 				</table>
 			</div>
 		</form>
