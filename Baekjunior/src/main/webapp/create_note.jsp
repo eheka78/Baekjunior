@@ -9,7 +9,25 @@ request.setCharacterEncoding("utf-8");
 <meta charset="UTF-8">
 <title>create_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
+
+<script>
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+</script>
 </head>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     let languageSelect = document.querySelector('select[name="language"]');
@@ -146,10 +164,10 @@ try {
 %>
 
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -158,8 +176,7 @@ try {
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -298,10 +315,10 @@ try {
 	
 	<div style="width:80%; margin:0 auto; margin-top:30px;">
 		<div style="float:right;">
-			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; margin-right:10px;"
+			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; margin-right:10px; cursor:pointer;"
 					onclick="return fnCheck('save_and_note')">
 				Save and Note</button> 
-			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px;"
+			<button type="submit" style="font-size:15px; font-weight:bold;  background:white; border:3px solid black; padding:5px 20px; cursor:pointer;"
 					onclick="return fnCheck('save')">Save</button>
 		</div>
 	</div>

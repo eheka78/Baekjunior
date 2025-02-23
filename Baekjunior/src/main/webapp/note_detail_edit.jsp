@@ -6,6 +6,23 @@
 <meta charset="UTF-8">
 <title>create_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
+
+<script>
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+</script>
 </head>
 <%
 request.setCharacterEncoding("utf-8");
@@ -44,7 +61,7 @@ ResultSet rs = null;
     }
 </script>
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -67,8 +84,8 @@ ResultSet rs = null;
 			}
 
 		%>
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -77,8 +94,7 @@ ResultSet rs = null;
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -205,10 +221,11 @@ ResultSet rs = null;
 					<!-- 언어 종류 -->
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-					</div> 
-					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
 					</div>
+					<div style="height:10px;"></div>
+					<div style="display:inline;">
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+					</div> 
 				</div>
 			</div>	
 			
@@ -264,13 +281,13 @@ ResultSet rs = null;
 					<div class="container_div" style="padding:5px;">
 		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
 		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <a class="delete_btn" href="#">X</a>
+		                <a class="delete_btn" href="#"><img src="img/x.png"></a>
 		        	</div>
 		        <% } %>
 		        </div>
 		        
-		        <div style="padding:5px; margin-bottom:20px;">
-		            <a id="add_btn" href="#">+</a>
+		        <div style="padding:10px 5px 5px 5px; margin-bottom:20px;">
+		            <a id="add_btn" href="#" style="padding:0px; margin:0px;"><img src="img/plus.png" style="height:20px;"></a>
 		        </div>
 			</div>
 			

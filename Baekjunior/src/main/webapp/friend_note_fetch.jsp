@@ -134,6 +134,10 @@ ResultSet rs = null;
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs.getString("language") %></span>
 					</div>
+					<div style="height:10px;"></div>
+					<div style="display:inline;">
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+					</div> 
 				</div>
 			</div>	
 			

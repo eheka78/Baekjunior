@@ -6,15 +6,6 @@
 <meta charset="UTF-8">
 <title>Baekjunior</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
-<style>
-.ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-</style>
 
 <script>
 function updateSortSelectTopLoc() {
@@ -27,8 +18,25 @@ function updateSortSelectTopLoc() {
 	console.log("top: " + sort_select_div_bottom);
 }
 
-window.onload = updateSortSelectTopLoc;
+window.addEventListener("DOMContentLoaded", updateSortSelectTopLoc);
+window.addEventListener("resize", updateSortSelectTopLoc);
 
+
+
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
 
 </head>
@@ -193,7 +201,7 @@ ResultSet countRs = null;
 </script>
 
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		PreparedStatement pstmt = null;
@@ -218,8 +226,8 @@ ResultSet countRs = null;
 			}
 
 		%>
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -228,8 +236,7 @@ ResultSet countRs = null;
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -347,7 +354,7 @@ ResultSet countRs = null;
 			} else if("category".equals(pageType)) {
 		%>
 				<div style="margin-bottom:50px;display:flex;" >
-					<a style="font-size:30px; font-weight:bold;cursor:pointer;" onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'">
+					<a style="font-size:30px; font-weight:bold;cursor:pointer;" <%if(algorithmSort != "") { %> onclick="location.href='algorithm_note.jsp?algorithm_sort=<%=algorithmSort%>'" <% } %>>
 					CATEGORY <%if(algorithmSort != "") { %> : <%=algorithmSort %> <% } %></a>
 					<!-- 해당 알고리즘 노트 리스트는 오른쪽으로 밀리고 왼쪽에 알고리즘노트 나오는 버튼 -->
 					<%if(algorithmSort != ""){ %>
@@ -527,7 +534,7 @@ ResultSet countRs = null;
                   	memoRs = memoPstmt.executeQuery();
                   	if(memoRs.next()) {
                   %>
-                  	<%=Util.nullChk(memoRs.getString("algorithm_memo"), "not exist")%>
+                  	<%=Util.nullChk(memoRs.getString("algorithm_memo"), "")%>
                   <% 
                   	} 
                   	
@@ -698,15 +705,8 @@ ResultSet countRs = null;
 			 			</li>
  			<%
  					}			
- 				} else {
+ 				} 
  			%>
-		 			 <div>
-		 				not exist
-		 			</div>
- 			<% } %>
- 		<%-- <% if("category".equals(pageType)) { %>
-				</li>
-		 <% } %> --%>
 				</ul><!-- end-of-list -->
 			</div><!-- end-of-list_group -->
 	<% if("category".equals(pageType)) { %></div><!-- end-of-style="display:flex; margin-left:55px;" --><% } %>

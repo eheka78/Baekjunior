@@ -13,68 +13,6 @@ a{
 	color:black;
 }
 </style>
-</head>
-
-<script type="text/javascript">
-	function updateWindowHeight() {
-	    let splitDiv1 = document.getElementById("split1");
-	    let splitDiv2 = document.getElementById("split2");
-	    splitDiv1.style.height = (window.innerHeight - 160) + "px";
-	    splitDiv2.style.height = (window.innerHeight - 160) + "px";
-	    
-	    console.log("현재 window.innerHeight 값:", window.innerHeight);
-	}
-	
-	// 페이지 로드 시 실행
-	window.onload = updateWindowHeight;
-	
-	// 창 크기가 변경될 때 실행
-	window.addEventListener("resize", updateWindowHeight);
-
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-	
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
-
-<script>	
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
 
 <script>
 <%
@@ -123,8 +61,90 @@ ResultSet rs6 = null;
 %>
 </script>
 
+</head>
+
+<script type="text/javascript">
+	function updateWindowHeight() {
+	    let splitDiv1 = document.getElementById("split1");
+	    let splitDiv2 = document.getElementById("split2");
+
+		if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
+		    splitDiv1.style.height = (window.innerHeight - 105) + "px";
+		    splitDiv2.style.height = (window.innerHeight - 105) + "px";
+		}
+	    console.log("현재 window.innerHeight 값:", window.innerHeight);
+	}
+	
+	// 페이지 로드 시 실행
+	window.addEventListener("DOMContentLoaded", updateWindowHeight);
+	// 창 크기가 변경될 때 실행
+	window.addEventListener("resize", updateWindowHeight);
+	
+	
+	/* profile top 위치 */
+	function updateProfileSelectTopLoc() {
+		let profile_div = document.getElementById("profile");
+		let myprodiv_div = document.getElementById("myprodiv");
+		
+
+		let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+		 myprodiv_div.style.top = profile_div_bottom + "px";
+		console.log("top2: " + profile_div_bottom);
+		
+	}
+
+	window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+	window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    window.location.href = "logout_do.jsp";
+			} else {
+	    	return false;
+			}
+	}
+	
+    function confirmDeletion(problemIdx) {
+        var result = confirm("정말 삭제하시겠습니까?");
+        if (result) {
+            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+        } else {
+            return false;
+        }
+    }
+    
+    
+	// 고정 여부 업데이트하는 함수
+	function updatePin(problemIdx) {
+	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+	    let fix = 0;
+	    
+		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+			pinIcon.style.display = 'none';
+			fix = 0;
+		} else {
+			pinIcon.style.display = 'inline-block';
+			fix = 1;
+		}
+	  
+		const xhr = new XMLHttpRequest();
+	    xhr.open("POST", "updatePin.jsp", true);
+	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	    xhr.onreadystatechange = function () {
+	        if (xhr.readyState === 4 && xhr.status === 200) {
+	            console.log(xhr.responseText);  
+	        }
+	    };
+	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+	}
+</script>
+
+
+
 <body>	
-	<header style="padding:0px 100px;">
+	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -140,15 +160,14 @@ ResultSet rs6 = null;
 				profileimg = rs.getString("savedFileName");
 				if(profileimg == null){
 					profileimg = "img/user.png";
-				}
-				else {
+				} else {
 					profileimg = "./upload/" + rs.getString("savedFileName");
 				}
 			}
 
 		%>
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -157,13 +176,12 @@ ResultSet rs6 = null;
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
-		pstmt.close();
-		rs.close();
+			pstmt.close();
+			rs.close();
 		} catch (SQLException e){
 			out.print(e);
 			return;
@@ -180,15 +198,15 @@ ResultSet rs6 = null;
 		</script>
 	</header>
 	
-	<section class="banner" style="padding:40px 100px;">
-		<a href="index.jsp" class="logo"></a>
+	<section class="banner" style="padding:43px;">
+		<a href="#" class="logo"></a>
 	</section>
 	
 	<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
 		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
 	</div>
 	
-	<div style="display:grid; grid-template-columns: 1fr 1fr; margin-top:50px;">
+	<div style="display:grid; grid-template-columns: 1fr 1fr;">
 		<!-- 왼쪽 스크린 -->
 		
 		<!-- note가 나와야하는 경우 -->
@@ -204,7 +222,7 @@ ResultSet rs6 = null;
 				if(rs.next()){
 		%>
 		
-		<div id="split1" style="margin-top:20px; border-right:3px solid black; overflow-y:auto;">
+		<div id="split1" style="margin-top:10px; border-right:3px solid black; overflow-y:auto;">
 			<div style="margin:0 50px 0 80px;">
 				<div style="float:right;">
 					<button onclick="location.href='split_screen.jsp?problem_idx1=-1&problem_idx2=<%=problemIdx2 %>'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
@@ -251,11 +269,12 @@ ResultSet rs6 = null;
 						<!-- 언어 종류 -->
 						<div style="display:inline;">
 							<span style="margin-right:50px;"><%=rs.getString("language") %></span>
-						</div>
-						<!-- 친구 -->
+						</div> 
+						<div style="height:10px;"></div>
 						<div style="display:inline;">
-							Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-						</div>
+							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+						</div> 
+						<div style="height:10px;"></div>
 					</div>
 				</div>	
 				
@@ -266,7 +285,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -397,9 +416,7 @@ ResultSet rs6 = null;
 		 				
 		 				if (rs4.next() && rs4.getInt(1) <= 0) {
 		 					%>
-		 					<div>
-		 						not exist
-		 					</div>
+		 					<div></div>
 		 					<%
 		 				} else {
 		 					while (rs3.next()) {
@@ -420,7 +437,7 @@ ResultSet rs6 = null;
 		    				<li><a onclick="confirmDeletion('<%=rs3.getInt("problem_idx") %>')" href="#">Delete</a></li>
 		    			</ul>
 			    		</div>
-		 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"><%=rs3.getString("memo_title") %></a></div>
+		 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=rs3.getInt("problem_idx")%>"><%=rs3.getString("memo_title") %></a></div>
 		 			</li>
 		 		<%
 		 					}
@@ -457,7 +474,7 @@ ResultSet rs6 = null;
 				if(rs2.next()){
 		%>
 	
-	<div id="split2" style="margin-top:20px; border-left:3px solid black; overflow-y:auto;">
+	<div id="split2" style="margin-top:10px; border-left:3px solid black; overflow-y:auto;">
 		<div style="width:80%; margin:0 50px;">
 			<div style="float:right;">
 				<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx1%>&problem_idx2=-1'" style="font-size:15px; font-weight:bold; border:3px solid black; padding:0 5px; cursor:pointer;">X</button>
@@ -504,10 +521,12 @@ ResultSet rs6 = null;
 					</div>
 					<div style="display:inline;">
 						<span style="margin-right:50px;"><%=rs2.getString("language") %></span>
-					</div>
+					</div> 
+					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						Friends who solved : <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dodam</span> <span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">Dam</span>
-					</div>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs2.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
 				</div>
 			</div>	
 			
@@ -520,7 +539,7 @@ ResultSet rs6 = null;
 					
 					if(subMemoStr == null){
 				%>
-						<div>not exist</div>
+						<div></div>
 				<%
 					}
 					else{
@@ -647,9 +666,7 @@ ResultSet rs6 = null;
 	 				
 	 				if (rs6.next() && rs6.getInt(1) <= 0) {
 	 					%>
-	 					<div>
-	 						not exist
-	 					</div>
+	 					<div></div>
 	 					<%
 	 				} else {
 	 					while (rs5.next()) {
@@ -672,7 +689,7 @@ ResultSet rs6 = null;
 	    				<li><a onclick="confirmDeletion('<%=rs5.getInt("problem_idx") %>')" href="#">Delete</a></li>
 	    			</ul>
 		    	</div>
-	 				<div class="content_title"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"><%=rs5.getString("memo_title") %></a></div>
+	 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=rs5.getInt("problem_idx")%>"><%=rs5.getString("memo_title") %></a></div>
 	 			</li>
 	 		<%
 	 					}

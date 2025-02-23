@@ -7,6 +7,23 @@
 <title>Insert title here</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=3">
+
+<script>
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+</script>
 </head>
 <%
 request.setCharacterEncoding("utf-8");
@@ -22,6 +39,8 @@ if(session != null && session.getAttribute("login.id") != null) {
 Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
+
+String profileimg = null;
 try {
 	if(userId != "none") {
 		String sql = "SELECT * FROM users WHERE user_id=?";
@@ -29,63 +48,31 @@ try {
 		pstmt.setString(1, userId);
 		rs = pstmt.executeQuery();
 		rs.next();
+		
+		// 프로필이미지 설정 전인 경우 기본이미지 뜨도록 처리
+		profileimg = rs.getString("savedFileName");
+		if(profileimg == null){
+			profileimg = "img/user.png";
+		}
+		else {
+			profileimg = "./upload/" + rs.getString("savedFileName");
+		}
 	}
 %>
 <body>
-	<header style="padding:0 100px;">
-		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
-		<div id="main_menu">
-			<ul>
-				<li class="main_menu_Storage"><a href="#">Storage</a>
-					<ul>
-						<li><a href="#">storage1</a></li>
-						<li><a href="#">storage2</a></li>
-						<li><a href="#">storage3</a></li>
-						<li><a href="#">storage4</a></li>
-					</ul>
-				</li>				
-				<li class="main_menu_Friend"><a href="#">Friend</a>
-					<ul>
-						<li><a href="#">friend1</a></li>
-						<li><a href="#">friend2</a></li>
-						<li><a href="#">friend3</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Group"><a href="#">Group</a>
-					<ul>
-						<li><a href="#">group1</a></li>
-						<li><a href="#">group2</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_MyPage"><a href="#">MyPage</a>
-					<ul>
-						<li><a href="#">mypage1</a></li>
-						<li><a href="#">mypage2</a></li>
-						<li><a href="#">mypage3</a></li>
-						<li><a href="#">mypage4</a></li>
-					</ul>
-				</li>
-				<li class="main_menu_Setting"><a href="#">Setting</a>
-					<ul>
-						<li><a href="#">setting1</a></li>
-						<li><a href="#">setting2</a></li>
-						<li><a href="#">setting3</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-	
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
-				<li><img src="img/user.png" style="width:30px;"></li>
+	<header>
+		<a href="index.jsp" class="logo">Baekjunior</a>	
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
 			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
 				<div id="myprofileimgborder">
-					<img id="myprofileimg" src="./upload/<%=rs.getString("savedFileName") %>" alt="profileimg">
+					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="logout_do.jsp" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%

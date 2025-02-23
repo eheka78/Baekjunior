@@ -45,7 +45,7 @@ PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 %>
 <body style="min-height:100vh;">
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		PreparedStatement pstmt = null;
@@ -71,7 +71,7 @@ ResultSet levelRs = null;
 
 		%>
 		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -150,7 +150,7 @@ ResultSet levelRs = null;
 				<h1 style="font-size:30px;">CATEGORY</h1>
 				<div>
 					<button type="button" onclick="checkAll()" id="allCheck" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
-					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;">
+					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;cursor:pointer;">
 				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
@@ -199,7 +199,7 @@ ResultSet levelRs = null;
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" style="margin-right:10px;">
+				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" style="margin-right:10px;cursor:pointer;">
 				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>

@@ -46,16 +46,28 @@ public class AlgorithmMemoDB {
 		pstmt.executeUpdate();
 	}
 	
-	// 카테고리를 삭제하는 함수
-		public void deleteAlgorithm(int cate_idx) throws SQLException {
-			String sql = "DELETE FROM algorithm_memo WHERE idx=?";
-			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, cate_idx);
-			
-			pstmt.executeUpdate();
-			pstmt.close();
+	public int countAlgorithmMemo(String id) throws SQLException {
+		String sql = "SELECT COUNT(*) FROM algorithm_memo WHERE user_id=?";
+		
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return rs.getInt(1);
 		}
+		return 0;
+	}
+	
+	// 카테고리를 삭제하는 함수
+	public void deleteAlgorithm(int cate_idx) throws SQLException {
+		String sql = "DELETE FROM algorithm_memo WHERE idx=?";
+			
+		pstmt = con.prepareStatement(sql);
+		pstmt.setInt(1, cate_idx);
+			
+		pstmt.executeUpdate();
+		pstmt.close();
+	}
 	
 	public void close() throws SQLException {
 		if(rs != null) rs.close();

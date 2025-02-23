@@ -8,6 +8,23 @@
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 
+<script>
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+</script>
+
 <style>
 a{
 	text-decoration: none;
@@ -86,7 +103,7 @@ ResultSet memoRs = null;
     }
 </script>
 <body>	
-	<header style="padding:0 100px;">
+	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
 		<%
 		String profileimg = null;
@@ -109,8 +126,8 @@ ResultSet memoRs = null;
 			}
 
 		%>
-		<div>
-			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:130px;">
+		<div id="profile">
+			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
 				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
@@ -119,8 +136,7 @@ ResultSet memoRs = null;
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
 				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
 			</div>
 		</div>
 		<%
@@ -195,7 +211,7 @@ ResultSet memoRs = null;
                   	memoRs = memoPstmt.executeQuery();
                   	if(memoRs.next()) {
                   %>
-                  <%=Util.nullChk(memoRs.getString("algorithm_memo"), "not exist")%>
+                  <%=Util.nullChk(memoRs.getString("algorithm_memo"), "")%>
                   <% } %>
                </div>
                <!-- editablememo 내용 수정할때마다 받아오기 -->
@@ -328,6 +344,10 @@ ResultSet memoRs = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+					</div> 
+					<div style="height:10px;"></div>
+					<div style="display:inline;">
 						Friends who solved :
 						<%
 						try {
@@ -347,7 +367,9 @@ ResultSet memoRs = null;
 				 			return;
 				 		}
 						%>
-						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;"><a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a></span>
+						<span style="background:lightgray; font-size:15px; padding:3px 20px; border-radius:20px;">
+							<a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a>
+						</span>
 					</div>
 					<div style="float:right; font-size:15px; padding:10px;">
 						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
@@ -363,7 +385,7 @@ ResultSet memoRs = null;
 					
 					if(subMemoStr == null){
 						%>
-						<div>not exist</div><%
+						<div></div><%
 					}
 					else{
 				%>
