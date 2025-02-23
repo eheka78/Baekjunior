@@ -203,7 +203,7 @@ ResultSet rs6 = null;
 	</section>
 	
 	<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
+		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px; cursor:pointer;">Switch Sides</button>
 	</div>
 	
 	<div style="display:grid; grid-template-columns: 1fr 1fr;">
