@@ -148,7 +148,7 @@ ResultSet levelRs = null;
 				<h1 style="font-size:30px;">노트</h1>
 				<div>
 					<button type="button" onclick="checkAll()" id="allCheck" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
-					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;">
+					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;cursor:pointer;">
 				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">
@@ -188,7 +188,7 @@ ResultSet levelRs = null;
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;">
-				    	<input type="checkbox" id="deletenoteitem" name="deletenoteitem" value="<%=problemRs.getInt("problem_idx")%>" style="margin-right:10px;">
+				    	<input type="checkbox" id="deletenoteitem" name="deletenoteitem" value="<%=problemRs.getInt("problem_idx")%>" style="margin-right:10px;cursor:pointer;">
 				    	<a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getInt("problem_id") %></a>
 				    </td>
 				    <td><a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></td>
