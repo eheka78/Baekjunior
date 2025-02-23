@@ -127,22 +127,25 @@ ResultSet levelRs = null;
 			</div>
 		</div>
 		<script>
-		function checkAll() {
-			const checkboxes = document.getElementsByName("deletecateitem");
-			let allcheck = document.getElementById("allCheck").innerHTML;
-			if (allcheck == "전체선택") {
-				checkboxes.forEach((checkbox) => {
-					checkbox.checked = true
-				})
-				document.getElementById("allCheck").innerHTML = "전체해제";
+			function checkAll() {
+				const checkboxes = document.getElementsByName("deletecateitem");
+				let allcheck = document.getElementById("allCheck").innerHTML;
+				if (allcheck == "전체선택") {
+					checkboxes.forEach((checkbox) => {
+						let catenotecount = parseInt(checkbox.dataset.catenotecount);
+						if(catenotecount==0){
+							checkbox.checked = true
+						}
+					})
+					document.getElementById("allCheck").innerHTML = "전체해제";
+				}
+				else if (allcheck == "전체해제") {
+					checkboxes.forEach((checkbox) => {
+						checkbox.checked = false
+					})
+					document.getElementById("allCheck").innerHTML = "전체선택";
+				}
 			}
-			else if (allcheck == "전체해제") {
-				checkboxes.forEach((checkbox) => {
-					checkbox.checked = false
-				})
-				document.getElementById("allCheck").innerHTML = "전체선택";
-			}
-		}
 		</script>
 		<div class="inner_contents" style="margin-top:35px;">
 		<form action="checkdelete_cate_do.jsp" onsubmit="return validateForm()" method="post" name="deletecate">
@@ -188,7 +191,8 @@ ResultSet levelRs = null;
 		 		%>
 				  <tr class="table_item">
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" style="margin-right:10px;cursor:pointer;">
+				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" data-catenotecount="<%=catenotecount %>" style="margin-right:10px;cursor:pointer;"
+				    	<%if (catenotecount != 0){%>disabled<%} %>>
 				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>
