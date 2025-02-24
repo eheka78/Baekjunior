@@ -6,13 +6,41 @@
 <meta charset="UTF-8">
 <title>create_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
+
+<script type="text/javascript">
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
+    }
+}
+   
+//진짜 로그아웃할건지 확인하는 함수
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+	} else {
+   	return false;
+	}
+}
+</script>
+
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
 HttpSession session = request.getSession(false);
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
+} else {
+	response.sendRedirect("information.jsp");
+    return;
 }
 int problemIdx = Integer.parseInt(request.getParameter("problem_idx"));
 
@@ -20,16 +48,9 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
-<script type="text/javascript">
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
+
+
+
 <body>	
 	<header>
 		<a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>

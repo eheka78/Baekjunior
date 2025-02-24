@@ -101,6 +101,9 @@ a{
 </style>
 
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -118,6 +121,9 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
+
+
+
 <body>	
 	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>

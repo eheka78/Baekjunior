@@ -22,8 +22,31 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
+    }
+}
 </script>
+
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -41,25 +64,9 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
-<script type="text/javascript">
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
 
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
+
+
 <body>	
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>

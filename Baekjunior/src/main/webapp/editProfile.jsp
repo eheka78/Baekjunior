@@ -23,8 +23,40 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmDeletion(userId) {
+    var result = confirm("정말 탈퇴하시겠습니까?");
+    if (result) {
+        window.location.href = "ask_real_delete_user.jsp";
+    } else {
+        return false;
+    }
+}
+
+// 이미지 미리보기 함수
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('profilePreview');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
 </script>
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -49,35 +81,8 @@ try {
 	}
 %>
 
-<script type="text/javascript">
-	function confirmLogout() {
-    	var result = confirm("정말 로그아웃 하시겠습니까?");
-    	if (result) {
-    	    window.location.href = "logout_do.jsp";
-   		} else {
-        	return false;
-   		}
-	}
-	
-    function confirmDeletion(userId) {
-        var result = confirm("정말 탈퇴하시겠습니까?");
-        if (result) {
-            window.location.href = "ask_real_delete_user.jsp";
-        } else {
-            return false;
-        }
-    }
-    
-    // 이미지 미리보기 함수
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('profilePreview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-</script>
+
+
 <body>
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>

@@ -48,7 +48,10 @@ function fnCheck() {
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
+
 </head>
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
