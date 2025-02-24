@@ -1,5 +1,6 @@
 package Baekjunior.db;
 
+import java.io.File;
 import java.sql.*;
 import javax.naming.NamingException;
 import Baekjunior.db.DsCon;
@@ -62,6 +63,22 @@ public class UserInfoDB {
 		pstmt.setString(2, save);
 		pstmt.setString(3, id);
 		
+		pstmt.executeUpdate();
+	}
+	
+	//  회원 정보에 프로필 사진을 삭제하는 함수
+	public void deleteProfileImage(String id, String savedFileName) throws SQLException {
+		String uploadDir = "/upload/";
+		String filePath = uploadDir + savedFileName;
+		
+		File file = new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		String sql = "UPDATE users SET originalFileName=NULL, savedFileName=NULL WHERE user_id=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, id);
 		pstmt.executeUpdate();
 	}
 	
