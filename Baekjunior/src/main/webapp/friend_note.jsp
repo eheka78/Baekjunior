@@ -37,6 +37,15 @@ function updateProfileSelectTopLoc() {
 	
 }
 
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	   		window.location.href = "logout_do.jsp";
+		} else {
+    		return false;
+		}
+}
+
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
@@ -99,6 +108,9 @@ HttpSession session = request.getSession(false);
 
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
+} else {
+	response.sendRedirect("information.jsp");
+    return;
 }
 int problemId = Integer.parseInt(request.getParameter("problem_id"));
 

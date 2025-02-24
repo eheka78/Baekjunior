@@ -78,6 +78,9 @@ HttpSession session = request.getSession(false);
 
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
+} else {
+	response.sendRedirect("information.jsp");
+    return;
 }
 int problemIdx = Integer.parseInt(request.getParameter("problem_idx"));
 
@@ -93,6 +96,14 @@ ResultSet rs2 = null;
 ResultSet memoRs = null;
 %>
 <script type="text/javascript">
+	function confirmLogout() {
+		var result = confirm("정말 로그아웃 하시겠습니까?");
+		if (result) {
+		    	window.location.href = "logout_do.jsp";
+			} else {
+	    		return false;
+			}
+	}
     function confirmDeletion(problemIdx) {
         var result = confirm("정말 삭제하시겠습니까?");
         if (result) {
