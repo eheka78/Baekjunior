@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>create_note</title>
+<title>take_algorithm_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <style>
@@ -45,14 +45,19 @@
       animation-duration: 2s;
    }
 </style>
-</head>
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
 HttpSession session = request.getSession(false);
 if(session != null && session.getAttribute("login.id") != null) {
-   userId = (String) session.getAttribute("login.id");
-}
+	    userId = (String) session.getAttribute("login.id");
+	} else {
+	    response.sendRedirect("information.jsp");
+	    return;
+	}
+
 int problemIdx = Integer.parseInt(request.getParameter("problem_idx"));
 String algorithmSort = request.getParameter("algoname");
 
@@ -62,16 +67,32 @@ PreparedStatement memoPstmt = null;
 ResultSet rs = null;
 ResultSet memoRs = null;
 %>
+
 <script type="text/javascript">
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
     }
+}
+   
+//진짜 로그아웃할건지 확인하는 함수
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+	} else {
+   		return false;
+	}
+}
 </script>
+
+</head>
+
+
+
 <body>   
    <header>
       <a href="0_Baekjunior.jsp" class="logo">Baekjunior</a>
@@ -97,20 +118,23 @@ ResultSet memoRs = null;
 			}
 
 		%>
-		<div>
+						
+		<!-- header 프로필 -->
+		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">
-						로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
+
 		<%
 		pstmt.close();
 		rs.close();

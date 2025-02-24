@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>editProfile</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="editProfilest.css?v=3">
 
@@ -23,8 +23,40 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmDeletion(userId) {
+    var result = confirm("정말 탈퇴하시겠습니까?");
+    if (result) {
+        window.location.href = "ask_real_delete_user.jsp";
+    } else {
+        return false;
+    }
+}
+
+// 이미지 미리보기 함수
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('profilePreview');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
 </script>
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -49,35 +81,8 @@ try {
 	}
 %>
 
-<script type="text/javascript">
-	function confirmLogout() {
-    	var result = confirm("정말 로그아웃 하시겠습니까?");
-    	if (result) {
-    	    window.location.href = "logout_do.jsp";
-   		} else {
-        	return false;
-   		}
-	}
-	
-    function confirmDeletion(userId) {
-        var result = confirm("정말 탈퇴하시겠습니까?");
-        if (result) {
-            window.location.href = "ask_real_delete_user.jsp";
-        } else {
-            return false;
-        }
-    }
-    
-    // 이미지 미리보기 함수
-    function previewImage(event) {
-        var reader = new FileReader();
-        reader.onload = function() {
-            var output = document.getElementById('profilePreview');
-            output.src = reader.result;
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    }
-</script>
+
+
 <body>
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
@@ -102,19 +107,23 @@ try {
 			}
 
 		%>
+						
+		<!-- header 프로필 -->
 		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
+
 		<%
 		con.close();
 		pstmt.close();

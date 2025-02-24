@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ask_real_delete_user</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=3">
 
@@ -18,7 +18,26 @@ function updateProfileSelectTopLoc() {
 	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
 	 myprodiv_div.style.top = profile_div_bottom + "px";
 	console.log("top2: " + profile_div_bottom);
-	
+}
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmNext() {
+	var checkCaution = document.getElementById("realcheck");
+	if(checkCaution.checked) {
+		window.location.href = "delete_user.jsp";
+	} else {
+		alert("유의사항을 확인해주세요.");
+		checkCaution.focus();
+		return false;
+	}
 }
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
@@ -62,20 +81,25 @@ try {
 <body>
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>	
+				
+		<!-- header 프로필 -->
 		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
+
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -118,10 +142,10 @@ try {
 				<h1 style="font-size: xx-large;">정말 탈퇴하시겠어요?</h1>
 				<span>지금 탈퇴하면 내가 작성한 노트들을 복구할 수 없어요!</span>
 				<div style="justify-content: flex-start;margin-top:30px;">
-					<input type="checkbox" id="realcheck" name="realcheck">
-					<label for="realcheck">회원탈퇴 유의사항을 확인하였습니다.</label>
+					<input type="checkbox" id="realcheck" name="realcheck" style="cursor:pointer">
+					<label for="realcheck" style="cursor:pointer">회원탈퇴 유의사항을 확인하였습니다.</label>
 				</div>
-				<button onclick="location.href='delete_user.jsp'">다음</button>
+				<button onclick="confirmNext()">다음</button>
 			</div>
 		</div>
 	</div>

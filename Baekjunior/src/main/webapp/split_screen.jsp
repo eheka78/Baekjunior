@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>create_note</title>
+<title>split_screen</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 
 <style>
@@ -14,7 +14,6 @@ a{
 }
 </style>
 
-<script>
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -59,87 +58,89 @@ ResultSet rs5 = null;
 PreparedStatement pstmt6 = null;
 ResultSet rs6 = null;
 %>
+
+
+
+<script>
+function updateWindowHeight() {
+    let splitDiv1 = document.getElementById("split1");
+    let splitDiv2 = document.getElementById("split2");
+
+	if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
+	    splitDiv1.style.height = (window.innerHeight - 105) + "px";
+	    splitDiv2.style.height = (window.innerHeight - 105) + "px";
+	}
+    console.log("현재 window.innerHeight 값:", window.innerHeight);
+}
+
+// 페이지 로드 시 실행
+window.addEventListener("DOMContentLoaded", updateWindowHeight);
+// 창 크기가 변경될 때 실행
+window.addEventListener("resize", updateWindowHeight);
+
+
+/* profile top 위치 */
+function updateProfileSelectTopLoc() {
+	let profile_div = document.getElementById("profile");
+	let myprodiv_div = document.getElementById("myprodiv");
+	
+
+	let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
+	 myprodiv_div.style.top = profile_div_bottom + "px";
+	console.log("top2: " + profile_div_bottom);
+	
+}
+
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+//진짜 로그아웃할건지 확인하는 함수
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+	} else {
+   		return false;
+	}
+}
+
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
+    }
+}
+
+
+// 고정 여부 업데이트하는 함수
+function updatePin(problemIdx) {
+    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+    let fix = 0;
+    
+	if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+		pinIcon.style.display = 'none';
+		fix = 0;
+	} else {
+		pinIcon.style.display = 'inline-block';
+		fix = 1;
+	}
+  
+	const xhr = new XMLHttpRequest();
+    xhr.open("POST", "updatePin.jsp", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);  
+        }
+    };
+    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+}
 </script>
 
 </head>
-
-<script type="text/javascript">
-	function updateWindowHeight() {
-	    let splitDiv1 = document.getElementById("split1");
-	    let splitDiv2 = document.getElementById("split2");
-
-		if(<%=problemIdx1 %> != -1 && <%=problemIdx2 %> != -1){
-		    splitDiv1.style.height = (window.innerHeight - 105) + "px";
-		    splitDiv2.style.height = (window.innerHeight - 105) + "px";
-		}
-	    console.log("현재 window.innerHeight 값:", window.innerHeight);
-	}
-	
-	// 페이지 로드 시 실행
-	window.addEventListener("DOMContentLoaded", updateWindowHeight);
-	// 창 크기가 변경될 때 실행
-	window.addEventListener("resize", updateWindowHeight);
-	
-	
-	/* profile top 위치 */
-	function updateProfileSelectTopLoc() {
-		let profile_div = document.getElementById("profile");
-		let myprodiv_div = document.getElementById("myprodiv");
-		
-
-		let profile_div_bottom = profile_div.getBoundingClientRect().bottom;
-		 myprodiv_div.style.top = profile_div_bottom + "px";
-		console.log("top2: " + profile_div_bottom);
-		
-	}
-
-	window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
-	window.addEventListener("resize", updateProfileSelectTopLoc);
-
-
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-	
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-    
-    
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
 
 
 
@@ -166,19 +167,23 @@ ResultSet rs6 = null;
 			}
 
 		%>
+		
+		<!-- header 프로필 -->
 		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
+
 		<%
 			pstmt.close();
 			rs.close();
@@ -203,7 +208,7 @@ ResultSet rs6 = null;
 	</section>
 	
 	<div style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px;">Switch Sides</button>
+		<button onclick="location.href='split_screen.jsp?problem_idx1=<%=problemIdx2 %>&problem_idx2=<%=problemIdx1 %>'" style="border-right:3px solid black; font-size:15px; font-weight:bold; width:60px; cursor:pointer;">Switch Sides</button>
 	</div>
 	
 	<div style="display:grid; grid-template-columns: 1fr 1fr;">

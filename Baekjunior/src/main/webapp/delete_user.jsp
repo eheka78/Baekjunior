@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>delete_user</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=3">
 
@@ -21,10 +21,37 @@ function updateProfileSelectTopLoc() {
 	
 }
 
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+	} else {
+    	return false;
+	}
+}
+
+function showAlert(message) {
+    alert(message);
+}
+
+function fnCheck() {
+	var pwd = document.getElementById("password");
+	if(pwd.value == "") {
+		alert("비밀번호를 입력하세요");
+		pwd.focus();
+		return false;
+	}
+	window.open("", "deletePopup", "width=500,height=300");
+	return true;
+}
+
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
+
 </head>
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -61,20 +88,25 @@ try {
 <body>
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>
+						
+		<!-- header 프로필 -->
 		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
+
 		<%
+		con.close();
 		pstmt.close();
 		rs.close();
 		} catch (SQLException e){
@@ -113,13 +145,14 @@ try {
 			</div>
 		</div>
 		<div class="inner_content">
-			<form class="delete_box" action="user_delete_do.jsp" method="POST">
+			<form class="delete_box" action="user_delete_do.jsp" target="deletePopup" onsubmit="return fnCheck()" method="POST">
 				<h1 style="font-size: xx-large;">비밀번호 재확인</h1>
 				<span>비밀번호를 다시 한번 입력해주세요</span>
-				<input type="password">
+				<input type="text" name="user_id" value="<%=userId %>" style="display:none;">
+				<input type="password" name="password" id="password">
 				<div>
-					<input type="submit" value="확인">
-					<input type="reset" value="취소" onclick="location.href='editProfile.jsp'">
+					<input type="submit" value="확인" style="cursor:pointer;">
+					<input type="reset" value="취소" onclick="location.href='editProfile.jsp'" style="cursor:pointer;">
 				</div>
 			</form>
 		</div>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>note</title>
+<title>friend_note_fetch</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 
 <style>
@@ -68,14 +68,7 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
-<body>	
-	
-	<script type="text/javascript">
-		window.addEventListener("scroll", function(){
-			var header= document.querySelector("header");
-			header.classList.toggle("sticky", window.scrollY > 0);
-		});
-	</script>
+<body>
 	<%
 		try {
 			String sql = "SELECT * FROM problems WHERE problem_idx=? AND user_id=?";
@@ -148,7 +141,7 @@ ResultSet rs = null;
 					
 					if(subMemoStr == null){
 						%>
-						<div>not exist</div><%
+						<div></div><%
 					}
 					else{
 				%>
@@ -185,63 +178,59 @@ ResultSet rs = null;
  			return;
  		}
 		%>
-		
-		<script>
-		const textarea = document.getElementById('code_note');
-        const lineNumbers = document.getElementById('lineNumbers');
-        
-		console.log("AA: " + textarea);
-        function updateLineNumbers() {
-            const numberOfLines = textarea.value.split('\n').length;
-            let lineNumberString = '';
+		</div>
+	</div>
+	<br><br>
+	
+	<script>	
+	const textarea = document.getElementById('code_note');
+    const lineNumbers = document.getElementById('lineNumbers');
+    
+	console.log("AA: " + textarea);
+    function updateLineNumbers() {
+        const numberOfLines = textarea.value.split('\n').length;
+        let lineNumberString = '';
 
-            for (let i = 1; i <= numberOfLines; i++) {
-                lineNumberString += i + '\n'
-            }
-
-            lineNumbers.value = lineNumberString;
+        for (let i = 1; i <= numberOfLines; i++) {
+            lineNumberString += i + '\n'
         }
 
-        function adjustHeight(element) {
-            element.style.height = 'auto'; // Reset height to auto to measure scrollHeight
-            element.style.height = element.scrollHeight + 'px'; // Adjust height to fit content
-        }
+        lineNumbers.value = lineNumberString;
+    }
 
-        // Function to sync heights between textareas
-        function syncHeights() {
-            const maxScrollHeight = Math.max(textarea.scrollHeight, lineNumbers.scrollHeight);
-            textarea.style.height = maxScrollHeight + 'px';
-            lineNumbers.style.height = maxScrollHeight + 'px';
-        }
+    function adjustHeight(element) {
+        element.style.height = 'auto'; // Reset height to auto to measure scrollHeight
+        element.style.height = element.scrollHeight + 'px'; // Adjust height to fit content
+    }
 
-        // 초기 라인 번호 및 높이 업데이트
+    // Function to sync heights between textareas
+    function syncHeights() {
+        const maxScrollHeight = Math.max(textarea.scrollHeight, lineNumbers.scrollHeight);
+        textarea.style.height = maxScrollHeight + 'px';
+        lineNumbers.style.height = maxScrollHeight + 'px';
+    }
+
+    // 초기 라인 번호 및 높이 업데이트
+    updateLineNumbers();
+    syncHeights();
+
+    // 사용자가 텍스트를 입력하거나 줄을 변경할 때 라인 번호 및 높이 업데이트
+    textarea.addEventListener('input', () => {
         updateLineNumbers();
         syncHeights();
+    });
 
-        // 사용자가 텍스트를 입력하거나 줄을 변경할 때 라인 번호 및 높이 업데이트
-        textarea.addEventListener('input', () => {
-            updateLineNumbers();
-            syncHeights();
-        });
+    // Scroll the line numbers to match the code textarea
+    textarea.addEventListener('scroll', () => {
+        lineNumbers.scrollTop = textarea.scrollTop;
+    });
 
-        // Scroll the line numbers to match the code textarea
-        textarea.addEventListener('scroll', () => {
-            lineNumbers.scrollTop = textarea.scrollTop;
-        });
-
-        function submitcode_note() {
-            const code = textarea.value;
-            console.log("Submitted Code:", code);
-
-            // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
-        }
-    	</script>
-		</div>
-			
-	</div>
+    function submitcode_note() {
+        const code = textarea.value;
+        console.log("Submitted Code:", code);
+    }
+	</script>
 	
-	<br><br>
-
 	<footer></footer>
 
 </body>

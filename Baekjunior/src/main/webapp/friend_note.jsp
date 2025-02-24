@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>note</title>
+<title>friend_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 
@@ -35,6 +35,15 @@ function updateProfileSelectTopLoc() {
 	 myprodiv_div.style.top = profile_div_bottom + "px";
 	console.log("top2: " + profile_div_bottom);
 	
+}
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	   		window.location.href = "logout_do.jsp";
+		} else {
+    		return false;
+		}
 }
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
@@ -92,6 +101,9 @@ a{
 </style>
 
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -99,6 +111,9 @@ HttpSession session = request.getSession(false);
 
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
+} else {
+	response.sendRedirect("information.jsp");
+    return;
 }
 int problemId = Integer.parseInt(request.getParameter("problem_id"));
 
@@ -106,6 +121,9 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
+
+
+
 <body>	
 	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>
@@ -130,17 +148,20 @@ ResultSet rs = null;
 			}
 
 		%>
+						
+		<!-- header 프로필 -->
 		<div id="profile">
 			<ul onmouseover="opendiv()" onmouseout="closediv()" style="height:70px;">
-				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px;height:40px;"></li>
+				<li><img src=<%=profileimg %> id="myprofileimg" alt="profileimg" style="width:40px; height:40px;"></li>
 				<li><a href="MyPage.jsp"><%=userId %></a></li>
 			</ul>
-			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none;position:fixed;top: 100px;background: white;padding: 17px;border: 3px solid black;margin-right: 20px;width: 200px;">
+			<!-- header 프로필 hover했을 때 나오는 프로필 -->
+			<div id="myprodiv" onmouseover="opendiv()" onmouseout="closediv()" style="display:none; position:fixed; top:100px; background:white; padding:17px; border:3px solid black; margin-right:20px; width:200px;">
 				<div id="myprofileimgborder">
 					<img id="myprofileimg" src=<%=profileimg %> alt="profileimg">
 				</div>
-				<a href="MyPage.jsp" style="position:absolute;top:30px;margin-left:90px;text-decoration: none;color: black;"><%=userId %></a>
-				<a href="#" onclick="confirmLogout()" style="border: 1px solid;width: 90px;display:inline-block;text-align: center;height: 30px;position:absolute;top:60px;margin-left:78px;text-decoration: none;color: black;">로그아웃</a>
+				<a href="MyPage.jsp" style="position:absolute; top:20px; margin-left:90px; text-decoration:none; color:black;"><%=userId %></a>
+				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
 		
@@ -164,15 +185,6 @@ ResultSet rs = null;
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		
 	</header>
-
-
-	<script type="text/javascript">
-		window.addEventListener("scroll", function(){
-			var header= document.querySelector("header");
-			header.classList.toggle("sticky", window.scrollY > 0);
-		});
-	</script>
-	
 	
 	
 	<section class="banner" style="padding:43px;">
@@ -243,15 +255,22 @@ ResultSet rs = null;
 			<!-- 처리 script -->
 			<script>
 			function ajax_fetch(friend, problemIdx, num) {
-				fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx + "&num=" + num)
-			        .then(response => response.text()) // 서버에서 텍스트 응답 받기
+			    fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx + "&num=" + num)
+			        .then(response => response.text())
 			        .then(data => {
-			        	let noteElement = document.getElementById("noteContent");
-			            noteElement.style = ""; // 모든 스타일 초기화
-			            noteElement.innerHTML = data; // 특정 영역 업데이트
+			            let noteElement = document.getElementById("noteContent");
+			            noteElement.style = ""; 
+			            noteElement.innerHTML = data;
+
+			            let scripts = noteElement.getElementsByTagName("script");
+
+			            for (let script of scripts) {
+			                eval(script.innerText); // 직접 실행
+			            }
 			        })
 			        .catch(error => console.error("Error:", error));
 			}
+
 			</script>
 			
 			<!-- 나타나는 div -->
