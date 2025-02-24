@@ -164,15 +164,6 @@ ResultSet rs = null;
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		
 	</header>
-
-
-	<script type="text/javascript">
-		window.addEventListener("scroll", function(){
-			var header= document.querySelector("header");
-			header.classList.toggle("sticky", window.scrollY > 0);
-		});
-	</script>
-	
 	
 	
 	<section class="banner" style="padding:43px;">
@@ -243,15 +234,22 @@ ResultSet rs = null;
 			<!-- 처리 script -->
 			<script>
 			function ajax_fetch(friend, problemIdx, num) {
-				fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx + "&num=" + num)
-			        .then(response => response.text()) // 서버에서 텍스트 응답 받기
+			    fetch("friend_note_fetch.jsp?friend=" + friend + "&problem_idx=" + problemIdx + "&num=" + num)
+			        .then(response => response.text())
 			        .then(data => {
-			        	let noteElement = document.getElementById("noteContent");
-			            noteElement.style = ""; // 모든 스타일 초기화
-			            noteElement.innerHTML = data; // 특정 영역 업데이트
+			            let noteElement = document.getElementById("noteContent");
+			            noteElement.style = ""; 
+			            noteElement.innerHTML = data;
+
+			            let scripts = noteElement.getElementsByTagName("script");
+
+			            for (let script of scripts) {
+			                eval(script.innerText); // 직접 실행
+			            }
 			        })
 			        .catch(error => console.error("Error:", error));
 			}
+
 			</script>
 			
 			<!-- 나타나는 div -->
