@@ -26,11 +26,12 @@ header{
 	z-index:100000;
 	background:white;
 	border-bottom:thick double black;
+	padding:25px 100px;
 }
 
 header.sticky{
 	padding:5px 100px;
-	/* background:orange; */
+	background:white;
 }
 
 header .logo, banner .logo{
@@ -41,7 +42,6 @@ header .logo, banner .logo{
 	font-size:2em;
 	text-transform:uppercase;
 	letter-spacing:2px;
-	transition:0.6s;
 }
 
 header ul{
@@ -63,7 +63,6 @@ header ul li a{
 	color:black;
 	letter-spacing:2px;
 	font-weight:500px;
-	transition:0.6s;
 }
 
 header [class ^= "main_menu_"] > a:hover, 
