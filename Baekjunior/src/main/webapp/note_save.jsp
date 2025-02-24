@@ -63,7 +63,7 @@
 			AlgorithmMemoDB amdb = new AlgorithmMemoDB();
 			for(String algo : algorithms) {
 				// 존재하지 않는 알고리즘인 경우 필기할 수 있는 목록에 추가
-				if(amdb.algorithmExistCheck(algo) == 0) {
+				if(amdb.algorithmExistCheck(userId, algo) == 0) {
 					amdb.insertAlgorithmMemo(userId, algo);
 				}
 			}

@@ -13,11 +13,12 @@ public class AlgorithmMemoDB {
 		con = DsCon.getConnection();
 	}
 	
-	public int algorithmExistCheck(String algorithm_name) throws SQLException {
-		String sql = "SELECT * FROM algorithm_memo WHERE algorithm_name=?";
+	public int algorithmExistCheck(String user_id, String algorithm_name) throws SQLException {
+		String sql = "SELECT * FROM algorithm_memo WHERE user_id=? AND algorithm_name=?";
 		
 		pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, algorithm_name);
+		pstmt.setString(1, user_id);
+		pstmt.setString(2, algorithm_name);
 		rs = pstmt.executeQuery();
 		if(rs.next()) {
 			return 1;
