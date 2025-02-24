@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MyPage</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=1.2">
 
@@ -23,8 +23,21 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
 </script>
+
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -59,16 +72,9 @@ try {
 		}
 	}
 %>
-<script>
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-</script>
+
+
+
 <body>
 	<header>
 		<a href="index.jsp" class="logo">Baekjunior</a>

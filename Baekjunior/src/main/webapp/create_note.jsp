@@ -25,10 +25,8 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
-</script>
-</head>
 
-<script>
+
 document.addEventListener("DOMContentLoaded", function() {
     let languageSelect = document.querySelector('select[name="language"]');
     let otherSpan = document.getElementById("language_other");
@@ -106,6 +104,9 @@ function importClick() {
     return false; // 문제 정보 가져오기만 하고 제출은 x
 }
 </script>
+</head>
+
+
 <%
 ProblemInfoGet getPI = new ProblemInfoGet();
 String problemId = request.getParameter("problemId"); // 문제 번호 입력 받기
@@ -162,6 +163,7 @@ try {
 		}
 	}
 %>
+
 
 <body>	
 	<header>

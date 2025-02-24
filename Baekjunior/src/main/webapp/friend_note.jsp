@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>note</title>
+<title>friend_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 
@@ -101,6 +101,9 @@ a{
 </style>
 
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -118,6 +121,9 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 %>
+
+
+
 <body>	
 	<header style="padding:5px 100px;">
 		<a href="index.jsp" class="logo">Baekjunior</a>

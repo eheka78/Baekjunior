@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>gather_category</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=3">
 <link rel="stylesheet" type="text/css" href="Baekjunior_css.css?v=3">
@@ -24,8 +24,31 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
+    }
+}
 </script>
+
 </head>
+
+
+
 <%
 request.setCharacterEncoding("utf-8");
 String userId = "none";
@@ -62,25 +85,7 @@ PreparedStatement levelPstmt = null;
 ResultSet levelRs = null;
 %>
 
-<script type="text/javascript">
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
+ 
 
 <script>
 	// 고정 여부 업데이트하는 함수

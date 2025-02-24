@@ -37,9 +37,56 @@ function updateProfileSelectTopLoc() {
 
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+
+//진짜 로그아웃할건지 확인하는 함수
+function confirmLogout() {
+	var result = confirm("정말 로그아웃 하시겠습니까?");
+	if (result) {
+	    window.location.href = "logout_do.jsp";
+		} else {
+    	return false;
+		}
+}
+
+// 진짜 삭제할건지 확인하는 함수
+function confirmDeletion(problemIdx) {
+    var result = confirm("정말 삭제하시겠습니까?");
+    if (result) {
+        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
+    } else {
+        return false;
+    }
+}
+
+// 고정 여부 업데이트하는 함수
+function updatePin(problemIdx) {
+    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
+    let fix = 0;
+    
+	if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
+		pinIcon.style.display = 'none';
+		fix = 0;
+	} else {
+		pinIcon.style.display = 'inline-block';
+		fix = 1;
+	}
+  
+	const xhr = new XMLHttpRequest();
+    xhr.open("POST", "updatePin.jsp", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);  
+        }
+    };
+    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
+}
 </script>
 
 </head>
+
 
 <%
 request.setCharacterEncoding("utf-8");
@@ -152,53 +199,7 @@ PreparedStatement problemCountPstmt = null;
 ResultSet countRs = null;
  %>
 
-<script type="text/javascript">
-	//진짜 로그아웃할건지 확인하는 함수
-	function confirmLogout() {
-		var result = confirm("정말 로그아웃 하시겠습니까?");
-		if (result) {
-		    window.location.href = "logout_do.jsp";
-			} else {
-	    	return false;
-			}
-	}
-	
-	// 진짜 삭제할건지 확인하는 함수
-    function confirmDeletion(problemIdx) {
-        var result = confirm("정말 삭제하시겠습니까?");
-        if (result) {
-            window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-        } else {
-            return false;
-        }
-    }
-</script>
 
-<script>
-	// 고정 여부 업데이트하는 함수
-	function updatePin(problemIdx) {
-	    var pinIcon = document.getElementById('content_set_a_' + problemIdx);
-	    let fix = 0;
-	    
-		if(pinIcon.offsetWidth > 0 && pinIcon.offsetHeight > 0) {
-			pinIcon.style.display = 'none';
-			fix = 0;
-		} else {
-			pinIcon.style.display = 'inline-block';
-			fix = 1;
-		}
-	  
-		const xhr = new XMLHttpRequest();
-	    xhr.open("POST", "updatePin.jsp", true);
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	    xhr.onreadystatechange = function () {
-	        if (xhr.readyState === 4 && xhr.status === 200) {
-	            console.log(xhr.responseText);  
-	        }
-	    };
-	    xhr.send("problem_idx=" + problemIdx +"&is_fixed=" + fix);
-	}
-</script>
 
 <body>	
 	<header>

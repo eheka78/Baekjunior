@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>note</title>
+<title>friend_note_fetch</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 
 <style>
