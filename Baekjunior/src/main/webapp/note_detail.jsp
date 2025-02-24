@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>create_note</title>
+<title>note_detail</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 
 <script type="text/javascript">

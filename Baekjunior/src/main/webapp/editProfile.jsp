@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>editProfile</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="editProfilest.css?v=3">
 

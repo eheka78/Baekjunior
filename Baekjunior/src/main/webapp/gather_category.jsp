@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>gather_category</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=3">
 <link rel="stylesheet" type="text/css" href="Baekjunior_css.css?v=3">

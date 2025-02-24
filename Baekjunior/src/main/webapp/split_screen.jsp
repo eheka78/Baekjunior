@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>create_note</title>
+<title>split_screen</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 
 <style>
