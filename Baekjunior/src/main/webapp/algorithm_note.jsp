@@ -239,26 +239,23 @@ try {
 							while(problemRs.next()) {
 		 		%>
 					<li class="item">
-						<div class="content_number">
-							<a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getString("problem_id") %></a>
-						</div>
-						<div class="content_set">
+		 				<div class="content_number"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"># <%=problemRs.getInt("problem_id") %></a></div>
+		 				<div class="content_set">
+		 				<!-- 고정 핀 아이콘 출력 여부 -->
 		 				<% if(problemRs.getInt("is_fixed") == 1) { %>
 			    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png">
 			    		<% } else { %>
 			    			<img class="content_set_a" id="content_set_a_<%= problemRs.getInt("problem_idx") %>" src="img/pin.png" style="display:none">
 			    		<% } %>
-			    		<button class="content_set_b"><img src="img/....png"></button>
-							<ul>
-								<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
-				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
-				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
-							</ul>
-						</div>
-						<div class="content_title">
-							<a href="note_detail.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a>
-						</div>
-					</li>
+			    		<button class="content_set_b" style="cursor:pointer;"><img src="img/....png"></button>
+				    		<ul>
+				    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" style="display: block; cursor:pointer;">Unpin / Pin to top</a></li>
+				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1" style="display: block; cursor:pointer;">Split screen</a></li>
+				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#" style="display: block; cursor:pointer;">Delete</a></li>
+				    		</ul>
+			    		</div>
+		 				<div class="content_title area ellipsis"><a href="note.jsp?problem_idx=<%=problemRs.getInt("problem_idx")%>"><%=problemRs.getString("memo_title") %></a></div>
+		 			</li>
 				<%
 							}
 						}
