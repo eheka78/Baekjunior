@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.*;
 import javax.naming.NamingException;
 import Baekjunior.db.DsCon;
+import jakarta.servlet.ServletContext;
 
 public class UserInfoDB {
 	private Connection con;
@@ -67,15 +68,7 @@ public class UserInfoDB {
 	}
 	
 	//  회원 정보에 프로필 사진을 삭제하는 함수
-	public void deleteProfileImage(String id, String savedFileName) throws SQLException {
-		String uploadDir = "/upload/";
-		String filePath = uploadDir + savedFileName;
-		
-		File file = new File(filePath);
-		if(file.exists()) {
-			file.delete();
-		}
-		
+	public void deleteProfileImage(String id) throws SQLException {
 		String sql = "UPDATE users SET originalFileName=NULL, savedFileName=NULL WHERE user_id=?";
 		pstmt = con.prepareStatement(sql);
 		pstmt.setString(1, id);

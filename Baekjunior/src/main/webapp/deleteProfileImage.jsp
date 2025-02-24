@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="java.sql.*, javax.naming.*, Baekjunior.db.*" session="false"%>
+	import="java.sql.*, javax.naming.*, java.io.*, Baekjunior.db.*" session="false"%>
 <%
 request.setCharacterEncoding("utf-8");
 String id = request.getParameter("id");
@@ -11,7 +11,16 @@ try {
 		out.print("현재 기본 프로필 이미지입니다.");
 	}
 	else {
-		uidb.deleteProfileImage(id, savedFileName);
+		ServletContext context = getServletContext();
+		String uploadDir = context.getRealPath("upload");
+		String filePath = uploadDir + File.separator + savedFileName;
+		
+		File file = new File(filePath);
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		uidb.deleteProfileImage(id);
 		out.print("프로필 이미지가 삭제되었습니다.");
 	}
 	uidb.close();
