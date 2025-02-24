@@ -166,6 +166,7 @@ try {
 					</div>
 					<input type="file" accept="image/jpg,image/gif" name="fileName" class="imgUpload" id="imgUpload" onchange="previewImage(event)">
 					<button onclick="onClickUpload();" style="margin-top:10px;">프로필 사진 업로드</button>
+					<button onclick="onClickDelete('<%=userId%>');" style="margin-top:10px;">현재 사진 삭제</button>
 					<h1><%=rs.getString("user_id") %></h1>
 					<textarea name="intro"><%=Util.nullChk(rs.getString("intro"), "") %></textarea>
 					<input type="submit" value="저장">
@@ -176,6 +177,18 @@ try {
 						let myupload = document.getElementById("imgUpload");
 						myupload.click();
 						event.preventDefault();
+					}
+					function onClickDelete(id) {
+						if (!confirm("프로필 이미지를 삭제하시겠습니까?")) {
+					        return;
+					    }
+						fetch("deleteProfileImage.jsp?id="+id)
+							.then(response => response.text())
+							.then(result => {
+								alert(result);
+								location.reload(); // 페이지 새로고침하여 변경 반영
+							})
+							.catch(error => console.error("삭제 오류:", error));
 					}
 				</script>
 			</div>
