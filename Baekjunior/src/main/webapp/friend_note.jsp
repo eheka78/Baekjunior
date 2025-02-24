@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>note</title>
+<title>friend_note</title>
 <link rel="stylesheet" href="Baekjunior_css.css">
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 
