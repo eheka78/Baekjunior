@@ -391,7 +391,7 @@ ResultSet memoRs = null;
 						</span>
 					</div>
 					<div style="float:right; font-size:15px;">
-						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black; text-decoration:underline;">Edit</a>
+						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black; text-decoration:underline; padding-right:5px;">Edit</a>
 						<a onclick="confirmDeletion('<%=rs.getInt("problem_idx") %>')" href="#" style="color:black; text-decoration:underline;">Delete</a>
 					</div>
 				</div>
