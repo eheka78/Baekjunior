@@ -370,7 +370,7 @@ ResultSet memoRs = null;
 						Friends who solved :
 						<%
 						try {
-							String sql2 = "SELECT * FROM problems WHERE problem_id = ? AND user_id != ? GROUP BY user_id";
+							String sql2 = "SELECT * FROM problems WHERE problem_id = ? AND user_id != ? GROUP BY user_id LIMIT 3";
 							
 							pstmt2 = con.prepareStatement(sql2);
 							pstmt2.setInt(1, rs.getInt("problem_id"));
