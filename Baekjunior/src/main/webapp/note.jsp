@@ -24,6 +24,20 @@ function updateProfileSelectTopLoc() {
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 
+//profile에 hover할 때만 실행
+let profile_div = document.getElementById("profile");
+
+document.addEventListener("DOMContentLoaded", function () {
+    let profile_div = document.getElementById("profile");
+
+    if (profile_div) {
+        profile_div.addEventListener("mousemove", (event) => {
+            updateProfileSelectTopLoc();
+        });
+    }
+});
+
+
 
 function confirmLogout() {
 	var result = confirm("정말 로그아웃 하시겠습니까?");
@@ -363,14 +377,14 @@ ResultSet memoRs = null;
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline;"><%=rs.getString("problem_url") %></a></span>
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
 						Friends who solved :
 						<%
 						try {
-							String sql2 = "SELECT * FROM problems WHERE problem_id = ? AND user_id != ? GROUP BY user_id";
+							String sql2 = "SELECT * FROM problems WHERE problem_id = ? AND user_id != ? GROUP BY user_id LIMIT 3";
 							
 							pstmt2 = con.prepareStatement(sql2);
 							pstmt2.setInt(1, rs.getInt("problem_id"));
@@ -390,9 +404,9 @@ ResultSet memoRs = null;
 							<a href="friend_note.jsp?problem_id=<%=rs.getInt("problem_id") %>"><img src="img/list.png" style="height:13px;"></a>
 						</span>
 					</div>
-					<div style="float:right; font-size:15px; padding:10px;">
-						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black;">Edit</a>
-						<a onclick="confirmDeletion('<%=rs.getInt("problem_idx") %>')" href="#" style="color:black;">Delete</a>
+					<div style="float:right; font-size:15px;">
+						<a href="note_detail_edit.jsp?problem_idx=<%=rs.getInt("problem_idx") %>" style="color:black; text-decoration:underline; padding-right:5px;">Edit</a>
+						<a onclick="confirmDeletion('<%=rs.getInt("problem_idx") %>')" href="#" style="color:black; text-decoration:underline;">Delete</a>
 					</div>
 				</div>
 			</div>	

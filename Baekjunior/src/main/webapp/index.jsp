@@ -39,6 +39,20 @@ window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 
 
+// profile에 hover할 때만 실행
+let profile_div = document.getElementById("profile");
+
+document.addEventListener("DOMContentLoaded", function () {
+    let profile_div = document.getElementById("profile");
+
+    if (profile_div) {
+        profile_div.addEventListener("mousemove", (event) => {
+            updateProfileSelectTopLoc();
+        });
+    }
+});
+
+
 
 //진짜 로그아웃할건지 확인하는 함수
 function confirmLogout() {
@@ -649,13 +663,13 @@ ResultSet countRs = null;
 					if(tierName.equals("unrated")) {
 	%>
 	 			<li class="item">
-	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%></a></div>
+	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><img src="img/star_<%=tierName.toLowerCase()%>.png"> <%=tierName%></a></div>
 	 			</li>
 	 			<%
 					} else {
 				%>
 			 	<li class="item">
-	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><%=tierName%> <%=tierNum %></a></div>
+	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><img src="img/star_<%=tierName.toLowerCase()%>.png" style="height:20px;"> <%=tierName%> <%=tierNum %></a></div>
 	 			</li>
 	<%
 					}

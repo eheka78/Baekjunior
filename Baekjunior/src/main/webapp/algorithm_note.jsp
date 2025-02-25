@@ -23,6 +23,18 @@ function updateProfileSelectTopLoc() {
 window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
 window.addEventListener("resize", updateProfileSelectTopLoc);
 
+//profile에 hover할 때만 실행
+let profile_div = document.getElementById("profile");
+
+document.addEventListener("DOMContentLoaded", function () {
+    let profile_div = document.getElementById("profile");
+
+    if (profile_div) {
+        profile_div.addEventListener("mousemove", (event) => {
+            updateProfileSelectTopLoc();
+        });
+    }
+});
 
 
 

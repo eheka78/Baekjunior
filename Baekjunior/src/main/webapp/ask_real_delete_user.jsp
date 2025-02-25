@@ -20,6 +20,24 @@ function updateProfileSelectTopLoc() {
 	console.log("top2: " + profile_div_bottom);
 }
 
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+
+//profile에 hover할 때만 실행
+let profile_div = document.getElementById("profile");
+
+document.addEventListener("DOMContentLoaded", function () {
+    let profile_div = document.getElementById("profile");
+
+    if (profile_div) {
+        profile_div.addEventListener("mousemove", (event) => {
+            updateProfileSelectTopLoc();
+        });
+    }
+});
+
+
+
 function confirmLogout() {
 	var result = confirm("정말 로그아웃 하시겠습니까?");
 	if (result) {
@@ -39,9 +57,6 @@ function confirmNext() {
 		return false;
 	}
 }
-
-window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
-window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
 </head>
 <%
