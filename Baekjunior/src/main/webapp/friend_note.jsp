@@ -37,6 +37,11 @@ function updateProfileSelectTopLoc() {
 	
 }
 
+window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
+window.addEventListener("resize", updateProfileSelectTopLoc);
+
+
+
 function confirmLogout() {
 	var result = confirm("정말 로그아웃 하시겠습니까?");
 	if (result) {
@@ -45,9 +50,6 @@ function confirmLogout() {
     		return false;
 		}
 }
-
-window.addEventListener("DOMContentLoaded", updateProfileSelectTopLoc);
-window.addEventListener("resize", updateProfileSelectTopLoc);
 </script>
 
 <style>
