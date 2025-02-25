@@ -29,5 +29,5 @@ if(multiPart.getMyPart("fileName") != null) {
 uidb.updateIntro(userId, introText);
 uidb.close();
 
-response.sendRedirect("editProfile.jsp");
+response.sendRedirect("MyPage.jsp");
 %>
