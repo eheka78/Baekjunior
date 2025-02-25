@@ -137,8 +137,7 @@ header [class^="main_menu_"]>ul>li:hover {
 .inner_contents {
 	flex: 8;
 	margin-top: 30px;
-	margin-right: 200px;
-	margin-left: 100px;
+	margin: 100px;
 }
 
 .profileimg {
@@ -183,6 +182,7 @@ td {
     margin: 0 60px;
     flex-direction: column;
     align-items: center;
+    margin-top: 100px;
 }
 
 .info_box>h1 {
