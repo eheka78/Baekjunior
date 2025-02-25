@@ -7,6 +7,8 @@
 <title>MyPage</title>
 <script src="https://kit.fontawesome.com/c9057320ee.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="MyPagest.css?v=1.2">
+<link rel="stylesheet" type="text/css" href="editProfilest.css?v=1.2">
+
 
 <script>
 /* profile top 위치 */
@@ -32,6 +34,25 @@ function confirmLogout() {
     	return false;
 		}
 }
+
+function confirmDeletion(userId) {
+    var result = confirm("정말 탈퇴하시겠습니까?");
+    if (result) {
+        window.location.href = "ask_real_delete_user.jsp";
+    } else {
+        return false;
+    }
+}
+
+// 이미지 미리보기 함수
+function previewImage(event) {
+    var reader = new FileReader();
+    reader.onload = function() {
+        var output = document.getElementById('profilePreview');
+        output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
 </script>
 
 </head>
@@ -53,6 +74,10 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 String profileimg = null;
+String realemail = null;
+String showemail = null;
+String pw = null;
+int emailVerifyStatus = 0;
 try {
 	if(userId != "none") {
 		String sql = "SELECT * FROM users WHERE user_id=?";
@@ -70,6 +95,10 @@ try {
 		else {
 			profileimg = "./upload/" + rs.getString("savedFileName");
 		}
+		
+		realemail = rs.getString("email");
+		showemail = realemail.substring(0,2) + "******@" + realemail.split("@")[1].substring(0,1) + "******"; 
+		pw = rs.getString("password");
 	}
 %>
 
@@ -126,13 +155,6 @@ try {
 		<a href="#" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul style="min-width:150px;">
-					<li><a href="editProfile.jsp">프로필 수정</a></li>
-				</ul>
-			</div>
-		</div>
 		<% 
 			ProblemInfoDB pidb = new ProblemInfoDB(); 
 			int noteCount = pidb.countProblem(userId);
@@ -167,171 +189,215 @@ try {
 					</div>
 				</Button>
 			</div>
-			<div class="calender">
-				<div class="calender_box">
-					<h2>2024년 8월</h2>
-					<table>
-						<tr>
-							<th>일</th>
-							<th>월</th>
-							<th>화</th>
-							<th>수</th>
-							<th>목</th>
-							<th>금</th>
-							<th>토</th>
-						</tr>
-						<tr>
-							<td><div>
-								
-							</div></td>
-							<td><div>
-								
-							</div></td>
-							<td><div>
-								
-							</div></td>
-							<td><div>
-								
-							</div></td>
-							<td><div>
-								<p>1</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>2</p>
-								<p>1</p>
-							</div></td>
-							<td><div>
-								<p>3</p>
-								<p>3</p>
-							</div></td>
-						</tr>
-						<tr>
-							<td><div>
-								<p>4</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>5</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>6</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>7</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>8</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>9</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>10</p>
-								<p>3</p>
-							</div></td>
-						</tr>
-						<tr>
-							<td><div>
-								<p>11</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>12</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>13</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>14</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>15</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>16</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>17</p>
-								<p>3</p>
-							</div></td>
-						</tr>
-						<tr>
-							<td><div>
-								<p>18</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>19</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>20</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>21</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>22</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>23</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>24</p>
-								<p>3</p>
-							</div></td>
-						</tr>
-						<tr>
-							<td><div>
-								<p>25</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>26</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>27</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>28</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>29</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>30</p>
-								<p>3</p>
-							</div></td>
-							<td><div>
-								<p>31</p>
-								<p>3</p>
-							</div></td>
-						</tr>
-					</table>
+			<div class="myinfo">
+				<form action="editProfile_do.jsp" method="POST" enctype="multipart/form-data">
+				<div class="info_box">
+					<input type="hidden" name="user_id" value="<%=userId%>">
+					<div style="border-radius: 70%;width: 150px;height: 150px;overflow: hidden;">
+						<img id="profilePreview" src=<%=profileimg %> class="profileimg" alt="profileimg" style="width: 100%;height: 100%;object-fit: cover;">
+					</div>
+					<input type="file" accept="image/jpg,image/gif" name="fileName" class="imgUpload" id="imgUpload" onchange="previewImage(event)">
+					<button onclick="onClickUpload();" style="margin-top:10px;">프로필 사진 업로드</button>
+					<button onclick="onClickDelete('<%=userId%>');" style="margin-top:10px;">현재 사진 삭제</button>
+					<h1><%=rs.getString("user_id") %></h1>
+					<textarea name="intro"><%=Util.nullChk(rs.getString("intro"), "") %></textarea>
+					<input type="submit" value="저장">
+				</div>
+				</form>
+				<script>
+					function onClickUpload() {
+						let myupload = document.getElementById("imgUpload");
+						myupload.click();
+						event.preventDefault();
+					}
+					function onClickDelete(id) {
+						if (!confirm("프로필 이미지를 삭제하시겠습니까?")) {
+					        return;
+					    }
+						fetch("deleteProfileImage.jsp?id="+id)
+							.then(response => response.text())
+							.then(result => {
+								alert(result);
+								location.reload(); // 페이지 새로고침하여 변경 반영
+							})
+							.catch(error => console.error("삭제 오류:", error));
+					}
+				</script>
+			</div>
+			<div style="margin:100px;">
+				<table>
+					<tr>
+						<td>
+							<i class="fa-solid fa-lock"></i>&nbsp;&nbsp;비밀번호
+							<button onclick="openModal('oldPasswordModal')" style="width:80px;margin-left:650px;">변경</button>
+							</td>
+					</tr>
+					<tr>
+						<td>
+							<i class="fa-solid fa-envelope"></i>&nbsp;&nbsp;<%=showemail %>
+							<button onclick="openModal('emailModal')" style="width:80px;margin-left:578px;">변경</button>
+						</td>
+					</tr>
+					<tr>
+						<td><a href="#" onclick="confirmLogout()">로그아웃 ></a></td>
+					</tr>
+					<tr>
+						<td><a href="#" onclick="confirmDeletion('<%=userId %>')">회원 탈퇴 ></a></td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- 비밀번호 변경창 -->
+			<div id="oldPasswordModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('oldPasswordModal')">&times;</span>
+					<h2>비밀번호 변경</h2>
+					<label for="oldPassword">현재 비밀번호를 입력해주세요.</label>
+					<br>
+					<input type="password" id="oldPassword">
+					<button onclick="checkOldPw()">확인</button>
+				</div>
+			</div>
+			<div id="newPasswordModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('newPasswordModal')">&times;</span>
+					<h2>비밀번호 변경</h2>
+					<label for="newPassword">새 비밀번호를 입력해주세요.</label>
+					<br>
+					<input type="password" id="newPassword">
+					<br>
+					<label for="checknewPassword">새 비밀번호 확인</label>
+					<br>
+					<input type="password" id="checknewPassword">
+					<button onclick="checkNewPw()">변경</button>
+				</div>
+			</div>
+			
+			<!-- 이메일 변경창 -->
+			<div id="emailModal" class="modal">
+				<div class="modal-content">
+					<span class="close" onclick="closeModal('emailModal')">&times;</span>
+					<h2>이메일 변경</h2>
+					<label for="oldEmail">기존 이메일을 입력해주세요.</label>
+					<br>
+					<input type="email" id="oldEmail">
+					<button onclick="checkOldEmail()">확인</button>
+					
+					<label for="newEmail">새 이메일을 입력해주세요.</label>
+					<br>
+					<input type="email" id="newEmail">
+					<button onclick="changeEmail()">변경</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+<script>
+	function closeModal(divid){
+		document.getElementById(divid).style.display = "none";
+	}
+	function openModal(divid) {
+		document.getElementById(divid).style.display = "block";
+	}
+	function checkOldPw() {
+		let oldPw = document.getElementById("oldPassword").value;
+		if(oldPw == ""){
+			alert("비밀번호를 입력해주세요.");
+			document.getElementById("oldPassword").focus();
+			return;
+		}
+		else if(oldPw == "<%=pw%>"){
+			document.getElementById("oldPasswordModal").style.display = "none";
+			document.getElementById("newPasswordModal").style.display = "block";
+		}
+		else {
+			alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+			document.getElementById("oldPassword").value="";
+			document.getElementById("oldPassword").focus();
+			return;
+		}
+		
+	}
+	function checkNewPw() {
+		let userId = "<%= userId %>";
+		let newPw = document.getElementById("newPassword").value;
+		let check = document.getElementById("checknewPassword").value;
+		
+		if(newPw == ""){
+			alert("새 비밀번호를 입력해주세요.");
+			document.getElementById("newPassword").focus();
+			return;
+		}
+		else if(check == ""){
+			alert("비밀번호 확인을 입력해주세요.");
+			document.getElementById("checknewPassword").focus();
+			return;
+		}
+		else if(newPw == check) {
+			fetch("changePW.jsp?id="+userId+"&newPw="+newPw)
+				.then(response=>response.text())
+				.then(result => {
+					alert(result);
+					window.location.href = "logout_do.jsp";
+				})
+				.catch(error => console.error("비밀번호 변경 오류:", error));
+		}
+		else {
+			alert("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+			document.getElementById("newPassword").value="";
+			document.getElementById("checknewPassword").value="";
+			document.getElementById("newPassword").focus();
+		}
+	}
+	function checkOldEmail() {
+		let oldEmail = document.getElementById("oldEmail").value;
+		if(oldEmail == ""){
+			alert("기존 이메일을 입력해주세요.");
+			document.getElementById("oldEmail").focus();
+			return;
+		}
+		else if (oldEmail == "<%=realemail%>"){
+			alert("확인되었습니다.");
+			emailVerifyStatus = 1;
+			document.getElementById("newEmail").focus();
+			return;
+		}
+		else {
+			alert("기존 이메일과 일치하지 않습니다. 다시 입력해주세요.");
+			document.getElementById("oldEmail").value="";
+			document.getElementById("oldEmail").focus();
+		}
+		
+	}
+	function changeEmail() {
+		let userId = "<%= userId %>";
+		let newEmail = document.getElementById("newEmail").value;
+		if(newEmail == ""){
+			alert("새 이메일을 입력해주세요.");
+			document.getElementById("newEmail").focus();
+			return;
+		}
+		else if (newEmail == document.getElementById("oldEmail").value){
+			alert("기존 이메일과 동일합니다. 다른 이메일을 입력해주세요.");
+			document.getElementById("newEmail").value="";
+			document.getElementById("newEmail").focus();
+			return;
+		}
+		else {
+			if(<%= emailVerifyStatus%> == 0){
+				alert("기존 이메일 확인 후 변경가능합니다.");
+				document.getElementById("oldEmail").focus();
+				return;
+			}
+			fetch("changeEmail.jsp?id="+userId+"&newEmail="+newEmail)
+			.then(response=>response.text())
+			.then(result => {
+				alert(result);
+				location.reload();
+			})
+			.catch(error => console.error("이메일 변경 오류:", error));
+		}
+	}
+</script>
 	
 </body>
 </html>
