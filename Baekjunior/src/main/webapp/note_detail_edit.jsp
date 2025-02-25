@@ -292,7 +292,7 @@ ResultSet rs = null;
 					<div class="container_div" style="padding:5px;">
 		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
 		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <a class="delete_btn" href="#"><img src="img/x.png"></a>
+		                <a class="delete_btn" href="#"><img src="img/x.png" style="height:15px;"></a>
 		        	</div>
 		        <% } %>
 		        </div>
