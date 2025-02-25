@@ -21,7 +21,7 @@ header{
 	display:flex;
 	justify-content:space-between;
 	align-items:center;
-	transition:all 0.3s;
+	transition:all 0.6s;
 	z-index:100000;
 	background:white;
 	border-bottom:thick double black;
