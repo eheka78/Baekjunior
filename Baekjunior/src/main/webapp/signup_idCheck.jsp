@@ -12,22 +12,9 @@ try {
 	int is_exist = userDB.idCheck(id);
 	
 	if(is_exist == 1) {	
-	%>
-	<script>
-		opener.document.signupf.idDuplication.value = "0";
-		opener.showAlert("이미 존재하는 아이디입니다.");
-		window.close();
-	</script>
-	<%
-	} 
-	else {
-	%>
-	<script>
-		opener.document.signupf.idDuplication.value = "1";
-		opener.showAlert("사용 가능한 아이디입니다.");
-		window.close();
-	</script>
-	<%
+		out.print("unavailable");
+	} else {
+		out.print("available");
 	}
 	userDB.close();
 } catch(SQLException e) {

@@ -43,7 +43,7 @@ function confirmLogout() {
 	if (result) {
 	    window.location.href = "logout_do.jsp";
 		} else {
-    	return false;
+    		return false;
 		}
 }
 
@@ -56,6 +56,7 @@ function confirmNext() {
 		checkCaution.focus();
 		return false;
 	}
+	return true;
 }
 </script>
 </head>
@@ -152,7 +153,7 @@ try {
 					<input type="checkbox" id="realcheck" name="realcheck" style="cursor:pointer">
 					<label for="realcheck" style="cursor:pointer">회원탈퇴 유의사항을 확인하였습니다.</label>
 				</div>
-				<button onclick="confirmNext()">다음</button>
+				<button onclick="return confirmNext()">다음</button>
 			</div>
 		</div>
 	</div>

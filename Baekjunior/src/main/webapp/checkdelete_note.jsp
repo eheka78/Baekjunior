@@ -22,11 +22,10 @@ function confirmLogout() {
 
 // 진짜 삭제할건지 확인하는 함수
 function confirmDeletion(problemIdx) {
-    var result = confirm("정말 삭제하시겠습니까?");
-    if (result) {
-        window.location.href = "note_delete_do.jsp?problem_idx=" + problemIdx;
-    } else {
-        return false;
+	var result = confirm("정말 삭제하시겠습니까?");
+    if (!result) {
+    	event.preventDefault();
+    	return false;
     }
 }
 </script>
@@ -166,7 +165,7 @@ ResultSet levelRs = null;
 				<h1 style="font-size:30px;">노트</h1>
 				<div>
 					<button type="button" onclick="checkAll()" id="allCheck" name="allCheck" style="width:100px;height:40px;border-radius:40px;">전체선택</button>
-					<input type="submit" value="삭제" style="width:100px;height:40px;border-radius:40px;cursor:pointer;">
+					<input type="submit" onclick="confirmDeletion()" value="삭제" style="width:100px;height:40px;border-radius:40px;cursor:pointer;">
 				</div>
 			</div>
 			<div id="list_group" style="padding:0;margin-top:20px;">

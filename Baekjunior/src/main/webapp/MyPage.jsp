@@ -114,6 +114,9 @@ try {
 		realemail = rs.getString("email");
 		showemail = realemail.substring(0,2) + "******@" + realemail.split("@")[1].substring(0,1) + "******"; 
 		pw = rs.getString("password");
+	} else {
+		response.sendRedirect("information.jsp");
+	    return;
 	}
 %>
 
