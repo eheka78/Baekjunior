@@ -228,9 +228,6 @@ ResultSet levelRs = null;
 		 				if (countRs.next() && countRs.getInt(1) <= 0) {
 		 					%>
 		 					</table>
-		 					<div>
-		 						not exist
-		 					</div>
 		 					<%
 		 				} else {
 		 					// 고정된 문제 먼저 출력
@@ -274,7 +271,6 @@ ResultSet levelRs = null;
 		 			}
 		 		}
 		 		%>
-				</ul>
 				</table>
 			</div>
 		</div>
