@@ -277,7 +277,7 @@ function updatePin(problemIdx) {
 						</div> 
 						<div style="height:10px;"></div>
 						<div style="display:inline;">
-							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+							<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" target="_blank" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
 						</div> 
 						<div style="height:10px;"></div>
 					</div>
@@ -529,7 +529,7 @@ function updatePin(problemIdx) {
 					</div> 
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs2.getString("problem_url") %></a></span>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs2.getString("problem_url") %>" target="_blank" style="color:#4169E1; text-decoration:underline"><%=rs2.getString("problem_url") %></a></span>
 					</div> 
 					<div style="height:10px;"></div>
 				</div>

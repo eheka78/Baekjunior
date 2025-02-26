@@ -271,7 +271,7 @@ ResultSet rs = null;
 			        newDiv.innerHTML = `
 			            <span><img src="img/arrow3.png" style="width:13px;"></span>
 			            <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="">
-			            <a class="delete_btn" href="#">X</a>
+			            <a class="delete_btn" href="#"><img src="img/x.png" style="height:15px;"></a>
 			        `;
 
 			        // X 버튼 클릭 이벤트 리스너 추가
@@ -303,10 +303,10 @@ ResultSet rs = null;
 				%>
 				<div id="container">
 				<% for (String memo : subMemos) { %>
-					<div class="container_div" style="padding:5px;">
+					<div class="container_div" style="padding:5px 0 5px 5px;">
 		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
 		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <a class="delete_btn" href="#"><img src="img/x.png" style="height:15px;"></a>
+		                <img class="delete_btn" src="img/x.png" style="height:15px; cursor:pointer;"></a>
 		        	</div>
 		        <% } %>
 		        </div>
@@ -331,7 +331,8 @@ ResultSet rs = null;
             </div>
         </div>
     	</div>		
-		
+	
+	<!-- lineNumbers 설정 -->	
 	<script>
     const textarea = document.getElementById('code_note');
     const lineNumbers = document.getElementById('lineNumbers');
