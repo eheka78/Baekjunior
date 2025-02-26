@@ -20,6 +20,7 @@
       document.getElementById("x").style.display = "none";
       document.getElementById("menu").style.display = "none";
    	}   
+   	
    	function fnCheck() {
    		var userId = document.getElementById("id");
    		var userPwd = document.getElementById("pw");
@@ -59,16 +60,31 @@
    		}
    		return true;
    	}
+   	
    	function checkID() {
         var userId = document.getElementById("id");
+        var idCheck = document.getElementById("idDuplication");
         if(userId.value == "") {
-      	  alert("아이디를 입력하세요.");
-      	  userId.focus();
+      	  	alert("아이디를 입력하세요.");
+      	  	userId.focus();
+      		event.preventDefault();
+      		return;
         }
-        else {
-      	  window.open("signup_idCheck.jsp?id=" + userId.value , "", "width=400 height=300");
-        }
+        
+        fetch("signup_idCheck.jsp?id=" + userId.value)
+	  	  	.then(response => response.text())
+	  	  	.then(result => {	  	  	
+	  	  		if(result.trim() === "available") {
+	  	  			idCheck.value = "1";
+	  	  			alert("사용 가능한 아이디입니다.");
+	  	  		}
+	  	  		else {
+	  	  			alert("이미 존재하는 아이디입니다.");
+	  	  		}
+	  	  	})
+	  	  	.catch(error => console.error("오류 발생:", error));
     }
+   	
    	function resetIdCheck() {
    		document.getElementById("idDuplication").value = "0";
    	}
