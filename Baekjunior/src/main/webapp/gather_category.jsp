@@ -245,8 +245,8 @@ ResultSet levelRs = null;
 				    	</a>
 				    </td>
 				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    <% if(algorithmMemo != null && algorithmMemo.trim().isEmpty()) { %>
-				    <span><%=algorithmMemo%></span>
+				    <% if(algorithmMemo != null) { %>
+				    <%=algorithmMemo%>
 				    <%} %>
 				    </td>
 				    <td><%=catenotecount%></td>
