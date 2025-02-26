@@ -151,14 +151,6 @@ try {
 		<a href="#" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul>
-					<li><a href="MyPage.jsp">내 활동</a></li>
-					<li><a href="editProfile.jsp">프로필 수정</a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="inner_content">
 			<form class="delete_box" action="user_delete_do.jsp" target="deletePopup" onsubmit="return fnCheck()" method="POST">
 				<h1 style="font-size: xx-large;">비밀번호 재확인</h1>
