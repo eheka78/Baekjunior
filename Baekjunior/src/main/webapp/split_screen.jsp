@@ -297,7 +297,7 @@ function updatePin(problemIdx) {
 				%>
 				<% for (String memo : subMemos) { %>
 					<div style="padding:5px;">
-						<img src="img/arrow3.png" style="width:13px;"> <span><%=memo %></span>
+						<img src="img/arrow3.png" style="width:13px;"> <span style="white-space: pre;"><%=memo %></span>
 					</div>
 		        <% }
 				} %>
@@ -551,7 +551,7 @@ function updatePin(problemIdx) {
 				%>
 				<% for (String memo : subMemos) { %>
 					<div style="padding:5px;">
-						<img src="img/arrow3.png" style="width:13px;"> <span><%=memo %></span>
+						<img src="img/arrow3.png" style="width:13px;"> <span style="white-space: pre;"><%=memo %></span>
 					</div>
 		        <% }} %>
 			</div>
