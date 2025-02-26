@@ -264,7 +264,7 @@ ResultSet rs = null;
 			        
 			        // 새로운 div 요소 생성
 			        const newDiv = document.createElement('div');
-			        newDiv.className = 'container_div';
+			        newDiv.className = 'submemo_div';
 
 			        // div 내부 HTML 설정
 			        newDiv.innerHTML = `
@@ -289,7 +289,7 @@ ResultSet rs = null;
 			    container.addEventListener('click', function(event) {
 			        if (event.target.classList.contains('delete_btn')) {
 			            event.preventDefault(); // 링크 기본 동작 방지
-			            const divToRemove = event.target.closest('.container_div'); // 클릭한 X 버튼이 포함된 div 찾기
+			            const divToRemove = event.target.closest('.submemo_div'); // 클릭한 X 버튼이 포함된 div 찾기
 			            container.removeChild(divToRemove); // div 제거
 			        }
 			    });
@@ -306,7 +306,7 @@ ResultSet rs = null;
 				<% for (String memo : subMemos) { %>
 		        	
 		        	
-		        	<div class="container_div">
+		        	<div class="submemo_div">
 				        <span class="icon">
 				            <img src="img/arrow3.png" alt="arrow">
 				        </span>

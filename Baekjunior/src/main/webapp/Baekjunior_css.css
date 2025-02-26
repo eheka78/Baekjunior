@@ -534,7 +534,7 @@ textarea {
 
 
 /* note 관련 css */
-.container_div {
+.submemo_div {
    display: flex;
    align-items: center;
    justify-content: space-between;
