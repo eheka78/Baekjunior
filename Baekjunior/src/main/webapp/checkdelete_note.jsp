@@ -142,18 +142,6 @@ ResultSet levelRs = null;
 		<a href="index.jsp" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul style="min-width:150px;">
-					<li>
-						<a href="MyPage.jsp">내 활동</a>
-					</li>
-					<li>
-						<a href="editProfile.jsp">프로필 수정</a>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<script>
 		function checkAll() {
 			const checkboxes = document.getElementsByName("deletenoteitem");
@@ -208,9 +196,7 @@ ResultSet levelRs = null;
 		 				if (countRs.next() && countRs.getInt(1) <= 0) {
 		 					%>
 		 					</table>
-		 					<div>
-		 						not exist
-		 					</div>
+		 					
 		 					<%
 		 				} else {
 		 					// 고정된 문제 먼저 출력
@@ -248,7 +234,6 @@ ResultSet levelRs = null;
 		 			}
 		 		}
 		 		%>
-				</ul>
 			</div>
 		</form>
 		</div>

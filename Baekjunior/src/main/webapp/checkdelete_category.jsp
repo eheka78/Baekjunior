@@ -143,18 +143,6 @@ ResultSet levelRs = null;
 		<a href="index.jsp" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul style="min-width:150px;">
-					<li>
-						<a href="MyPage.jsp">내 활동</a>
-					</li>
-					<li>
-						<a href="editProfile.jsp">프로필 수정</a>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<script>
 			function checkAll() {
 				const checkboxes = document.getElementsByName("deletecateitem");
@@ -222,16 +210,16 @@ ResultSet levelRs = null;
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
 				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" data-catenotecount="<%=catenotecount %>" style="margin-right:10px;cursor:pointer;"
 				    	<%if (catenotecount != 0){%>disabled<%} %>>
-				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
+				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>">
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>
 				    </td>
-				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-				    <% if(algorithmMemo != null && algorithmMemo.trim().isEmpty()) { %>
-				    <span><%=algorithmMemo%></span>
+				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;text-align:center;">
+				    <% if(algorithmMemo != null) { %>
+				    	<%=algorithmMemo%>
 				    <%} %>
 				    </td>
-				    <td><%=catenotecount%></td>
+				    <td style="text-align:center;"><%=catenotecount%></td>
 			    	<td style="text-align:right;"></td>
 				  </tr>
 		 		<%		

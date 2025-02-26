@@ -144,14 +144,6 @@ try {
 		<a href="#" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul>
-					<li><a href="#">내 활동</a></li>
-					<li><a href="editProfile.jsp">프로필 수정</a></li>
-				</ul>
-			</div>
-		</div>
 		<div class="inner_content">
 			<div class="delete_box">
 				<h1 style="font-size: xx-large;">정말 탈퇴하시겠어요?</h1>
