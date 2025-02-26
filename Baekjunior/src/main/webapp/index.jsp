@@ -109,7 +109,7 @@ HttpSession session = request.getSession(false);
 if(session != null && session.getAttribute("login.id") != null) {
 	userId = (String) session.getAttribute("login.id");
 }
-else{
+else {
 	response.sendRedirect("information.jsp");
     return;
 }
