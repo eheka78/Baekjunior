@@ -210,16 +210,16 @@ ResultSet levelRs = null;
 				    <td style="padding-left: 10px;max-width: 120px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
 				    	<input type="checkbox" id="deletecateitem" name="deletecateitem" value="<%=categoryRs.getInt("idx")%>" data-catenotecount="<%=catenotecount %>" style="margin-right:10px;cursor:pointer;"
 				    	<%if (catenotecount != 0){%>disabled<%} %>>
-				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>" >
+				    	<a href="index.jsp?type=category&sort=<%=categoryRs.getString("algorithm_name")%>">
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>
 				    </td>
-				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;text-align:center;">
 				    <% if(algorithmMemo != null) { %>
 				    	<%=algorithmMemo%>
 				    <%} %>
 				    </td>
-				    <td><%=catenotecount%></td>
+				    <td style="text-align:center;"><%=catenotecount%></td>
 			    	<td style="text-align:right;"></td>
 				  </tr>
 		 		<%		

@@ -244,12 +244,12 @@ ResultSet levelRs = null;
 				    		<span><%=categoryRs.getString("algorithm_name") %></span>
 				    	</a>
 				    </td>
-				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+				    <td style="max-width: 200px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align:center;">
 				    <% if(algorithmMemo != null) { %>
 				    <%=algorithmMemo%>
 				    <%} %>
 				    </td>
-				    <td><%=catenotecount%></td>
+				    <td style="text-align:center;"><%=catenotecount%></td>
 			    	<td style="text-align:right;"></td>
 				  </tr>
 		 		<%			
