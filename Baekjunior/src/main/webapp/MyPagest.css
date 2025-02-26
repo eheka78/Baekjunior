@@ -144,6 +144,12 @@ Button:hover {
 	transition:0.3s;
     cursor: pointer;
   }
+input[type="submit"]:hover{
+	letter-spacing:3px;
+	font-weight:bold;
+	transition:0.3s;
+    cursor: pointer;
+}
 Button > div {
 	margin-bottom: 10px;
 }
