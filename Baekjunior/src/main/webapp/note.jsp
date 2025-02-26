@@ -424,7 +424,7 @@ ResultSet memoRs = null;
 				%>
 					<% for (String memo : subMemos) { %>
 						<div style="padding:5px;">
-							<img src="img/arrow3.png" style="height:15px; margin-right:5px;"> <span><%=memo %></span>
+							<img src="img/arrow3.png" style="height:15px; margin-right:5px;"> <span style="white-space: pre;"><%=memo %></span>
 						</div>
 		        <% 	   }
 					} %>
