@@ -263,9 +263,35 @@ input[type="submit"]:hover {
 	margin: 15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 300px;
+	width: 400px;
+	height: 250px;
 	text-align: center;
 	border-radius: 10px;
+}
+
+.modal-content h2 {
+	font-size: 22px;
+	margin-top: 10px;
+	margin-bottom: 39px;
+}
+#newPassword, #oldPassword, #checknewPassword, #oldEmail, #newEmail {
+	margin-top: 20px;
+	border: 3px solid black;
+	height: 35px;
+}
+#newPassword, #checknewPassword {
+	margin-bottom: 30px;
+	width: 270px;
+}
+#oldEmail {
+	margin-bottom: 30px;
+}
+#newEmail {
+	margin-bottom: 30px;
+	width: 315px;
+}
+.modal-content button {
+	width: 75px;
 }
 .close {
 	color: #aaa;

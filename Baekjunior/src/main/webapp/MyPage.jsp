@@ -92,7 +92,7 @@ String profileimg = null;
 String realemail = null;
 String showemail = null;
 String pw = null;
-int emailVerifyStatus = 0;
+
 try {
 	if(userId != "none") {
 		String sql = "SELECT * FROM users WHERE user_id=?";
@@ -274,7 +274,7 @@ try {
 				</div>
 			</div>
 			<div id="newPasswordModal" class="modal">
-				<div class="modal-content">
+				<div class="modal-content" style="height:400px;">
 					<span class="close" onclick="closeModal('newPasswordModal')">&times;</span>
 					<h2>비밀번호 변경</h2>
 					<label for="newPassword">새 비밀번호를 입력해주세요.</label>
@@ -284,29 +284,33 @@ try {
 					<label for="checknewPassword">새 비밀번호 확인</label>
 					<br>
 					<input type="password" id="checknewPassword">
-					<button onclick="checkNewPw()">변경</button>
+					<br>
+					<button onclick="checkNewPw()" style="width:100px;">변경</button>
 				</div>
 			</div>
 			
 			<!-- 이메일 변경창 -->
 			<div id="emailModal" class="modal">
-				<div class="modal-content">
+				<div class="modal-content" style="height: 400px;">
 					<span class="close" onclick="closeModal('emailModal')">&times;</span>
 					<h2>이메일 변경</h2>
 					<label for="oldEmail">기존 이메일을 입력해주세요.</label>
 					<br>
 					<input type="email" id="oldEmail">
 					<button onclick="checkOldEmail()">확인</button>
-					
+					<br>
 					<label for="newEmail">새 이메일을 입력해주세요.</label>
 					<br>
 					<input type="email" id="newEmail">
+					<br>
 					<button onclick="changeEmail()">변경</button>
 				</div>
 			</div>
 		</div>
 	</div>
 <script>
+let emailVerifyStatus = 0;
+
 	function closeModal(divid){
 		document.getElementById(divid).style.display = "none";
 	}
@@ -347,6 +351,13 @@ try {
 			document.getElementById("checknewPassword").focus();
 			return;
 		}
+		else if(newPw == "<%=pw%>") {
+			alert("기존 비밀번호와 동일합니다. 다른 비밀번호를 입력해주세요.");
+			document.getElementById("newPassword").value="";
+			document.getElementById("checknewPassword").value="";
+			document.getElementById("checknewPassword").focus();
+			return;
+		}
 		else if(newPw == check) {
 			fetch("changePW.jsp?id="+userId+"&newPw="+newPw)
 				.then(response=>response.text())
@@ -367,40 +378,49 @@ try {
 		let oldEmail = document.getElementById("oldEmail").value;
 		if(oldEmail == ""){
 			alert("기존 이메일을 입력해주세요.");
+			emailVerifyStatus = 0;
 			document.getElementById("oldEmail").focus();
+			console.log(emailVerifyStatus);
 			return;
 		}
 		else if (oldEmail == "<%=realemail%>"){
 			alert("확인되었습니다.");
 			emailVerifyStatus = 1;
 			document.getElementById("newEmail").focus();
+			console.log(emailVerifyStatus);
 			return;
 		}
 		else {
 			alert("기존 이메일과 일치하지 않습니다. 다시 입력해주세요.");
+			emailVerifyStatus = 0;
 			document.getElementById("oldEmail").value="";
 			document.getElementById("oldEmail").focus();
+			console.log(emailVerifyStatus);
 		}
 		
 	}
 	function changeEmail() {
 		let userId = "<%= userId %>";
 		let newEmail = document.getElementById("newEmail").value;
+		console.log(emailVerifyStatus);
 		if(newEmail == ""){
 			alert("새 이메일을 입력해주세요.");
 			document.getElementById("newEmail").focus();
+			console.log(emailVerifyStatus);
 			return;
 		}
 		else if (newEmail == document.getElementById("oldEmail").value){
 			alert("기존 이메일과 동일합니다. 다른 이메일을 입력해주세요.");
 			document.getElementById("newEmail").value="";
 			document.getElementById("newEmail").focus();
+			console.log(emailVerifyStatus);
 			return;
 		}
 		else {
-			if(<%= emailVerifyStatus%> == 0){
+			if(emailVerifyStatus == 0){
 				alert("기존 이메일 확인 후 변경가능합니다.");
 				document.getElementById("oldEmail").focus();
+				console.log(emailVerifyStatus);
 				return;
 			}
 			fetch("changeEmail.jsp?id="+userId+"&newEmail="+newEmail)
