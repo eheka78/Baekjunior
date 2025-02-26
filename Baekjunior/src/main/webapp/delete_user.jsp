@@ -159,7 +159,7 @@ try {
 				<input type="password" name="password" id="password">
 				<div>
 					<input type="submit" value="확인" style="cursor:pointer;">
-					<input type="reset" value="취소" onclick="location.href='editProfile.jsp'" style="cursor:pointer;">
+					<input type="reset" value="취소" onclick="location.href='MyPage.jsp'" style="cursor:pointer;">
 				</div>
 			</form>
 		</div>
