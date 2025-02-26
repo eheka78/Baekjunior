@@ -163,8 +163,13 @@ table {
 td {
 	height: 65px;
 	padding-left: 20px;
+	position: relative;	
 }
-
+td button {
+	position: absolute;
+	right: 10px;
+	top: 11px;
+}
 .myinfo {
 	display: flex;
 	justify-content: center;
