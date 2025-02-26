@@ -51,17 +51,6 @@ function confirmLogout() {
 function showAlert(message) {
     alert(message);
 }
-
-function fnCheck() {
-	var pwd = document.getElementById("password");
-	if(pwd.value == "") {
-		alert("비밀번호를 입력하세요");
-		pwd.focus();
-		return false;
-	}
-	window.open("", "deletePopup", "width=500,height=300");
-	return true;
-}
 </script>
 
 </head>
@@ -82,6 +71,7 @@ Connection con = DsCon.getConnection();
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 String profileimg = null;
+String pw = null;
 try {
 	if(userId != "none") {
 		String sql = "SELECT * FROM users WHERE user_id=?";
@@ -98,6 +88,10 @@ try {
 		else {
 			profileimg = "./upload/" + rs.getString("savedFileName");
 		}
+		pw = rs.getString("password");
+	} else {
+		response.sendRedirect("information.jsp");
+	    return;
 	}
 %>
 <body>
@@ -119,7 +113,6 @@ try {
 				<a href="#" onclick="confirmLogout()" style="border:1px solid;width:90px; display:inline-block; text-align:center; height:30px; position:absolute; top:50px; margin-left:78px; text-decoration:none; color:black;">로그아웃</a>
 			</div>
 		</div>
-
 		<%
 		con.close();
 		pstmt.close();
@@ -131,12 +124,12 @@ try {
 		%>
 		<!-- 프로필, 로그아웃 div 띄우기 -->
 		<script>
-		function opendiv() {
-			document.getElementById("myprodiv").style.display = "block";
-		}
-		function closediv() {
-			document.getElementById("myprodiv").style.display = "none";
-		}
+			function opendiv() {
+				document.getElementById("myprodiv").style.display = "block";
+			}
+			function closediv() {
+				document.getElementById("myprodiv").style.display = "none";
+			}
 		</script>
 	</header>
 	
@@ -152,7 +145,7 @@ try {
 	</section>
 	<div class="contents">
 		<div class="inner_content">
-			<form class="delete_box" action="user_delete_do.jsp" target="deletePopup" onsubmit="return fnCheck()" method="POST">
+			<form class="delete_box" action="user_delete_do.jsp" onsubmit="return fnCheck()" method="POST">
 				<h1 style="font-size: xx-large;">비밀번호 재확인</h1>
 				<span>비밀번호를 다시 한번 입력해주세요</span>
 				<input type="text" name="user_id" value="<%=userId %>" style="display:none;">
@@ -164,6 +157,27 @@ try {
 			</form>
 		</div>
 	</div>
+	<script>
+	function fnCheck() {
+		var pwd = document.getElementById("password");
+		if(pwd.value == "") {
+			alert("비밀번호를 입력하세요");
+			pwd.focus();
+			event.preventDefault();
+			return false;
+		}
+		
+		if(pwd.value === "<%=pw%>") {
+			alert("회원 탈퇴가 완료되었습니다.");
+		} else {
+			alert("비밀번호가 일치하지 않습니다.");
+			pwd.value = "";
+			pwd.focus();
+			event.preventDefault();
+			return false;
+		}
+	}
+	</script>
 	
 	
 </body>

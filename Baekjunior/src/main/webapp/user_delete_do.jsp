@@ -6,19 +6,6 @@ String userId = request.getParameter("user_id");
 String userPwd = request.getParameter("password");
 try {
 	UserInfoDB uidb = new UserInfoDB();
-	
-	int is_exist = uidb.userExistCheck(userId, userPwd);
-	if(is_exist == 0) {
-%>
-		<script>
-			opener.showAlert("비밀번호가 일치하지 않습니다.");
-			window.close();
-		</script>
-<%
-		uidb.close();
-	}
-	else {
-	
 		ServletContext context = getServletContext();
 		String realFolder = context.getRealPath("upload");
 		
@@ -32,15 +19,7 @@ try {
 		
 		uidb.deleteUser(userId);
 		uidb.close();
-%>
-		<script>
-			alert("탈퇴가 완료되었습니다."); // 1. 탈퇴 완료 메시지 띄우기
-		    opener.location.href = "logout_do.jsp"; // 2. 부모 창을 로그아웃 페이지로 이동
-		    window.close(); // 3. 현재 창 닫기
-		</script>
-<%
-	}
-	
+		response.sendRedirect("logout_do.jsp");
 } catch (SQLException e) {
 	out.print(e);
 	return;
