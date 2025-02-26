@@ -125,10 +125,7 @@ header [class ^= "main_menu_"] > ul > li:hover{
 	color: black;
 }
 .inner_contents {
-	flex: 8;
-	margin-top: 40px;
-    margin-right: 200px;
-    margin-left: 100px;
+	margin: 40px 150px;
 }
 .select_div {
 	display: flex;

@@ -200,18 +200,6 @@ ResultSet levelRs = null;
 		<a href="index.jsp" class="logo"></a>
 	</section>
 	<div class="contents">
-		<div class="menu">
-			<div class="menu_box">
-				<ul style="min-width:150px;">
-					<li>
-						<a href="MyPage.jsp">내 활동</a>
-					</li>
-					<li>
-						<a href="editProfile.jsp">프로필 수정</a>
-					</li>
-				</ul>
-			</div>
-		</div>
 		<div class="inner_contents" style="margin-top:35px;">
 			<div class="inner_header">
 				<h1 style="font-size:30px;">CATEGORY</h1>
