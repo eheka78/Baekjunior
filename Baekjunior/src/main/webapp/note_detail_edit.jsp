@@ -249,7 +249,7 @@ ResultSet rs = null;
 					</div>
 					<div style="height:10px;"></div>
 					<div style="display:inline;">
-						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
+						<span>link <img src="img/link.png" style="height:17px;"> | <a href="<%=rs.getString("problem_url") %>" target="_blank" style="color:#4169E1; text-decoration:underline"><%=rs.getString("problem_url") %></a></span>
 					</div> 
 				</div>
 			</div>	
@@ -264,14 +264,15 @@ ResultSet rs = null;
 			        
 			        // 새로운 div 요소 생성
 			        const newDiv = document.createElement('div');
-			        newDiv.className = 'container_div'; // CSS 클래스 추가
-			        newDiv.style.padding = '5px';
+			        newDiv.className = 'submemo_div';
 
 			        // div 내부 HTML 설정
 			        newDiv.innerHTML = `
-			            <span><img src="img/arrow3.png" style="width:13px;"></span>
-			            <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="">
-			            <a class="delete_btn" href="#"><img src="img/x.png" style="height:15px;"></a>
+			        	<span class="icon">
+				            <img src="img/arrow3.png" alt="arrow">
+				        </span>
+			            <input type="text" name="sub_memo" class="input_field" value="">
+			            <img class="delete_btn" src="img/x.png" alt="delete">
 			        `;
 
 			        // X 버튼 클릭 이벤트 리스너 추가
@@ -288,7 +289,7 @@ ResultSet rs = null;
 			    container.addEventListener('click', function(event) {
 			        if (event.target.classList.contains('delete_btn')) {
 			            event.preventDefault(); // 링크 기본 동작 방지
-			            const divToRemove = event.target.closest('.container_div'); // 클릭한 X 버튼이 포함된 div 찾기
+			            const divToRemove = event.target.closest('.submemo_div'); // 클릭한 X 버튼이 포함된 div 찾기
 			            container.removeChild(divToRemove); // div 제거
 			        }
 			    });
@@ -303,11 +304,15 @@ ResultSet rs = null;
 				%>
 				<div id="container">
 				<% for (String memo : subMemos) { %>
-					<div class="container_div" style="padding:5px 0 5px 5px;">
-		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
-		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <img class="delete_btn" src="img/x.png" style="height:15px; cursor:pointer;"></a>
-		        	</div>
+		        	
+		        	
+		        	<div class="submemo_div">
+				        <span class="icon">
+				            <img src="img/arrow3.png" alt="arrow">
+				        </span>
+				        <input type="text" name="sub_memo" class="input_field" value="<%=memo%>">
+				        <img class="delete_btn" src="img/x.png" alt="delete">
+				    </div>
 		        <% } %>
 		        </div>
 		        
