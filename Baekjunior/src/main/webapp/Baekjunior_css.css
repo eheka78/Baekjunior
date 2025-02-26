@@ -453,7 +453,7 @@ input[type='radio']:checked{
 	margin:20px;
 }
 
-#code-editor {
+#code-editor, #code-editor_2 {
     display: flex;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -464,7 +464,7 @@ input[type='radio']:checked{
     width:100%;
 }
 
-#lineNumbers {
+#lineNumbers, #lineNumbers_2 {
     background-color: #f0f0f0;
     padding: 8px;
     border-right: 1px solid #ccc;
@@ -472,16 +472,16 @@ input[type='radio']:checked{
     color: #888;
     user-select: none;
     font-family: monospace;
-    font-size:10px;
+    font-size:15px;
     counter-reset: line;
 }
 
-#lineNumbers div {
+#lineNumbers, #lineNumbers_2 div {
     counter-increment: line;
     content: counter(line);
     display: block;
-    line-height: 1.2;
 }
+
 
 textarea {
 	overflow-x:scroll;
@@ -492,8 +492,8 @@ textarea {
     padding: 8px;
     font-family: monospace;
     width: 100%;
-    font-size:10px;
-    line-height: 1.25;
+    font-size:15px;
+    line-height: 1.3;
 }
 
 
