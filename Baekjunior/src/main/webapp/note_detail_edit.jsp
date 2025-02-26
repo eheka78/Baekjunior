@@ -264,14 +264,15 @@ ResultSet rs = null;
 			        
 			        // 새로운 div 요소 생성
 			        const newDiv = document.createElement('div');
-			        newDiv.className = 'container_div'; // CSS 클래스 추가
-			        newDiv.style.padding = '5px';
+			        newDiv.className = 'container_div';
 
 			        // div 내부 HTML 설정
 			        newDiv.innerHTML = `
-			            <span><img src="img/arrow3.png" style="width:13px;"></span>
-			            <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="">
-			            <a class="delete_btn" href="#"><img src="img/x.png" style="height:15px;"></a>
+			        	<span class="icon">
+				            <img src="img/arrow3.png" alt="arrow">
+				        </span>
+			            <input type="text" name="sub_memo" class="input_field" value="">
+			            <img class="delete_btn" src="img/x.png" alt="delete">
 			        `;
 
 			        // X 버튼 클릭 이벤트 리스너 추가
@@ -303,11 +304,15 @@ ResultSet rs = null;
 				%>
 				<div id="container">
 				<% for (String memo : subMemos) { %>
-					<div class="container_div" style="padding:5px 0 5px 5px;">
-		           		<span><img src="img/arrow3.png" style="width:13px;"></span>
-		                <input type="text" name="sub_memo" style="width:90%; background-color:transparent; padding:5px; font-size:15px;" value="<%=memo%>">
-		                <img class="delete_btn" src="img/x.png" style="height:15px; cursor:pointer;"></a>
-		        	</div>
+		        	
+		        	
+		        	<div class="container_div">
+				        <span class="icon">
+				            <img src="img/arrow3.png" alt="arrow">
+				        </span>
+				        <input type="text" name="sub_memo" class="input_field" value="<%=memo%>">
+				        <img class="delete_btn" src="img/x.png" alt="delete">
+				    </div>
 		        <% } %>
 		        </div>
 		        
