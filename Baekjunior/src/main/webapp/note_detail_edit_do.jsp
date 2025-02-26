@@ -14,8 +14,8 @@ pi.setMain_memo(mainMemo);
 if(subMemos != null) {
 	StringBuilder subMemosBuilder = new StringBuilder();
 	for (String memo : subMemos) {
-	    if (!memo.trim().isEmpty()) {
-	        subMemosBuilder.append(memo.trim()).append("\n");
+	    if (!memo.isEmpty()) {
+	        subMemosBuilder.append(memo).append("\n");
 	    }
 	}
 	pi.setSub_memo(subMemosBuilder.toString());
