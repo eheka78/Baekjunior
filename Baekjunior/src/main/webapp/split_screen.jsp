@@ -307,14 +307,14 @@ function updatePin(problemIdx) {
 			        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 			            <div id="code-editor" style="display: grid; grid-template-columns: 1fr 17fr; border: none;">
 			                <textarea class="notes" id="lineNumbers" rows="10" wrap="off" style="text-align:center; padding-bottom:0px;" readonly></textarea>
-			                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("code") %></textarea>
+			                <textarea class="notes" id="code_note" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("code"), "") %></textarea>
 			            </div>
 			        </div>
 			        
 			
 			        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 			            <div id="code-editor" style="border: none;">
-			                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your code memo here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs.getString("main_memo") %></textarea>
+			                <textarea class="notes" id="note_detail" rows="10" placeholder="Enter your code memo here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs.getString("main_memo"), "") %></textarea>
 			            </div>
 			        </div>
 		    	</div>
@@ -324,22 +324,19 @@ function updatePin(problemIdx) {
 	
 			
 			<script>
-	        const textarea = document.getElementById('code_note');
+			const textarea = document.getElementById('code_note');
 	        const lineNumbers = document.getElementById('lineNumbers');
-	        const noteDetail = document.getElementById('note_detail');
-					
+	        
+			console.log("AA: " + textarea);
 	        function updateLineNumbers() {
 	            const numberOfLines = textarea.value.split('\n').length;
 	            let lineNumberString = '';
-	            let noteDetailString = '';
 	
 	            for (let i = 1; i <= numberOfLines; i++) {
-	                lineNumberString += i + '\n';
-	                noteDetailString += "_" + '\n';
+	                lineNumberString += i + '\n'
 	            }
 	
 	            lineNumbers.value = lineNumberString;
-	            noteDetail.value = noteDetailString;
 	        }
 	
 	        function adjustHeight(element) {
@@ -349,10 +346,9 @@ function updatePin(problemIdx) {
 	
 	        // Function to sync heights between textareas
 	        function syncHeights() {
-	            const maxScrollHeight = Math.max(textarea.scrollHeight, lineNumbers.scrollHeight, noteDetail.scrollHeight);
+	            const maxScrollHeight = Math.max(textarea.scrollHeight, lineNumbers.scrollHeight);
 	            textarea.style.height = maxScrollHeight + 'px';
 	            lineNumbers.style.height = maxScrollHeight + 'px';
-	            noteDetail.style.height = maxScrollHeight + 'px';
 	        }
 	
 	        // 초기 라인 번호 및 높이 업데이트
@@ -372,7 +368,7 @@ function updatePin(problemIdx) {
 	
 	        function submitcode_note() {
 	            const code = textarea.value;
-	            console.log("Submitted C++ Code:", code);
+	            console.log("Submitted Code:", code);
 	
 	            // 서버에 코드를 전송하거나 WebAssembly로 처리하는 로직을 여기에 추가합니다.
 	        }
@@ -560,14 +556,14 @@ function updatePin(problemIdx) {
 		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 		            <div id="code-editor_2" style="display: grid; grid-template-columns: 1fr 17fr; border: none;">
 		                <textarea class="notes" id="lineNumbers_2" rows="10" wrap="off" style="text-align:center; padding-bottom:0px;" readonly></textarea>
-		                <textarea class="notes" id="code_note_2" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("code") %></textarea>
+		                <textarea class="notes" id="code_note_2" rows="10" placeholder="Enter your code here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs2.getString("code"), "") %></textarea>
 		            </div>
 		        </div>
 		        
 		
 		        <div style="column-gap: 10px; border: 3px solid black; background: white; padding: 10px;">
 		            <div id="code-editor_2" style="border: none;">
-		                <textarea class="notes" id="note_detail_2" rows="10" placeholder="Enter your code memo here..." wrap="off" style="overflow-x:auto; padding-bottom:60px;" readonly><%=rs2.getString("main_memo") %></textarea>
+		                <textarea class="notes" id="note_detail_2" rows="10" placeholder="Enter your note here..." wrap="off" style="font-size:15px; overflow-x:auto; padding-bottom:60px;" readonly><%=Util.nullChk(rs2.getString("main_memo"), "") %></textarea>
 		            </div>
 		        </div>
 	    	</div>
@@ -576,20 +572,16 @@ function updatePin(problemIdx) {
     	<script>
         const textarea_2 = document.getElementById('code_note_2');
         const lineNumbers_2 = document.getElementById('lineNumbers_2');
-        const noteDetail_2 = document.getElementById('note_detail_2');
 				
         function updateLineNumbers() {
             const numberOfLines = textarea_2.value.split('\n').length;
             let lineNumberString = '';
-            let noteDetailString = '';
 
             for (let i = 1; i <= numberOfLines; i++) {
                 lineNumberString += i + '\n';
-                noteDetailString += "_" + '\n';
             }
 
             lineNumbers_2.value = lineNumberString;
-            noteDetail_2.value = noteDetailString;
         }
 
         function adjustHeight(element) {
@@ -599,10 +591,9 @@ function updatePin(problemIdx) {
 
         // Function to sync heights between textareas
         function syncHeights() {
-            const maxScrollHeight = Math.max(textarea_2.scrollHeight, lineNumbers_2.scrollHeight, noteDetail_2.scrollHeight);
+            const maxScrollHeight = Math.max(textarea_2.scrollHeight, lineNumbers_2.scrollHeight);
             textarea_2.style.height = maxScrollHeight + 'px';
             lineNumbers_2.style.height = maxScrollHeight + 'px';
-            noteDetail_2.style.height = maxScrollHeight + 'px';
         }
 
         // 초기 라인 번호 및 높이 업데이트
