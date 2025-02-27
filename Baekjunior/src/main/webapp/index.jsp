@@ -663,7 +663,7 @@ ResultSet countRs = null;
 					if(tierName.equals("unrated")) {
 	%>
 	 			<li class="item">
-	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><img src="img/star_<%=tierName.toLowerCase()%>.png"> <%=tierName%></a></div>
+	 				<div class="content_number"><a href="index.jsp?type=level&level=<%=level %>&tier_name=<%=tierName %>&tier_num=<%=tierNum%>"><img src="img/star_<%=tierName.toLowerCase()%>.png" style="height:20px;"> <%=tierName%></a></div>
 	 			</li>
 	 			<%
 					} else {

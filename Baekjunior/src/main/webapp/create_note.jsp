@@ -76,22 +76,27 @@ function fnCheck(btn) {
 
     if(problemId.value == "") {
         alert("문제 번호를 입력하세요.");
+        problemId.focus();
         return false;
     }
     else if(importCheck.value == "0") {
         alert("문제가 import 되지 않았습니다.");
+  		document.getElementById("import_btn").focus();
         return false;
     }
-    else if(problemTitle.value == "not_found") {
+    else if(problemTitle.value == "not_found" || problemTitle.value == "") {
     	alert("존재하지 않는 문제 번호입니다.");
+    	problemId.focus();
     	return false;
     }
     else if(language.value == "other" && languageOther.value == "") {
     	alert("언어를 입력하세요.");
+    	language.focus();
     	return false;
     }
     else if(code_note.value == "") {
         alert("코드를 입력하세요.");
+        code_note.focus();
         return false;
     }
 
@@ -135,7 +140,7 @@ int tier_num = 0;
 if (problemId != null && !problemId.isEmpty()) {
     // 문제 정보를 가져오는 메서드 호출
     title = getPI.getTitle(problemId);
-    if (title.equals("not_found")) {
+    if (title == null || title.equals("not_found")) {
         out.println("<script>alert('존재하지 않는 문제입니다.');</script>");
     } else {
         url = getPI.getProblemURL(problemId);
@@ -253,26 +258,26 @@ try {
 						<span style="border-bottom:3px solid black;">
 							<input type="text" id="problemId" name="problemId" value="<%=Util.nullChk(problemId, "") %>" oninput="resetImportCheck()" style="background:transparent; outline:none; border:none;">
 						</span>
-						<span><button type="button" style="font-size:15px; font-weight:bold; padding:5px 20px; background:white; border:3px soild black; margin-left:20px; cursor:pointer;"
+						<span><button type="button" id="import_btn" style="font-size:15px; font-weight:bold; padding:5px 20px; background:white; border:3px soild black; margin-left:20px; cursor:pointer;"
 								onclick="importClick()">import</button>
 						</span>
 					</div>
 					<div>
 						Problem Title :
 						<span style="border-bottom:3px solid black;">
-							<input type="text" id="title" name="title" value="<%=title%>" style="background:transparent; outline:none; border:none; width:50%;" readonly>
+							<input type="text" id="title" name="title" value="<%=Util.nullChk(title, "") %>" style="background:transparent; outline:none; border:none; width:50%;" readonly>
 						</span>
 					</div>
 					<div>
 						Note Title :
 						<span style="border-bottom:3px solid black;">
-							<input type="text" id="title" name="memo_title" value="<%=title%>" style="background:transparent; outline:none; border:none; width:50%;">
+							<input type="text" id="title" name="memo_title" value="<%=Util.nullChk(title, "")%>" style="background:transparent; outline:none; border:none; width:50%;">
 						</span>
 					</div>
 					<div>
 						Problem URL :
 						<span style="border-bottom:3px solid black;">
-							<input type="text" id="problem_url" name="problem_url" value="<%=url%>" style="background:transparent; outline:none; border:none; width:50%;">
+							<input type="text" id="problem_url" name="problem_url" value="<%=url%>" style="background:transparent; outline:none; border:none; width:50%;" readonly>
 						</span>
 					</div>
 					<div>

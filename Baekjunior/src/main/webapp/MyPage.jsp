@@ -230,13 +230,19 @@ try {
 					}
 					function onClickDelete(id) {
 						if (!confirm("프로필 이미지를 삭제하시겠습니까?")) {
+							event.preventDefault();
 					        return;
 					    }
 						fetch("deleteProfileImage.jsp?id="+id)
 							.then(response => response.text())
 							.then(result => {
-								alert(result);
-								location.reload(); // 페이지 새로고침하여 변경 반영
+								if(result.trim() === "default") {
+									alert("현재 기본 프로필 이미지입니다.");
+									event.preventDefault();
+								} else {
+									alert(result);
+									location.reload(); // 페이지 새로고침하여 변경 반영
+								}
 							})
 							.catch(error => console.error("삭제 오류:", error));
 					}

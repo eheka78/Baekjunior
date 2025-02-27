@@ -401,7 +401,7 @@ function updatePin(problemIdx) {
 			
 		 		if (!userId.equals("none")) {
 		 			try {
-						String sql3 = "SELECT * FROM problems WHERE user_id=? AND problem_idx!=? AND problem_idx!=?";
+						String sql3 = "SELECT * FROM problems WHERE user_id=? AND problem_idx!=? AND problem_idx!=? ORDER BY is_fixed DESC";
 		 				pstmt3 = con.prepareStatement(sql3);
 		 				pstmt3.setString(1, userId);
 		 				pstmt3.setInt(2, problemIdx1);
@@ -646,7 +646,7 @@ function updatePin(problemIdx) {
 		
 	 		if (!userId.equals("none")) {
 	 			try {
-					String sql5 = "SELECT * FROM problems WHERE user_id=? AND problem_idx!=? AND problem_idx!=?";
+					String sql5 = "SELECT * FROM problems WHERE user_id=? AND problem_idx!=? AND problem_idx!=? ORDER BY is_fixed DESC";
 	 				pstmt5 = con.prepareStatement(sql5);
 	 				pstmt5.setString(1, userId);
 	 				pstmt5.setInt(2, problemIdx1);

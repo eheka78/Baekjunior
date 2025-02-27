@@ -8,7 +8,7 @@ try {
 	UserInfoDB uidb = new UserInfoDB();
 	String savedFileName = uidb.imageExistCheck(id);
 	if(savedFileName == "" || savedFileName == null || savedFileName.trim().isEmpty()){
-		out.print("현재 기본 프로필 이미지입니다.");
+		out.print("default");
 	}
 	else {
 		ServletContext context = getServletContext();
