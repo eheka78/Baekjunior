@@ -247,7 +247,7 @@ ResultSet levelRs = null;
 			    	<td style="text-align:right;">
 			    		<div class="content_set" style="position:relative;">
 			    		<button class="content_set_b"><img src="img/....png"></button>
-			    			<ul style="width:180px;top:15px;right:0px;">
+			    			<ul style="width:180px;top:24px;right:0px;">
 				    			<li><a onclick="updatePin('<%=problemRs.getInt("problem_idx") %>')" href="#">Unpin / Pin to top</a></li>
 				    			<li><a href="split_screen.jsp?problem_idx1=<%=problemRs.getInt("problem_idx")%>&problem_idx2=-1">Split screen</a></li>
 				    			<li><a onclick="confirmDeletion('<%=problemRs.getInt("problem_idx") %>')" href="#">Delete</a></li>
