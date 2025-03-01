@@ -313,6 +313,8 @@ nav a:hover{
 .table_item:hover {
 	font-weight:bold;
 	transform:scale(1.01);
+	position: relative;
+	z-index: 2;
 }
 
 .content_number {
@@ -345,6 +347,7 @@ nav a:hover{
 
 .content_set > ul{
 	display: none;
+	position: absolute;
 }
 
 .content_set_b{
@@ -354,6 +357,12 @@ nav a:hover{
 
 .content_set_b:hover + ul, .content_set_b + ul:hover, .content_set_b + ul > li:hover{
     display:block;
+    z-index: 100;
+}
+
+.table_item {
+    position: relative; /* z-index 적용하려면 필수 */
+    z-index: 1; /* 기본적으로 위에 배치 */
 }
 
 .content_set_b + ul{
