@@ -13,15 +13,6 @@ public class ProblemInfoDB {
 		con = DsCon.getConnection();
 	}
 	
-	// 
-	/*
-	 * public int problemExistCheck(String title) throws SQLException { String sql =
-	 * "SELECT * FROM problems WHERE title=?";
-	 * 
-	 * pstmt = con.prepareStatement(sql); pstmt.setString(1, title); rs =
-	 * pstmt.executeQuery(); if(rs.next()) { return 1; } return 0; }
-	 */
-	
 	// 문제 정보 db에 추가하는 함수
 	public void insertProblem(ProblemInfo pi) throws SQLException {
 		String sql = "INSERT INTO problems (user_id, problem_id, problem_title, problem_url, problem_sort, tier_name, tier_num, level, code, language, is_checked)" +

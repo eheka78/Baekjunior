@@ -216,7 +216,7 @@ try {
 					</div>
 					<input type="file" accept="image/jpg,image/gif" name="fileName" class="imgUpload" id="imgUpload" onchange="previewImage(event)">
 					<button onclick="onClickUpload();" style="margin-top:10px;">프로필 사진 업로드</button>
-					<button onclick="onClickDelete('<%=userId%>');" style="margin-top:10px;">현재 사진 삭제</button>
+					<button type="button" onclick="onClickDelete('<%=userId%>');" style="margin-top:10px;">현재 사진 삭제</button>
 					<h1><%=rs.getString("user_id") %></h1>
 					<textarea name="intro"><%=Util.nullChk(rs.getString("intro"), "") %></textarea>
 					<input type="submit" value="저장">
@@ -238,7 +238,7 @@ try {
 							.then(result => {
 								if(result.trim() === "default") {
 									alert("현재 기본 프로필 이미지입니다.");
-									event.preventDefault();
+									return;
 								} else {
 									alert(result);
 									location.reload(); // 페이지 새로고침하여 변경 반영

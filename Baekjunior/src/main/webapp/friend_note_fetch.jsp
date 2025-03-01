@@ -120,7 +120,7 @@ ResultSet rs = null;
 	                   	}
 							else {
 						%>
-						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"></span><span> default sort</span>
+						<span style="margin-right:25px;"><img src="img/dot1.png" style="width:15px;"> default sort</span>
 						<% } %>
 					</div>
 					<!-- 언어 종류 -->
